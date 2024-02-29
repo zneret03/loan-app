@@ -2,7 +2,7 @@
 import { Button } from '@/components'
 import { useRouter } from 'next/navigation'
 
-const CreateAccount = (): JSX.Element => {
+const Page = (): JSX.Element => {
   const router = useRouter()
 
   const previousPage = (): void => {
@@ -27,4 +27,4 @@ const CreateAccount = (): JSX.Element => {
     </main>
   )
 }
-export default CreateAccount
+export default Page

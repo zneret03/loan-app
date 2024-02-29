@@ -1,13 +1,7 @@
 import type { Metadata } from 'next'
 import { TopNav } from '@/components'
-import { Inter } from 'next/font/google'
+import { inter } from '@/utils'
 import '@/styles/tailwind.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: '500',
-  style: ['normal']
-})
 
 export const metadata: Metadata = {
   title: 'Loan app',
@@ -23,7 +17,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <TopNav />
-        <div className='bg-gray h-[calc(100vh-74px)] overflow-hidden'>
+        <div className='bg-gray h-[calc(100vh-74px)] px-[56px] overflow-hidden'>
           {children}
         </div>
       </body>

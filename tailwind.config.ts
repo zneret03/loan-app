@@ -11,6 +11,11 @@ const config: Config = {
       inter: ['var(--font-inter)'],
       poppins: ['var(--font-poppins)']
     },
+    screens: {
+      tablet: '640px',
+      laptop: '1024px',
+      desktop: '1550px'
+    },
     extend: {
       colors: {
         gray: '#ECF3F5',
@@ -26,6 +31,6 @@ const config: Config = {
       }
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')]
 }
 export default config

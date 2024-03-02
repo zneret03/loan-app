@@ -124,9 +124,13 @@ const Page = (): JSX.Element => {
           <section className='space-y-4'>
             <Button label='Continue' styles='w-full py-2' />
 
-            <div className='flex items-center space-x-2'>
-              <input ref={TAndCBox} type='checkbox' className='w-6 h-6' />
-              <label className='text-lg'>
+            <div className='flex items-center space-x-2 w-full'>
+              <input
+                ref={TAndCBox}
+                type='checkbox'
+                className='w-5 h-5 rounded-sm text-primary focus:ring-gray border border-primary border-2 cursor-pointer'
+              />
+              <label className='text-base'>
                 I agree to the{' '}
                 <Link href='#' className='underline font-bold'>
                   Terms and Conditions

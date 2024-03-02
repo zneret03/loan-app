@@ -16,7 +16,7 @@ export const BaseLine = ({
   return (
     <main className={`${styles}`}>
       <aside
-        className={`grid grid-row-2 gap-y-[2.5rem] divide-y divide-${dividerColor} px-14 mt-[5rem]`}
+        className={`grid grid-row-2 gap-y-[2.5rem] divide-y divide-${dividerColor} px-[3.5rem] mt-[5rem]`}
       >
         <h1 className='text-[2rem] text-dark-primary'>{title}</h1>
         <div className={`pt-[2.5rem]`}>{children}</div>

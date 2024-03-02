@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import { BaseLine, Button, InputField, Select } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
 import { useForm } from 'react-hook-form'
+import Link from 'next/link'
 import { selectOptionsData } from './helpers/constants'
 
 interface FormTypes {
@@ -15,6 +16,7 @@ interface FormTypes {
 const Page = (): JSX.Element => {
   const [activeSelect, setActiveSelect] = useState<string>('Select Loan Term')
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
+  const TAndCBox = useRef<HTMLInputElement>(null)
 
   const { state, dispatch } = useContext(LoanContext)
 
@@ -102,10 +104,10 @@ const Page = (): JSX.Element => {
         styles='flex-1 bg-gray shadow-sm h-screen'
       >
         <section className='space-y-10 text-dark-primary'>
-          <div className='space-y-6'>
+          <section className='space-y-6'>
             <label className='text-sm '>ESTIMATED AMORTIZATION</label>
             <h2 className='text-2xl'>Php {amortization}</h2>
-          </div>
+          </section>
 
           <aside className='divide divide-y divide-divider-dark space-y-6'>
             <div className='space-y-6'>
@@ -119,9 +121,19 @@ const Page = (): JSX.Element => {
             </div>
           </aside>
 
-          <div>
+          <section className='space-y-4'>
             <Button label='Continue' styles='w-full py-2' />
-          </div>
+
+            <div className='flex items-center space-x-2'>
+              <input ref={TAndCBox} type='checkbox' className='w-6 h-6' />
+              <label className='text-lg'>
+                I agree to the{' '}
+                <Link href='#' className='underline font-bold'>
+                  Terms and Conditions
+                </Link>
+              </label>
+            </div>
+          </section>
         </section>
       </BaseLine>
     </main>

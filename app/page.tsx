@@ -1,6 +1,6 @@
 'use client'
-import { useRouter } from 'next/navigation'
 
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components'
 
 const Home = (): JSX.Element => {
@@ -34,7 +34,12 @@ const Home = (): JSX.Element => {
 
         <div className='flex justify-center gap-6 mt-16'>
           {ButtonObj.map(({ label, action }) => (
-            <Button label={label} action={action} key={label} />
+            <Button
+              label={label}
+              action={action}
+              key={label}
+              styles='py-4 px-16'
+            />
           ))}
         </div>
       </div>

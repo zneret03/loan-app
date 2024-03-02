@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TopNav } from '@/components'
 import { inter } from '@/utils'
+import { LoanProvider } from '@/context'
 import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
@@ -17,9 +18,11 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <TopNav />
-        <div className='bg-gray h-[calc(100vh-74px)] px-[56px] overflow-hidden'>
-          {children}
-        </div>
+        <LoanProvider>
+          <div className='bg-default h-[calc(100vh-74px)] px-[56px] overflow-hidden'>
+            {children}
+          </div>
+        </LoanProvider>
       </body>
     </html>
   )

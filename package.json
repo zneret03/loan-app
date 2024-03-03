@@ -11,6 +11,7 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "date-fns": "^3.3.1",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
@@ -22,6 +23,7 @@
     "next": "13.4",
     "prettier": "^3.2.5",
     "react": "^18",
+    "react-datepicker": "^6.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1"
   },

@@ -1,25 +1,30 @@
-import type { Metadata } from 'next'
+'use client'
+
 import { TopNav } from '@/components'
 import { inter } from '@/utils'
 import { LoanProvider } from '@/context'
+import { usePathname } from 'next/navigation'
 import '@/styles/tailwind.css'
-
-export const metadata: Metadata = {
-  title: 'Loan app',
-  description: 'Loan Application'
-}
 
 export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const pathname = usePathname()
+  const termsAndConditions = pathname === '/terms-and-conditions'
+
   return (
     <html lang='en'>
       <body className={inter.className}>
         <TopNav />
         <LoanProvider>
-          <div className='bg-default h-dvh laptop:px-0 desktop:px-[3.5rem]'>
+          <div
+            className={`
+            ${termsAndConditions ? 'bg-dark-tertiary' : 'bg-default'} 
+            ${termsAndConditions ? 'h-fit' : 'h-dvh'} 
+            laptop:px-0 desktop:px-[3.5rem]`}
+          >
             {children}
           </div>
         </LoanProvider>

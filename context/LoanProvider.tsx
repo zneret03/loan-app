@@ -8,7 +8,7 @@ interface LoanProviderTypes {
 
 interface InitialStateTypes {
   amortization: number
-  interestRates: string
+  interestRates: number
   total: number
   loanAmount: number
   loanTerm: string
@@ -29,7 +29,7 @@ interface ActionTypes {
 
 const initialState: InitialStateTypes = {
   amortization: 0,
-  interestRates: '0%',
+  interestRates: 0,
   total: 0,
   loanAmount: 0,
   loanTerm: ''

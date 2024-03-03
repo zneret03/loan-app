@@ -1,6 +1,6 @@
 'use client'
-import { useRouter } from 'next/navigation'
 
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components'
 
 const Home = (): JSX.Element => {
@@ -10,6 +10,21 @@ const Home = (): JSX.Element => {
     router.push('/create-account')
   }
 
+  const gotToApplyLoan = (): void => {
+    router.push('/apply-loan')
+  }
+
+  const ButtonObj = [
+    {
+      label: 'Yes',
+      action: gotToApplyLoan
+    },
+    {
+      label: 'No',
+      action: goToCreateAccount
+    }
+  ]
+
   return (
     <main className='grid place-items-center'>
       <div className='mt-60'>
@@ -18,8 +33,14 @@ const Home = (): JSX.Element => {
         </h1>
 
         <div className='flex justify-center gap-6 mt-16'>
-          <Button label='Yes' />
-          <Button label='No' action={goToCreateAccount} />
+          {ButtonObj.map(({ label, action }) => (
+            <Button
+              label={label}
+              action={action}
+              key={label}
+              styles='py-4 px-16'
+            />
+          ))}
         </div>
       </div>
     </main>

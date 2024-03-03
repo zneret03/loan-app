@@ -19,9 +19,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <TopNav />
         <LoanProvider>
-          <div className='bg-default h-dvh laptop:px-0 desktop:px-[3.5rem]'>
-            {children}
-          </div>
+          <div className='bg-dark-secondary h-fit'>{children}</div>
         </LoanProvider>
       </body>
     </html>

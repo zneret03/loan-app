@@ -161,7 +161,10 @@ const Page = (): JSX.Element => {
               />
               <label className='text-base'>
                 I agree to the{' '}
-                <Link href='#' className='underline font-bold'>
+                <Link
+                  href='/terms-and-conditions'
+                  className='underline font-bold'
+                >
                   Terms and Conditions
                 </Link>
               </label>

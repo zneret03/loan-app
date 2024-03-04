@@ -26,7 +26,7 @@ export const InputField = forwardRef<Ref, InputFieldTypes>(
           className={`${poppins.className} 
             border ${hasError ? 'border-red-500' : 'border-primary'} 
             focus:border-dark-primary 
-            rounded-lg text-base outline-none pl-4 py-3`}
+            rounded-lg text-base outline-none pl-4 py-3 placeholder-gray.4`}
           placeholder='Enter amount'
           ref={ref}
           {...rest}

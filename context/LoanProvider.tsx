@@ -1,5 +1,6 @@
 'use client'
 
+import { calculateLoanPayment } from './helper'
 import { Dispatch, ReactNode, createContext, useReducer } from 'react'
 
 interface LoanProviderTypes {
@@ -11,7 +12,7 @@ interface InitialStateTypes {
   interestRates: number
   total: number
   loanAmount: number
-  loanTerm: string
+  loanTerm: number
 }
 
 interface CreateContextTypes {
@@ -23,7 +24,7 @@ interface ActionTypes {
   type: 'computation'
   payload: {
     loanAmount: 0
-    loanTerm: string
+    loanTerm: number
   }
 }
 
@@ -32,7 +33,7 @@ const initialState: InitialStateTypes = {
   interestRates: 0,
   total: 0,
   loanAmount: 0,
-  loanTerm: ''
+  loanTerm: 0
 } as const
 
 export const LoanContext = createContext<CreateContextTypes>({
@@ -46,16 +47,33 @@ const reducer = (
 ): InitialStateTypes => {
   switch (action.type) {
     case 'computation':
-      // const { loanAmount, loanTerm } = action.payload
-      //
-      // if (loanTerm === 'Monthly Interest Rate') {
-      // }
-      //
-      // if(loanTerm === 'Disbursment Fee') {
-      //   return {...state, }
-      // }
+      const { loanAmount: principal, loanTerm } = action.payload
 
-      return { ...state, ...action.payload }
+      const monthlyInterest = 1.75
+      const documentaryStampFee = principal >= 250_000 && 0.075 * principal
+
+      console.log(documentaryStampFee)
+
+      const monthlyInterestRate = monthlyInterest / 100 / 12
+      const disbursmentFee = 1500
+
+      const { monthlyPayment, totalInterest, totalPayment } =
+        calculateLoanPayment(Number(principal), loanTerm, monthlyInterestRate)
+
+      const interestInPercent = (totalInterest / totalPayment) * 100
+
+      const grandTotal =
+        Number(totalPayment) +
+        Number(disbursmentFee) +
+        Number(documentaryStampFee)
+
+      const config = {
+        amortization: Number(monthlyPayment.toFixed(2)),
+        interestRates: Math.floor(interestInPercent),
+        total: grandTotal
+      }
+
+      return { ...state, ...action.payload, ...config }
     default:
       return state
   }

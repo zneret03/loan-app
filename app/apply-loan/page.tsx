@@ -10,12 +10,14 @@ import { selectOptionsData } from './helpers/constants'
 
 interface FormTypes {
   loanAmount: number
-  loanTerm: string
+  loanTerm: number
   termsAndConditions: boolean
 }
 
 const Page = (): JSX.Element => {
-  const [activeSelect, setActiveSelect] = useState<string>('Select Loan Term')
+  const [activeSelect, setActiveSelect] = useState<number | undefined>(
+    undefined
+  )
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
 
   const { state, dispatch } = useContext(LoanContext)
@@ -49,7 +51,7 @@ const Page = (): JSX.Element => {
       return
     }
 
-    if (activeSelect === 'Select Loan Term') {
+    if (!activeSelect) {
       setError('loanTerm', {
         message: 'required field.'
       })
@@ -63,24 +65,24 @@ const Page = (): JSX.Element => {
     })
   }
 
-  const setActiveOptions = (option: string): void => {
+  const setActiveOptions = (option: number): void => {
     setIsOpenSelect(false)
     setActiveSelect(option)
   }
 
-  const filteredOptions = selectOptionsData.filter(
-    ({ label }) => label !== activeSelect
-  ) as MenuOptions[]
-
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
-  const isDisableButton =
-    !!amount && activeSelect !== 'Select Loan Term' && isTermsAndCondition
+  const isDisableButton = !!amount && !activeSelect && isTermsAndCondition
 
-  console.log(
-    !!amount,
-    activeSelect !== 'Select Loan Term',
-    isTermsAndCondition
+  const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
+    (options) => ({
+      label: options,
+      value: options
+    })
+  )
+
+  const filteredOptions = selectOptionsFormat.filter(
+    ({ value }) => value !== activeSelect
   )
 
   return (
@@ -104,10 +106,11 @@ const Page = (): JSX.Element => {
             isOpen={isOpenSelect}
             onOpen={onOpenSelect}
             label='LOAN TERM'
-            activeSelect={activeSelect}
-            setSelectOptions={setActiveOptions}
+            activeSelect={activeSelect as number}
+            setSelectOptions={setActiveOptions as typeof setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
+            placeholder='Select Loan Term'
             errorMessage={errors.loanTerm?.message as string}
           />
           <div className='flex align-items gap-4 mt-24'>
@@ -124,7 +127,9 @@ const Page = (): JSX.Element => {
         <section className='space-y-10 text-dark-primary'>
           <section className='space-y-6'>
             <label className='text-sm '>ESTIMATED AMORTIZATION</label>
-            <h2 className='text-2xl'>Php {amortization}</h2>
+            <h2 className='text-2xl'>
+              Php {Number(amortization).toLocaleString('en-US')}
+            </h2>
           </section>
 
           <aside className='divide divide-y divide-divider-dark space-y-6'>
@@ -135,7 +140,9 @@ const Page = (): JSX.Element => {
 
             <div className='space-y-6 pt-6'>
               <label className='text-sm'>TOTAL</label>
-              <h2 className='text-2xl'>Php {total}</h2>
+              <h2 className='text-2xl'>
+                Php {Number(total).toLocaleString('en-US')}
+              </h2>
             </div>
           </aside>
 

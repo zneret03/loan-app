@@ -1,27 +1,17 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { Button } from '@/components'
+import Link from 'next/link'
 
 const Home = (): JSX.Element => {
-  const router = useRouter()
-
-  const goToCreateAccount = (): void => {
-    router.push('/create-account')
-  }
-
-  const gotToApplyLoan = (): void => {
-    router.push('/apply-loan')
-  }
-
   const ButtonObj = [
     {
       label: 'Yes',
-      action: gotToApplyLoan
+      path: '/create-account'
     },
     {
       label: 'No',
-      action: goToCreateAccount
+      path: '/apply-loan'
     }
   ]
 
@@ -33,13 +23,10 @@ const Home = (): JSX.Element => {
         </h1>
 
         <div className='flex justify-center gap-6 mt-16'>
-          {ButtonObj.map(({ label, action }) => (
-            <Button
-              label={label}
-              action={action}
-              key={label}
-              styles='py-4 px-16'
-            />
+          {ButtonObj.map(({ label, path }) => (
+            <Link href={path} key={label}>
+              <Button label={label} styles='py-4 px-16' />
+            </Link>
           ))}
         </div>
       </div>

@@ -18,14 +18,17 @@ const config: Config = {
     },
     extend: {
       colors: {
+        'dark-primary': '#29515C',
+        'dark-secondary': '#BDC2C4',
+        'dark-tertiary': '#D7DADC',
+        'dark-slate': '#F4F8F9',
+        'divider-slate': '#D9E1E3',
+        'divider-dark': '#6EA6B6',
         gray: '#ECF3F5',
         white: '#FFFFFF',
         primary: '#76ADBC',
-        'dark-primary': '#29515C',
         'gray.4': '#A3BEC6',
         divider: '#6EA6B6',
-        'divider-slate': '#D9E1E3',
-        'divider-dark': '#6EA6B6',
         secondary: '#350840',
         default: '#F9F4F4'
       }

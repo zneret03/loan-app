@@ -5,12 +5,13 @@ import { MenuOptions } from '@/lib'
 interface SelectTypes {
   label: string
   onOpen: () => void
-  activeSelect: string
+  activeSelect: number | string
   isOpen: boolean
-  setSelectOptions: (select: string) => void
+  setSelectOptions: (select: number) => void
   selectOptions: MenuOptions[]
   hasErrors: boolean
   errorMessage: string
+  placeholder: string
   styles?: string
 }
 
@@ -23,6 +24,7 @@ export const Select = ({
   selectOptions,
   hasErrors,
   errorMessage,
+  placeholder,
   styles
 }: SelectTypes): JSX.Element => (
   <main className={`${styles} text-dark-primary`}>
@@ -40,9 +42,9 @@ export const Select = ({
         onClick={() => onOpen()}
       >
         <span
-          className={`${activeSelect !== 'Select Loan Term' ? 'text-black' : 'text-gray.4'} mt-1 text-base ${poppins.className}`}
+          className={`${!activeSelect ? 'text-gray.4' : 'text-black'} mt-1 text-base ${poppins.className}`}
         >
-          {activeSelect}
+          {activeSelect || placeholder}
         </span>
         <AccordionDown />
       </div>
@@ -53,7 +55,7 @@ export const Select = ({
             <option
               key={label}
               className='cursor-pointer'
-              onClick={() => setSelectOptions(label)}
+              onClick={() => setSelectOptions(value as number)}
               value={value}
             >
               {label}

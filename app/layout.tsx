@@ -22,7 +22,7 @@ export default function RootLayout({
           <div
             className={`
             ${termsAndConditions ? 'bg-dark-tertiary' : 'bg-default'} 
-            ${termsAndConditions ? 'h-fit' : 'h-dvh'} 
+            h-1/2
             laptop:px-0 desktop:px-[3.5rem]`}
           >
             {children}

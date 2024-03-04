@@ -52,8 +52,6 @@ const reducer = (
       const monthlyInterest = 1.75
       const documentaryStampFee = principal >= 250_000 && 0.075 * principal
 
-      console.log(documentaryStampFee)
-
       const monthlyInterestRate = monthlyInterest / 100 / 12
       const disbursmentFee = 1500
 

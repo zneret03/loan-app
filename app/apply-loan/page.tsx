@@ -30,7 +30,8 @@ const Page = (): JSX.Element => {
     formState: { errors },
     setError,
     control,
-    watch
+    watch,
+    reset
   } = useForm<FormTypes>({
     defaultValues: {
       termsAndConditions: false
@@ -71,6 +72,11 @@ const Page = (): JSX.Element => {
   }
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
+  const resetFields = (): void => {
+    dispatch({ type: 'reset' })
+    setActiveSelect(undefined)
+    reset()
+  }
 
   const isDisableButton = !!amount && !activeSelect && isTermsAndCondition
 
@@ -114,7 +120,12 @@ const Page = (): JSX.Element => {
             errorMessage={errors.loanTerm?.message as string}
           />
           <div className='flex align-items gap-4 mt-24'>
-            <Button label='Clear' styles='py-4 px-11' />
+            <Button
+              label='Clear'
+              type='button'
+              action={resetFields}
+              styles='py-4 px-11'
+            />
             <Button type='submit' label='Calculate' styles='py-4 px-11' />
           </div>
         </form>

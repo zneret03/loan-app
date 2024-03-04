@@ -21,7 +21,7 @@ interface CreateContextTypes {
 }
 
 interface ActionTypes {
-  type: 'computation'
+  type: 'computation' | 'reset'
   payload: {
     loanAmount: 0
     loanTerm: number
@@ -72,6 +72,8 @@ const reducer = (
       }
 
       return { ...state, ...action.payload, ...config }
+    case 'reset':
+      return { ...state, ...initialState }
     default:
       return state
   }

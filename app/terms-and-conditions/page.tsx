@@ -20,6 +20,7 @@ const Page = (): JSX.Element => {
       <BaseLine
         title='Terms and Conditions'
         styles='p-4 bg-dark-slate rounded-lg h-content'
+        dividerColor='divide-divider-slate'
         isCenterTitle={true}
       >
         <div

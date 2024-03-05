@@ -78,7 +78,7 @@ const Page = (): JSX.Element => {
     reset()
   }
 
-  const isDisableButton = !!amount && !activeSelect && isTermsAndCondition
+  const isDisableButton = !!amount && !!activeSelect && isTermsAndCondition
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
@@ -95,7 +95,7 @@ const Page = (): JSX.Element => {
     <main className='flex'>
       <BaseLine
         title='Apply for a Loan'
-        dividerColor='divider-slate'
+        dividerColor='divide-divider-slate'
         styles='flex-[2.5]'
       >
         <form className='w-1/2 relative' onSubmit={handleSubmit(onSubmit)}>
@@ -132,7 +132,7 @@ const Page = (): JSX.Element => {
       </BaseLine>
       <BaseLine
         title='Breakdown'
-        dividerColor='divider-dark'
+        dividerColor='divide-divider-dark'
         styles='flex-1 bg-gray shadow-sm h-screen'
       >
         <section className='space-y-10 text-dark-primary'>
@@ -158,11 +158,13 @@ const Page = (): JSX.Element => {
           </aside>
 
           <section className='space-y-4'>
-            <Button
-              label='Continue'
-              isDisabled={!isDisableButton}
-              styles='w-full py-2'
-            />
+            <Link href='/personal-information'>
+              <Button
+                label='Continue'
+                isDisabled={!isDisableButton}
+                styles='w-full py-2'
+              />
+            </Link>
 
             <div className='flex items-center space-x-2 w-full'>
               <Controller

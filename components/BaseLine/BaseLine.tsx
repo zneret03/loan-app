@@ -20,7 +20,7 @@ export const BaseLine = ({
       <aside
         className={`grid grid-row-2 gap-y-[2.5rem] 
           divide-y 
-          divide-${dividerColor} 
+          ${dividerColor}
           ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] pt-[5rem]`}
       >
         <h1 className='text-[2rem] text-dark-primary'>{title}</h1>

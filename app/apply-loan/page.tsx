@@ -103,6 +103,8 @@ const Page = (): JSX.Element => {
             label='LOAN AMOUNT'
             hasError={!!errors.loanAmount}
             errorMessage={errors?.loanAmount?.message as string}
+            hasSubText={true}
+            placeholder='Enter amount'
             {...register('loanAmount', {
               required: 'required field.'
             })}

@@ -24,6 +24,8 @@ const config: Config = {
         'dark-slate': '#F4F8F9',
         'divider-slate': '#D9E1E3',
         'divider-dark': '#6EA6B6',
+        'iris-dark': '#6667F0',
+        'iris-slate': '#A5A6F6',
         gray: '#ECF3F5',
         white: '#FFFFFF',
         primary: '#76ADBC',

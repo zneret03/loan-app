@@ -7,7 +7,7 @@ export const TopNav = (): JSX.Element => (
       <span className='text-sm font-semibold'>Menu</span>
     </aside>
 
-    <h1 className='font-semibold text-base'>Let&apos;s get your loan</h1>
+    <h1 className='font-semibold text-base -ml-8'>Let&apos;s get your loan</h1>
 
     <aside>
       <MGLogo />

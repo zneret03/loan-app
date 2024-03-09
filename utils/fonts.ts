@@ -10,7 +10,8 @@ const inter = Inter({
 const poppins = Poppins({
   subsets: ['latin'],
   weight: '400',
-  style: ['normal']
+  style: ['normal'],
+  variable: '--font-poppins'
 })
 
 export { inter, poppins }

@@ -19,7 +19,7 @@ const Page = (): JSX.Element => (
         </div>
 
         <div className='space-y-6'>
-          <section className='grid grid-cols-2 gap-4'>
+          <section className='grid grid-cols-2 gap-8'>
             <InputField
               type='text'
               label='FIRST NAME'
@@ -32,7 +32,7 @@ const Page = (): JSX.Element => (
             />
           </section>
 
-          <section className='grid grid-cols-2 gap-4'>
+          <section className='grid grid-cols-2 gap-8'>
             <InputField
               type='number'
               label='MOBILE NUMBER'
@@ -44,7 +44,7 @@ const Page = (): JSX.Element => (
             />
           </section>
           <section className='grd grid-cols-2'>
-            <CustomDatePicker />
+            <CustomDatePicker label='DATE OF BIRTH' />
           </section>
         </div>
       </main>

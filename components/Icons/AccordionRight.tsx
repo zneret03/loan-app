@@ -6,7 +6,7 @@ export const AccordionRight = ({
   <svg
     onClick={action}
     className='cursor-pointer'
-    width='9'
+    width='8'
     height='14'
     viewBox='0 0 9 14'
     fill='none'

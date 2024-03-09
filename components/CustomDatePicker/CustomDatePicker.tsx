@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import DatePicker from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import { inter } from '@/utils'
 import { Calendar, AccordionRight, AccordionLeft } from '@/components'
-import { inter, poppins } from '@/utils'
 import { getMonth } from 'date-fns'
-import '@/styles/custom_date_picker.module.css'
+
 import 'react-datepicker/dist/react-datepicker.css'
+import { enGB } from 'date-fns/locale'
+registerLocale('en-GB', enGB)
 
 const months = [
   'January',
@@ -23,32 +25,62 @@ const months = [
   'December'
 ]
 
-export const CustomDatePicker = (): JSX.Element => {
-  const [startDate, setStartDate] = useState(new Date())
+interface CustomDatePicker {
+  label: string
+}
+
+interface CustomHeader {
+  date: Date
+  decreaseMonth: () => void
+  increaseMonth: () => void
+}
+
+const CustomHeader = ({
+  date,
+  decreaseMonth,
+  increaseMonth
+}: CustomHeader): JSX.Element => (
+  <main className='flex items-center justify-between px-6 pt-4 pb-8'>
+    <span className='text-2xl font-bold'>{months[getMonth(date)]}</span>
+    <section className='flex items-center gap-4'>
+      <AccordionLeft action={decreaseMonth} />
+      <AccordionRight action={increaseMonth} />
+    </section>
+  </main>
+)
+
+export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
+  const [startDate, setStartDate] = useState<Date | null>(null)
 
   return (
-    <main className='flex items-center border border-primary focus:border-dark-primary w-fit rounded-lg px-3 bg-white'>
-      <DatePicker
-        className={`${poppins.className} placeholder-gray.4 border border-transparent text-primary px-0 rounded text-base focus:border-0 focus:ring-0 bg-white`}
-        selected={startDate}
-        onChange={(date) => setStartDate(date as Date)}
-        placeholderText='Select date'
-        showPopperArrow={false}
-        renderCustomHeader={({ date, increaseMonth, decreaseMonth }) => (
-          <main className='flex items-center justify-between px-2'>
-            <span className={`text-2xl font-bold ${inter.className}`}>
-              {months[getMonth(date)]}
-            </span>
-            <section className='flex items-center gap-2'>
-              <AccordionLeft action={decreaseMonth} />
-              <AccordionRight action={increaseMonth} />
-            </section>
-          </main>
-        )}
-        popperContainer={({ children }) => <div className=''>{children}</div>}
-      />
+    <main>
+      <label
+        htmlFor='loan-amount'
+        className={`${inter.className} text-dark-primary text-xs`}
+      >
+        {label}
+      </label>
+      <section className='flex items-center border border-primary focus:border-dark-primary w-fit rounded-lg px-3 mt-2 bg-white'>
+        <DatePicker
+          className={`placeholder-gray.4 border w-[29rem] border-transparent text-primary px-0 rounded text-base focus:border-0 focus:ring-0 py-3 bg-white`}
+          selected={startDate}
+          locale='en-GB'
+          popperPlacement='bottom-start'
+          onChange={(date) => setStartDate(date as Date)}
+          placeholderText='Select date'
+          showPopperArrow={false}
+          minDate={new Date()}
+          renderCustomHeader={({ date, increaseMonth, decreaseMonth }) => (
+            <CustomHeader
+              date={date}
+              increaseMonth={increaseMonth}
+              decreaseMonth={decreaseMonth}
+            />
+          )}
+        />
 
-      <Calendar />
+        <Calendar />
+      </section>
     </main>
   )
 }

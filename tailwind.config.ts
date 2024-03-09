@@ -32,7 +32,8 @@ const config: Config = {
         'gray.4': '#A3BEC6',
         divider: '#6EA6B6',
         secondary: '#350840',
-        default: '#F9F4F4'
+        default: '#F9F4F4',
+        red: '#FB3F4A'
       }
     }
   },

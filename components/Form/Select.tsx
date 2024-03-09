@@ -9,10 +9,11 @@ interface SelectTypes {
   isOpen: boolean
   setSelectOptions: (select: number) => void
   selectOptions: MenuOptions[]
-  hasErrors: boolean
-  errorMessage: string
   placeholder: string
+  hasErrors?: boolean
+  errorMessage?: string
   styles?: string
+  selectStyles?: string
 }
 
 export const Select = ({
@@ -25,7 +26,8 @@ export const Select = ({
   hasErrors,
   errorMessage,
   placeholder,
-  styles
+  styles,
+  selectStyles
 }: SelectTypes): JSX.Element => (
   <main className={`${styles} text-dark-primary`}>
     <div className='mb-2'>
@@ -35,7 +37,7 @@ export const Select = ({
     </div>
     <div
       id='loan-term'
-      className='border border-primary px-4 py-3 rounded-lg bg-white pt-2 absolute w-full'
+      className={`border border-primary px-4 py-3 rounded-lg bg-white pt-2 ${selectStyles}`}
     >
       <div
         className={`flex items-center justify-between cursor-pointer ${isOpen ? 'mb-6' : 'm-auto'}`}

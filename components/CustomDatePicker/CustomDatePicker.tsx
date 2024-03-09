@@ -65,7 +65,7 @@ export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
           className={`placeholder-gray.4 border w-[29rem] border-transparent text-primary px-0 rounded text-base focus:border-0 focus:ring-0 py-3 bg-white`}
           selected={startDate}
           locale='en-GB'
-          popperPlacement='bottom-start'
+          portalId='root-portal'
           onChange={(date) => setStartDate(date as Date)}
           placeholderText='Select date'
           showPopperArrow={false}

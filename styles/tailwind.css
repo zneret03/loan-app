@@ -26,7 +26,7 @@
 }
 
 .react-datepicker-popper {
-  @apply -ml-2 z-50;
+  @apply -ml-2;
 }
 
 .react-datepicker__header {
@@ -45,12 +45,16 @@
   @apply text-red text-[20p] !important;
 }
 
+.react-datepicker__day:hover {
+  @apply bg-primary text-white rounded-full !important;
+}
+
 .react-datepicker__day--selected {
   @apply bg-red text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
 }
 
-.react-datepicker__day--keyboard-hover {
-  @apply bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center !important;
+.react-datepicker__day--keyboard-selected {
+  @apply bg-primary text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
 }
 
 .react-datepicker__day--disabled {

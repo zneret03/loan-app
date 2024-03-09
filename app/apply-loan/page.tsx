@@ -119,6 +119,7 @@ const Page = (): JSX.Element => {
             setSelectOptions={setActiveOptions as typeof setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
+            selectStyles='absolute w-full'
             placeholder='Select Loan Term'
             errorMessage={errors.loanTerm?.message as string}
           />

@@ -7,6 +7,7 @@ interface InputFieldTypes {
   errorMessage?: string
   placeholder?: string
   hasSubText?: boolean
+  type?: string
 }
 
 type Ref = HTMLInputElement
@@ -19,6 +20,7 @@ export const InputField = forwardRef<Ref, InputFieldTypes>(
       errorMessage,
       hasSubText = false,
       placeholder,
+      type = 'text',
       ...rest
     } = props
     return (
@@ -30,8 +32,8 @@ export const InputField = forwardRef<Ref, InputFieldTypes>(
           {label}
         </label>
         <input
-          type='number'
           id='loan-amount'
+          type={type}
           className={`${poppins.className} 
             border ${hasError ? 'border-red-500' : 'border-primary'} 
             focus:border-dark-primary 

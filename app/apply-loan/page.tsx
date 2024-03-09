@@ -100,6 +100,7 @@ const Page = (): JSX.Element => {
       >
         <form className='w-1/2 relative' onSubmit={handleSubmit(onSubmit)}>
           <InputField
+            type='number'
             label='LOAN AMOUNT'
             hasError={!!errors.loanAmount}
             errorMessage={errors?.loanAmount?.message as string}

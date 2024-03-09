@@ -1,3 +1,5 @@
+'use client'
+
 import { BaseLine, InputField, CustomDatePicker } from '@/components'
 
 const Page = (): JSX.Element => (
@@ -18,12 +20,21 @@ const Page = (): JSX.Element => (
 
         <div className='space-y-6'>
           <section className='grid grid-cols-2 gap-4'>
-            <InputField label='FIRST NAME' placeholder='Your first name' />
-            <InputField label='LAST NAME' placeholder='Your last name' />
+            <InputField
+              type='text'
+              label='FIRST NAME'
+              placeholder='Your first name'
+            />
+            <InputField
+              type='text'
+              label='LAST NAME'
+              placeholder='Your last name'
+            />
           </section>
 
           <section className='grid grid-cols-2 gap-4'>
             <InputField
+              type='number'
               label='MOBILE NUMBER'
               placeholder='In 09XX-XXX-XXXX format'
             />
@@ -32,7 +43,7 @@ const Page = (): JSX.Element => (
               placeholder='Your Email address'
             />
           </section>
-          <section>
+          <section className='grd grid-cols-2'>
             <CustomDatePicker />
           </section>
         </div>

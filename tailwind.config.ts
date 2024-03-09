@@ -33,7 +33,8 @@ const config: Config = {
         divider: '#6EA6B6',
         secondary: '#350840',
         default: '#F9F4F4',
-        red: '#FB3F4A'
+        red: '#FB3F4A',
+        'calendar-primary': '#333333'
       }
     }
   },

@@ -22,6 +22,7 @@ const Page = (): JSX.Element => {
         styles='p-4 bg-dark-slate rounded-lg h-content'
         dividerColor='divide-divider-slate'
         isCenterTitle={true}
+        divider={false}
       >
         <div
           className='bg-white text-left overflow-auto no-scrollbar'
@@ -351,11 +352,13 @@ const Page = (): JSX.Element => {
           </article>
         </div>
 
-        <Button
-          label='Continue'
-          isDisabled={!isEnable}
-          styles='mt-6 w-full py-2'
-        />
+        <div className='my-2'>
+          <Button
+            label='Continue'
+            isDisabled={!isEnable}
+            styles='mt-6 w-full py-2'
+          />
+        </div>
       </BaseLine>
     </section>
   )

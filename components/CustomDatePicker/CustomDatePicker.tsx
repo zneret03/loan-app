@@ -40,9 +40,11 @@ const CustomHeader = ({
   decreaseMonth,
   increaseMonth
 }: CustomHeader): JSX.Element => (
-  <main className='flex items-center justify-between px-6 pt-4 pb-8'>
-    <span className='text-2xl font-bold'>{months[getMonth(date)]}</span>
-    <section className='flex items-center gap-4'>
+  <main className='flex items-center justify-between px-3 py-2'>
+    <span className='text-lg font-bold text-calendar-primary'>
+      {months[getMonth(date)]}
+    </span>
+    <section className='flex items-center gap-6'>
       <AccordionLeft action={decreaseMonth} />
       <AccordionRight action={increaseMonth} />
     </section>
@@ -66,6 +68,7 @@ export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
           selected={startDate}
           locale='en-GB'
           portalId='root-portal'
+          popperPlacement='bottom-start'
           onChange={(date) => setStartDate(date as Date)}
           placeholderText='Select date'
           showPopperArrow={false}

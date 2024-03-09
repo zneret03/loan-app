@@ -22,7 +22,7 @@
 }
 
 .react-datepicker {
-  @apply border-none shadow-lg px-4 py-2 w-[30rem] h-[28.875rem] !important;
+  @apply border-none shadow-lg px-4 py-2 w-[20rem] h-[20rem] !important;
 }
 
 .react-datepicker-popper {
@@ -34,19 +34,23 @@
 }
 
 .react-datepicker__day-names {
-  @apply font-semibold text-[1.25rem] pb-[20px] px-2 flex justify-around !important;
+  @apply font-semibold text-lg text-primary px-2 flex justify-around !important;
+}
+
+.react-datepicker__day-name {
+  @apply text-calendar-primary !important;
 }
 
 .react-datepicker__week {
-  @apply flex justify-around text-[1rem] mb-[1.5rem] font-bold flex flex-row items-center justify-center !important;
+  @apply flex justify-around mb-[1rem] font-bold flex flex-row items-center justify-center !important;
 }
 
 .react-datepicker__day {
-  @apply text-red text-[20p] !important;
+  @apply text-red text-sm !important;
 }
 
 .react-datepicker__day:hover {
-  @apply bg-primary text-white rounded-full !important;
+  @apply bg-primary text-white transition-all flex items-center justify-center rounded-full !important;
 }
 
 .react-datepicker__day--selected {
@@ -54,7 +58,7 @@
 }
 
 .react-datepicker__day--keyboard-selected {
-  @apply bg-primary text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
+  @apply bg-red text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
 }
 
 .react-datepicker__day--disabled {

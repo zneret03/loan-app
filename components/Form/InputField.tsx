@@ -48,7 +48,7 @@ export const InputField = forwardRef<Ref, InputFieldTypes>(
           </p>
         )}
         {hasError && (
-          <span className={`${poppins.className} text-xs text-red-500 mt-2`}>
+          <span className={`${poppins.className} text-xs text-red mt-2`}>
             {errorMessage}
           </span>
         )}

@@ -1,9 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { typesId } from './helpers/constant'
 import { MenuOptions } from '@/lib'
-import { BaseLine, InputField, CustomDatePicker, Select } from '@/components'
+import { inter } from '@/utils'
+import {
+  BaseLine,
+  InputField,
+  CustomDatePicker,
+  Select,
+  Button,
+  Checkbox
+} from '@/components'
+import { useForm } from 'react-hook-form'
+
+interface PersonalInformationTypes {}
 
 const Page = (): JSX.Element => {
   const [activeSelect, setActiveSelect] = useState<number | undefined>(
@@ -11,9 +22,18 @@ const Page = (): JSX.Element => {
   )
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { control } = useForm()
+
   const setActiveOptions = (option: number): void => {
     setIsOpenSelect(false)
     setActiveSelect(option)
+  }
+
+  const onUploadAction = (): void => {
+    fileInputRef.current?.click()
+    console.log(fileInputRef.current?.files)
   }
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
@@ -34,8 +54,9 @@ const Page = (): JSX.Element => {
         styles='bg-dark-slate rounded-lg h-content'
         dividerColor='divide-divider-slate'
         isCenterTitle={true}
+        divider={true}
       >
-        <main className='my-14 text-left space-y-14'>
+        <main className='mb-14 text-left space-y-14'>
           <div
             className='bg-iris-slate w-[22.188rem]  border border-iris-dark text-sm
         text-white text-center px-3.5 py-[0.8rem] rounded-lg'
@@ -86,13 +107,33 @@ const Page = (): JSX.Element => {
                   placeholder='Select an ID type to upload'
                 />
               </div>
-              <InputField
-                label='EMAIL ADDRESS'
-                placeholder='Your Email address'
-              />
+              <aside className='-mt-1'>
+                <label
+                  className={`text-dark-primary text-xs ${inter.className}`}
+                >
+                  UPLOAD IMAGE
+                </label>
+                <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
+                  <input type='file' ref={fileInputRef} className='hidden' />
+                  <span className={`text-gray.4 ${inter.className}`}>
+                    Upload ID
+                  </span>
+                  <button
+                    className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
+                    onClick={onUploadAction}
+                  >
+                    Choose
+                  </button>
+                </div>
+              </aside>
             </section>
           </div>
         </main>
+
+        <div className='pt-12 space-y-6'>
+          <Button type='button' label='Continue' styles='mt-6 w-full py-2' />
+          <Checkbox control={control} name='termsAndCondition' />
+        </div>
       </BaseLine>
     </div>
   )

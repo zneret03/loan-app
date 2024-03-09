@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useContext } from 'react'
-import { BaseLine, Button, InputField, Select } from '@/components'
+import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { selectOptionsData } from './helpers/constants'
 
@@ -21,6 +21,8 @@ const Page = (): JSX.Element => {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
 
   const { state, dispatch } = useContext(LoanContext)
+
+  console.log(state)
 
   const { amortization, interestRates, total } = state
 
@@ -170,29 +172,7 @@ const Page = (): JSX.Element => {
               />
             </Link>
 
-            <div className='flex items-center space-x-2 w-full'>
-              <Controller
-                control={control}
-                name='termsAndConditions'
-                render={({ field: { onChange, value } }) => (
-                  <input
-                    type='checkbox'
-                    checked={value}
-                    onChange={onChange}
-                    className='w-5 h-5 rounded-sm text-primary focus:ring-gray border border-primary border-2 cursor-pointer'
-                  />
-                )}
-              />
-              <label className='text-base'>
-                I agree to the{' '}
-                <Link
-                  href='/terms-and-conditions'
-                  className='underline font-bold'
-                >
-                  Terms and Conditions
-                </Link>
-              </label>
-            </div>
+            <Checkbox control={control} name='termsAndConditions' />
           </section>
         </section>
       </BaseLine>

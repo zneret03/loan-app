@@ -12,7 +12,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const pathname = usePathname()
-  const termsAndConditions = pathname === '/terms-and-conditions'
+
+  const links = ['/terms-and-conditions', '/personal-information']
+
+  const heightFitLinks = links.includes(pathname)
 
   return (
     <html lang='en'>
@@ -21,8 +24,8 @@ export default function RootLayout({
         <LoanProvider>
           <div
             className={`
-            ${termsAndConditions ? 'bg-dark-tertiary' : 'bg-default'} 
-            ${termsAndConditions ? 'h-fit' : 'h-dvh'} 
+            ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-default'} 
+            ${heightFitLinks ? 'h-fit' : 'h-dvh'} 
             laptop:px-0 desktop:px-[3.5rem]`}
           >
             {children}

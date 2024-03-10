@@ -7,7 +7,7 @@ interface SelectTypes {
   onOpen: () => void
   activeSelect: number | string
   isOpen: boolean
-  setSelectOptions: (select: number) => void
+  setSelectOptions: (option: MenuOptions) => void
   selectOptions: MenuOptions[]
   placeholder: string
   hasErrors?: boolean
@@ -29,47 +29,49 @@ export const Select = ({
   styles,
   selectStyles
 }: SelectTypes): JSX.Element => (
-  <main className={`${styles} text-dark-primary`}>
+  <main className={`${styles}`}>
     <div className='mb-2'>
-      <label htmlFor='loan-term' className='text-xs'>
+      <label htmlFor='loan-term' className='text-xs text-primary-dark'>
         {label}
       </label>
     </div>
-    <div
-      id='loan-term'
-      className={`border border-primary px-4 py-3 rounded-lg bg-white pt-2 ${selectStyles}`}
-    >
+    <section className='relative'>
       <div
-        className={`flex items-center justify-between cursor-pointer ${isOpen ? 'mb-6' : 'm-auto'}`}
-        onClick={() => onOpen()}
+        id='loan-term'
+        className={`border ${hasErrors ? 'border-red-500' : 'border-primary'} px-4 py-3 rounded-lg bg-white pt-2 ${isOpen ? 'z-50 absolute' : 'relative'} ${selectStyles}`}
       >
-        <span
-          className={`${!activeSelect ? 'text-gray.4' : 'text-black'} mt-1 text-base ${poppins.className}`}
+        <div
+          className={`flex items-center justify-between cursor-pointer ${isOpen ? 'mb-6' : 'm-auto'}`}
+          onClick={() => onOpen()}
         >
-          {activeSelect || placeholder}
-        </span>
-        <AccordionDown />
-      </div>
-
-      {isOpen && (
-        <div className='flex flex-col gap-y-6'>
-          {selectOptions.map(({ label, value }) => (
-            <option
-              key={label}
-              className='cursor-pointer'
-              onClick={() => setSelectOptions(value as number)}
-              value={value}
-            >
-              {label}
-            </option>
-          ))}
+          <span
+            className={`${!activeSelect ? 'text-gray.4' : 'text-black'} mt-1 text-base ${poppins.className}`}
+          >
+            {activeSelect || placeholder}
+          </span>
+          <AccordionDown />
         </div>
+
+        {isOpen && (
+          <div className='flex flex-col gap-y-6'>
+            {selectOptions.map((option) => (
+              <option
+                key={option.label}
+                className='cursor-pointer'
+                onClick={() => setSelectOptions(option)}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
+          </div>
+        )}
+      </div>
+      {hasErrors && (
+        <span className={`${poppins.className} text-xs text-red-500`}>
+          {errorMessage}
+        </span>
       )}
-    </div>
-    {!!hasErrors && (
-      <span className={`${poppins.className} text-xs text-red-500 mt-2`}>
-        {errorMessage}
-      </span>
-    )}
+    </section>
   </main>
 )

@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext, ChangeEvent, useEffect } from 'react'
+import { PersonalInformationContext } from '@/context'
 import { typesId } from './helpers/constant'
-import { MenuOptions } from '@/lib'
-import { inter } from '@/utils'
+import { inter, poppins } from '@/utils'
 import {
   BaseLine,
   InputField,
@@ -12,29 +12,109 @@ import {
   Button,
   Checkbox
 } from '@/components'
+import {
+  InitialInformationStateTypes,
+  MenuOptions,
+  useValidation,
+  useUploadImage
+} from '@/lib'
+import { useRouter } from 'next/navigation'
+import { mobileNumberFormat } from '@/helpers'
 import { useForm } from 'react-hook-form'
 
-interface PersonalInformationTypes {}
-
 const Page = (): JSX.Element => {
-  const [activeSelect, setActiveSelect] = useState<number | undefined>(
+  const { state, dispatch } = useContext(PersonalInformationContext)
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [activeSelect, setActiveSelect] = useState<string | undefined>(
     undefined
   )
+  const [image, setImage] = useState<File | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
+
+  const { validate } = useValidation()
+  const { uploadImage } = useUploadImage()
+
+  const query = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    watch,
+    control,
+    formState: { errors }
+  } = useForm<InitialInformationStateTypes>({
+    defaultValues: {
+      termsAndConditions: false
+    }
+  })
+
+  const isTermsAndCondition = watch('termsAndConditions')
+
+  const watchForm = watch(['firstName', 'lastName', 'mobileNumber', 'email'])
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const { control } = useForm()
-
-  const setActiveOptions = (option: number): void => {
+  const setActiveOptions = (option: MenuOptions): void => {
     setIsOpenSelect(false)
-    setActiveSelect(option)
+    setActiveSelect(option.value as string)
   }
 
   const onUploadAction = (): void => {
     fileInputRef.current?.click()
-    console.log(fileInputRef.current?.files)
   }
+
+  const onSubmit = async (
+    data: InitialInformationStateTypes
+  ): Promise<void> => {
+    dispatch({ type: 'loading' })
+
+    if (!activeSelect) {
+      setError('idType', {
+        message: 'required field.'
+      })
+      return
+    }
+
+    if (!image) {
+      setError('imageUrl', {
+        message: 'required field.'
+      })
+      return
+    }
+
+    if (!startDate) {
+      setError('dateOfBirth', {
+        message: 'required field.'
+      })
+      return
+    }
+
+    const { getUrl } = await uploadImage(image)
+
+    const config = {
+      ...data,
+      imageUrl: getUrl,
+      idType: activeSelect,
+      dateOfBirth: startDate,
+      isLoading: false
+    }
+
+    dispatch({ type: 'continue', payload: config })
+  }
+
+  useEffect(() => {
+    if (!!activeSelect || !!image || !!startDate) {
+      clearErrors()
+    }
+  }, [activeSelect, image, startDate, clearErrors])
+
+  useEffect(() => {
+    if (!!state.isLoading) {
+      query.replace('/preview-info')
+    }
+  }, [state, query])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
@@ -46,6 +126,14 @@ const Page = (): JSX.Element => {
   const filteredOptions = selectOptionsFormat.filter(
     ({ value }) => value !== activeSelect
   )
+
+  const isFormEmpty =
+    watchForm.findIndex((find) => !find) > -1 ||
+    !activeSelect ||
+    !image ||
+    !startDate ||
+    state.isLoading ||
+    !isTermsAndCondition
 
   return (
     <div className='w-full max-w-6xl mx-auto bg-dark-slate shadow-sm'>
@@ -70,39 +158,71 @@ const Page = (): JSX.Element => {
                 type='text'
                 label='FIRST NAME'
                 placeholder='Your first name'
+                hasError={!!errors.firstName}
+                errorMessage={errors.firstName?.message}
+                {...register('firstName', {
+                  required: 'required field.'
+                })}
               />
               <InputField
                 type='text'
                 label='LAST NAME'
                 placeholder='Your last name'
+                hasError={!!errors.lastName}
+                errorMessage={errors.lastName?.message}
+                {...register('lastName', {
+                  required: 'required field.'
+                })}
               />
             </section>
 
             <section className='grid grid-cols-2 gap-8'>
               <InputField
-                type='number'
+                type='text'
                 label='MOBILE NUMBER'
                 placeholder='In 09XX-XXX-XXXX format'
+                hasError={!!errors.mobileNumber}
+                errorMessage={errors.mobileNumber?.message}
+                {...register('mobileNumber', {
+                  required: 'required field.',
+                  validate: (value) =>
+                    mobileNumberFormat.test(value as string) ||
+                    'mobile number should be in 09XX-XXX-XXX format.'
+                })}
               />
               <InputField
                 label='EMAIL ADDRESS'
                 placeholder='Your Email address'
+                hasError={!!errors.email}
+                errorMessage={errors.email?.message}
+                {...register('email', {
+                  required: 'required field.',
+                  validate: (value) => validate(value)
+                })}
               />
             </section>
             <section className='grd grid-cols-2'>
-              <CustomDatePicker label='DATE OF BIRTH' />
+              <CustomDatePicker
+                label='DATE OF BIRTH'
+                currentDate={startDate}
+                setCurrentDate={setStartDate}
+                hasError={!!errors.dateOfBirth}
+                errorMessage={errors.dateOfBirth?.message}
+              />
             </section>
 
             <section className='grid grid-cols-2 gap-8'>
               <div className='relative'>
                 <Select
                   styles='-mt-1.5'
-                  selectStyles='absolute w-full'
+                  selectStyles='w-full'
                   isOpen={isOpenSelect}
                   onOpen={onOpenSelect}
                   label='ID TYPE'
-                  activeSelect={activeSelect as number}
-                  setSelectOptions={setActiveOptions as typeof setActiveOptions}
+                  hasErrors={!!errors.idType}
+                  errorMessage={errors.idType?.message}
+                  activeSelect={activeSelect as string}
+                  setSelectOptions={setActiveOptions}
                   selectOptions={filteredOptions}
                   placeholder='Select an ID type to upload'
                 />
@@ -114,9 +234,18 @@ const Page = (): JSX.Element => {
                   UPLOAD IMAGE
                 </label>
                 <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
-                  <input type='file' ref={fileInputRef} className='hidden' />
+                  <input
+                    type='file'
+                    ref={fileInputRef}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      if (event.target?.files) {
+                        setImage(event?.target?.files[0] as File)
+                      }
+                    }}
+                    className='hidden'
+                  />
                   <span className={`text-gray.4 ${inter.className}`}>
-                    Upload ID
+                    {image?.name || 'Upload ID'}
                   </span>
                   <button
                     className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
@@ -125,14 +254,32 @@ const Page = (): JSX.Element => {
                     Choose
                   </button>
                 </div>
+                {!!errors.imageUrl && (
+                  <span
+                    className={`${poppins.className} text-xs text-red-500 mt-2`}
+                  >
+                    {errors.imageUrl?.message}
+                  </span>
+                )}
               </aside>
             </section>
           </div>
         </main>
 
         <div className='pt-12 space-y-6'>
-          <Button type='button' label='Continue' styles='mt-6 w-full py-2' />
-          <Checkbox control={control} name='termsAndCondition' />
+          <Button
+            type='button'
+            isDisabled={isFormEmpty}
+            isLoading={state.isLoading}
+            action={handleSubmit(onSubmit)}
+            label='Continue'
+            styles='mt-6 w-full py-2'
+          />
+          <Checkbox
+            control={control}
+            name='termsAndConditions'
+            fromPath='persona-information'
+          />
         </div>
       </BaseLine>
     </div>

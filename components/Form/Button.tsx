@@ -3,6 +3,7 @@ type ButtonTypes = {
   styles?: string
   type?: 'button' | 'submit'
   isDisabled?: boolean
+  isLoading?: boolean
   action?: () => void
 }
 
@@ -12,6 +13,7 @@ export const Button = ({
   action,
   isDisabled,
   type,
+  isLoading,
   ...rest
 }: ButtonTypes): JSX.Element => (
   <button
@@ -23,6 +25,8 @@ export const Button = ({
     disabled={isDisabled}
     {...rest}
   >
-    <span className='font-semibold text-base'>{label}</span>
+    <span className='font-semibold text-base'>
+      {isLoading ? 'please wait...' : label}
+    </span>
   </button>
 )

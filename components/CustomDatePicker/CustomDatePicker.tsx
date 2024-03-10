@@ -1,8 +1,6 @@
-'use client'
-
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import { inter } from '@/utils'
+import { inter, poppins } from '@/utils'
 import { Calendar, AccordionRight, AccordionLeft } from '@/components'
 import { getMonth } from 'date-fns'
 
@@ -27,6 +25,10 @@ const months = [
 
 interface CustomDatePicker {
   label: string
+  currentDate: Date | null
+  setCurrentDate: Dispatch<SetStateAction<Date | null>>
+  hasError?: boolean
+  errorMessage?: string
 }
 
 interface CustomHeader {
@@ -51,9 +53,13 @@ const CustomHeader = ({
   </main>
 )
 
-export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date | null>(null)
-
+export const CustomDatePicker = ({
+  label,
+  currentDate,
+  setCurrentDate,
+  hasError,
+  errorMessage
+}: CustomDatePicker): JSX.Element => {
   return (
     <main>
       <label
@@ -65,11 +71,11 @@ export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
       <section className='flex items-center border border-primary focus:border-dark-primary w-fit rounded-lg px-3 mt-2 bg-white'>
         <DatePicker
           className={`placeholder-gray.4 border w-[29rem] border-transparent text-primary px-0 rounded text-base focus:border-0 focus:ring-0 py-3 bg-white`}
-          selected={startDate}
+          selected={currentDate}
           locale='en-GB'
           portalId='root-portal'
           popperPlacement='bottom-start'
-          onChange={(date) => setStartDate(date as Date)}
+          onChange={(date) => setCurrentDate(date as Date)}
           placeholderText='Select date'
           showPopperArrow={false}
           minDate={new Date()}
@@ -84,6 +90,11 @@ export const CustomDatePicker = ({ label }: CustomDatePicker): JSX.Element => {
 
         <Calendar />
       </section>
+      {hasError && (
+        <span className={`${poppins.className} text-xs text-red-500 mt-2`}>
+          {errorMessage}
+        </span>
+      )}
     </main>
   )
 }

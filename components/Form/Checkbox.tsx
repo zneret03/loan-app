@@ -1,12 +1,16 @@
+'use client'
+
 import { UseControllerProps, FieldValues, useController } from 'react-hook-form'
 import Link from 'next/link'
 
-type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T>
+type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T> & {
+  fromPath: string
+}
 
 export const Checkbox = <T extends FieldValues>(
   props: CheckBoxTypes<T>
 ): JSX.Element => {
-  const { control, name } = props
+  const { control, name, fromPath } = props
 
   const {
     field: { ref, ...rest }
@@ -22,7 +26,13 @@ export const Checkbox = <T extends FieldValues>(
       />
       <label className='text-base text-dark-primary'>
         I agree to the{' '}
-        <Link href='/terms-and-conditions' className='underline font-bold'>
+        <Link
+          href={{
+            pathname: '/terms-and-conditions',
+            query: { fromPath }
+          }}
+          className='underline font-bold'
+        >
           Terms and Conditions
         </Link>
       </label>

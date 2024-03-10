@@ -26,15 +26,15 @@ const config: Config = {
         'divider-dark': '#6EA6B6',
         'iris-dark': '#6667F0',
         'iris-slate': '#A5A6F6',
+        'calendar-day': '#FB3F4A',
+        'calendar-primary': '#333333',
         gray: '#ECF3F5',
         white: '#FFFFFF',
         primary: '#76ADBC',
         'gray.4': '#A3BEC6',
         divider: '#6EA6B6',
         secondary: '#350840',
-        default: '#F9F4F4',
-        red: '#FB3F4A',
-        'calendar-primary': '#333333'
+        default: '#F9F4F4'
       }
     }
   },

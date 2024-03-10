@@ -27,7 +27,7 @@ export const BaseLine = ({
       >
         <h1 className='text-[2rem] text-dark-primary'>{title}</h1>
         <div
-          className={`py-[2.5rem] ${divider && ' divide-y divide-divider-slate'}`}
+          className={`pt-[2.5rem] ${divider && 'divide-y divide-divider-slate'}`}
         >
           {children}
         </div>

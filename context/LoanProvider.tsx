@@ -1,6 +1,6 @@
 'use client'
 
-import { calculateLoanPayment } from './helper'
+import { calculateLoanPayment, LoanActionTypes } from './helper'
 import { Dispatch, ReactNode, createContext, useReducer } from 'react'
 
 interface LoanProviderTypes {
@@ -20,14 +20,6 @@ interface CreateContextTypes {
   dispatch: Dispatch<any>
 }
 
-interface ActionTypes {
-  type: 'computation' | 'reset'
-  payload: {
-    loanAmount: 0
-    loanTerm: number
-  }
-}
-
 const initialState: InitialStateTypes = {
   amortization: 0,
   interestRates: 0,
@@ -43,7 +35,7 @@ export const LoanContext = createContext<CreateContextTypes>({
 
 const reducer = (
   state: InitialStateTypes,
-  action: ActionTypes
+  action: LoanActionTypes
 ): InitialStateTypes => {
   switch (action.type) {
     case 'computation':

@@ -22,8 +22,6 @@ const Page = (): JSX.Element => {
 
   const { state, dispatch } = useContext(LoanContext)
 
-  console.log(state)
-
   const { amortization, interestRates, total } = state
 
   const {
@@ -68,9 +66,9 @@ const Page = (): JSX.Element => {
     })
   }
 
-  const setActiveOptions = (option: number): void => {
+  const setActiveOptions = (option: MenuOptions): void => {
     setIsOpenSelect(false)
-    setActiveSelect(option)
+    setActiveSelect(option.value as number)
   }
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
@@ -114,18 +112,18 @@ const Page = (): JSX.Element => {
           />
           <Select
             styles='mt-6'
+            selectStyles='w-full'
             isOpen={isOpenSelect}
             onOpen={onOpenSelect}
             label='LOAN TERM'
             activeSelect={activeSelect as number}
-            setSelectOptions={setActiveOptions as typeof setActiveOptions}
+            setSelectOptions={setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
-            selectStyles='absolute w-full'
-            placeholder='Select Loan Term'
             errorMessage={errors.loanTerm?.message as string}
+            placeholder='Select Loan Term'
           />
-          <div className='flex align-items gap-4 mt-24'>
+          <div className='flex align-items gap-4 mt-8'>
             <Button
               label='Clear'
               type='button'
@@ -172,7 +170,11 @@ const Page = (): JSX.Element => {
               />
             </Link>
 
-            <Checkbox control={control} name='termsAndConditions' />
+            <Checkbox
+              control={control}
+              name='termsAndConditions'
+              fromPath='apply-loan'
+            />
           </section>
         </section>
       </BaseLine>

@@ -6,6 +6,7 @@ interface BaseLineTypes {
   dividerColor?: string
   styles?: string
   isCenterTitle?: boolean
+  divider?: boolean
 }
 
 export const BaseLine = ({
@@ -13,18 +14,23 @@ export const BaseLine = ({
   children,
   dividerColor,
   styles,
-  isCenterTitle = false
+  isCenterTitle = false,
+  divider
 }: BaseLineTypes): JSX.Element => {
   return (
     <main className={`${styles}`}>
       <aside
         className={`grid grid-row-2 gap-y-[2.5rem] 
           divide-y 
-          divide-${dividerColor} 
-          ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] pt-[5rem]`}
+          ${dividerColor}
+          ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] py-[5rem]`}
       >
         <h1 className='text-[2rem] text-dark-primary'>{title}</h1>
-        <div className='pt-[2.5rem]'>{children}</div>
+        <div
+          className={`pt-[2.5rem] ${divider && 'divide-y divide-divider-slate'}`}
+        >
+          {children}
+        </div>
       </aside>
     </main>
   )

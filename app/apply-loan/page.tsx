@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useContext } from 'react'
-import { BaseLine, Button, InputField, Select } from '@/components'
+import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { selectOptionsData } from './helpers/constants'
 
@@ -66,9 +66,9 @@ const Page = (): JSX.Element => {
     })
   }
 
-  const setActiveOptions = (option: number): void => {
+  const setActiveOptions = (option: MenuOptions): void => {
     setIsOpenSelect(false)
-    setActiveSelect(option)
+    setActiveSelect(option.value as number)
   }
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
@@ -78,7 +78,7 @@ const Page = (): JSX.Element => {
     reset()
   }
 
-  const isDisableButton = !!amount && !activeSelect && isTermsAndCondition
+  const isDisableButton = !!amount && !!activeSelect && isTermsAndCondition
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
@@ -95,31 +95,35 @@ const Page = (): JSX.Element => {
     <main className='flex'>
       <BaseLine
         title='Apply for a Loan'
-        dividerColor='divider-slate'
+        dividerColor='divide-divider-slate'
         styles='flex-[2.5]'
       >
         <form className='w-1/2 relative' onSubmit={handleSubmit(onSubmit)}>
           <InputField
+            type='number'
             label='LOAN AMOUNT'
             hasError={!!errors.loanAmount}
             errorMessage={errors?.loanAmount?.message as string}
+            hasSubText={true}
+            placeholder='Enter amount'
             {...register('loanAmount', {
               required: 'required field.'
             })}
           />
           <Select
             styles='mt-6'
+            selectStyles='w-full'
             isOpen={isOpenSelect}
             onOpen={onOpenSelect}
             label='LOAN TERM'
             activeSelect={activeSelect as number}
-            setSelectOptions={setActiveOptions as typeof setActiveOptions}
+            setSelectOptions={setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
-            placeholder='Select Loan Term'
             errorMessage={errors.loanTerm?.message as string}
+            placeholder='Select Loan Term'
           />
-          <div className='flex align-items gap-4 mt-24'>
+          <div className='flex align-items gap-4 mt-8'>
             <Button
               label='Clear'
               type='button'
@@ -132,7 +136,7 @@ const Page = (): JSX.Element => {
       </BaseLine>
       <BaseLine
         title='Breakdown'
-        dividerColor='divider-dark'
+        dividerColor='divide-divider-dark'
         styles='flex-1 bg-gray shadow-sm h-screen'
       >
         <section className='space-y-10 text-dark-primary'>
@@ -158,35 +162,19 @@ const Page = (): JSX.Element => {
           </aside>
 
           <section className='space-y-4'>
-            <Button
-              label='Continue'
-              isDisabled={!isDisableButton}
-              styles='w-full py-2'
-            />
-
-            <div className='flex items-center space-x-2 w-full'>
-              <Controller
-                control={control}
-                name='termsAndConditions'
-                render={({ field: { onChange, value } }) => (
-                  <input
-                    type='checkbox'
-                    checked={value}
-                    onChange={onChange}
-                    className='w-5 h-5 rounded-sm text-primary focus:ring-gray border border-primary border-2 cursor-pointer'
-                  />
-                )}
+            <Link href='/personal-information'>
+              <Button
+                label='Continue'
+                isDisabled={!isDisableButton}
+                styles='w-full py-2'
               />
-              <label className='text-base'>
-                I agree to the{' '}
-                <Link
-                  href='/terms-and-conditions'
-                  className='underline font-bold'
-                >
-                  Terms and Conditions
-                </Link>
-              </label>
-            </div>
+            </Link>
+
+            <Checkbox
+              control={control}
+              name='termsAndConditions'
+              fromPath='apply-loan'
+            />
           </section>
         </section>
       </BaseLine>

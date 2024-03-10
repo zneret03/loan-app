@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind apply
 
 @layer base {
   input[type='number']::-webkit-inner-spin-button,
@@ -18,4 +19,52 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+
+.react-datepicker {
+  @apply z-50 border-none shadow-lg px-4 py-2 w-[20rem] h-[20rem] !important;
+}
+
+.react-datepicker-popper {
+  @apply -ml-2 z-50;
+}
+
+.react-datepicker__header {
+  @apply border-none bg-white w-full !important;
+}
+
+.react-datepicker__day-names {
+  @apply font-semibold text-lg text-primary px-2 flex justify-around !important;
+}
+
+.react-datepicker__day-name {
+  @apply text-calendar-primary !important;
+}
+
+.react-datepicker__week {
+  @apply flex justify-around mb-[1rem] font-bold flex flex-row items-center justify-center !important;
+}
+
+.react-datepicker__day {
+  @apply text-calendar-day text-sm !important;
+}
+
+.react-datepicker__day:hover {
+  @apply bg-primary text-white transition-all flex items-center justify-center rounded-full !important;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-calendar-day text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-calendar-day text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
+}
+
+.react-datepicker__day--disabled {
+  @apply text-gray.4 opacity-70 cursor-not-allowed !important;
+}
+
+.react-datepicker__month-container {
+  @apply float-none !important;
 }

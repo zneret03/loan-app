@@ -3,9 +3,15 @@
 import { UIEvent, useState } from 'react'
 import { BaseLine, Button } from '@/components'
 import { poppins } from '@/utils'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 const Page = (): JSX.Element => {
   const [isEnable, setIsEnable] = useState<boolean>(false)
+  const params = useSearchParams()
+  const query = params.get('fromPath')
+  const goToPath =
+    query === 'apply-loan' ? '/personal-information' : '/preview-info'
 
   const onScroll = (event: UIEvent<HTMLDivElement>): void => {
     event.stopPropagation()
@@ -20,7 +26,9 @@ const Page = (): JSX.Element => {
       <BaseLine
         title='Terms and Conditions'
         styles='p-4 bg-dark-slate rounded-lg h-content'
+        dividerColor='divide-divider-slate'
         isCenterTitle={true}
+        divider={false}
       >
         <div
           className='bg-white text-left overflow-auto no-scrollbar'
@@ -350,11 +358,15 @@ const Page = (): JSX.Element => {
           </article>
         </div>
 
-        <Button
-          label='Continue'
-          isDisabled={!isEnable}
-          styles='mt-6 w-full py-2'
-        />
+        <div className='my-2'>
+          <Link href={goToPath}>
+            <Button
+              label='Continue'
+              isDisabled={!isEnable}
+              styles='mt-6 w-full py-2'
+            />
+          </Link>
+        </div>
       </BaseLine>
     </section>
   )

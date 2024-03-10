@@ -89,7 +89,7 @@ const Page = (): JSX.Element => {
           <Items
             type='single'
             label='LOAN AMOUNT'
-            value={`Php ${loanAmount.toLocaleString()}`}
+            value={`Php ${Number(loanAmount).toLocaleString()}`}
           />
           <Items
             type='multiple'
@@ -97,7 +97,7 @@ const Page = (): JSX.Element => {
             firstLabel='LOAN TERM'
             firstValue={`${loanTerm} months`}
             secondLabel='LOAN COMPUTATION'
-            secondValue={`Php ${total.toFixed(2)}`}
+            secondValue={`Php ${Number(total).toLocaleString()}`}
           />
         </section>
 

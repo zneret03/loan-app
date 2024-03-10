@@ -60,7 +60,7 @@ const reducer = (
       const config = {
         amortization: Number(monthlyPayment.toFixed(2)),
         interestRates: Math.floor(interestInPercent),
-        total: grandTotal
+        total: Number(grandTotal.toFixed(2))
       }
 
       return { ...state, ...action.payload, ...config }

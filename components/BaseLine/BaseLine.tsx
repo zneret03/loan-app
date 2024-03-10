@@ -5,6 +5,7 @@ interface BaseLineTypes {
   children: ReactNode
   dividerColor?: string
   styles?: string
+  contentStyle?: string
   isCenterTitle?: boolean
   divider?: boolean
 }
@@ -15,7 +16,8 @@ export const BaseLine = ({
   dividerColor,
   styles,
   isCenterTitle = false,
-  divider
+  divider,
+  contentStyle
 }: BaseLineTypes): JSX.Element => {
   return (
     <main className={`${styles}`}>
@@ -27,7 +29,7 @@ export const BaseLine = ({
       >
         <h1 className='text-[2rem] text-dark-primary'>{title}</h1>
         <div
-          className={`pt-[2.5rem] ${divider && 'divide-y divide-divider-slate'}`}
+          className={`pt-[2.5rem] ${contentStyle} ${divider && 'divide-y divide-divider-slate'}`}
         >
           {children}
         </div>

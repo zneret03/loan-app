@@ -20,6 +20,7 @@ import {
 } from '@/lib'
 import { useRouter } from 'next/navigation'
 import { mobileNumberFormat } from '@/helpers'
+import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 
 const Page = (): JSX.Element => {
@@ -68,6 +69,8 @@ const Page = (): JSX.Element => {
   const onSubmit = async (
     data: InitialInformationStateTypes
   ): Promise<void> => {
+    const formatDate = new Date(`${startDate}`)
+
     dispatch({ type: 'loading' })
 
     if (!activeSelect) {
@@ -97,7 +100,7 @@ const Page = (): JSX.Element => {
       ...data,
       imageUrl: getUrl,
       idType: activeSelect,
-      dateOfBirth: startDate,
+      dateOfBirth: format(formatDate, 'MM/dd/yyyy'),
       isLoading: false
     }
 

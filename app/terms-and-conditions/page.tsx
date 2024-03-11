@@ -13,7 +13,7 @@ const Page = (): JSX.Element => {
   const goToPath =
     query === 'apply-loan' ? '/personal-information' : '/preview-info'
 
-  const onScroll = (event: UIEvent<HTMLDivElement>): void => {
+  const onScroll = (event: UIEvent): void => {
     event.stopPropagation()
     const e = event.target as HTMLDivElement
     const bottom = Math.floor(e.scrollHeight - e.scrollTop) === e.clientHeight
@@ -22,7 +22,7 @@ const Page = (): JSX.Element => {
   }
 
   return (
-    <section className='w-full max-w-6xl mx-auto bg-dark-tertiary p-10'>
+    <main className='w-full max-w-6xl mx-auto bg-dark-tertiary p-10'>
       <BaseLine
         title='Terms and Conditions'
         styles='p-4 bg-dark-slate rounded-lg h-content'
@@ -30,7 +30,7 @@ const Page = (): JSX.Element => {
         isCenterTitle={true}
         divider={false}
       >
-        <div
+        <section
           className='bg-white text-left overflow-auto no-scrollbar'
           onScroll={(event) => onScroll(event)}
         >
@@ -356,7 +356,7 @@ const Page = (): JSX.Element => {
               loss or damage of any nature.
             </p>
           </article>
-        </div>
+        </section>
 
         <div className='my-2'>
           <Link href={goToPath}>
@@ -368,7 +368,7 @@ const Page = (): JSX.Element => {
           </Link>
         </div>
       </BaseLine>
-    </section>
+    </main>
   )
 }
 

@@ -2,6 +2,7 @@
 
 import { PersonalInfoActionTypes } from './helper'
 import { InitialInformationStateTypes } from '@/lib'
+import { format } from 'date-fns'
 import { createContext, Dispatch, ReactNode, useReducer } from 'react'
 
 interface PersonalInformationProviderTypes {
@@ -16,6 +17,7 @@ const initialInformationState: InitialInformationStateTypes = {
   dateOfBirth: '',
   idType: '',
   imageUrl: '',
+  referenceNumber: '',
   isLoading: false
 } as const
 
@@ -35,7 +37,11 @@ const reducer = (
 ): InitialInformationStateTypes => {
   switch (action.type) {
     case 'continue':
-      return { ...state, ...action.payload }
+      const today = new Date()
+      const referenceNumber = `MG-${Math.floor(Math.random() * 90000) + 10000}`
+      const dateToday = format(today, 'MM/dd/yyyy')
+
+      return { ...state, ...action.payload, referenceNumber, dateToday }
     case 'loading':
       return { ...state, isLoading: true }
     default:

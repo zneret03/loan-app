@@ -18,6 +18,8 @@ const config: Config = {
     },
     extend: {
       colors: {
+        'T&C': '#8E9293',
+        banner: '#CDE2E7',
         'dark-primary': '#29515C',
         'dark-secondary': '#BDC2C4',
         'dark-tertiary': '#D7DADC',

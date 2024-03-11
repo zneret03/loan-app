@@ -1,16 +1,24 @@
 'use client'
 
 import { UseControllerProps, FieldValues, useController } from 'react-hook-form'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T> & {
   fromPath: string
+  isDisabled: boolean
+  callback: () => void
 }
 
 export const Checkbox = <T extends FieldValues>(
   props: CheckBoxTypes<T>
 ): JSX.Element => {
-  const { control, name, fromPath } = props
+  const { control, name, fromPath, isDisabled, callback } = props
+  const router = useRouter()
+
+  const toTermsAndConditionPage = (): void => {
+    callback()
+    router.push(`/terms-and-conditions?fromPath=${fromPath}`)
+  }
 
   const {
     field: { ref, ...rest }
@@ -26,15 +34,12 @@ export const Checkbox = <T extends FieldValues>(
       />
       <label className='text-base text-dark-primary'>
         I agree to the{' '}
-        <Link
-          href={{
-            pathname: '/terms-and-conditions',
-            query: { fromPath }
-          }}
-          className='underline font-bold'
+        <span
+          onClick={toTermsAndConditionPage}
+          className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
         >
           Terms and Conditions
-        </Link>
+        </span>
       </label>
     </div>
   )

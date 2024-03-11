@@ -1,3 +1,5 @@
+'use client'
+
 import { HamburgerIcon, MGLogo } from '@/components'
 
 export const TopNav = (): JSX.Element => (

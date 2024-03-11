@@ -3,7 +3,7 @@
 import { useContext } from 'react'
 import { PersonalInformationContext, LoanContext } from '@/context'
 import { BaseLine, Button } from '@/components'
-import { format } from 'date-fns'
+import Link from 'next/link'
 import Image from 'next/image'
 
 type ItemsTypes =
@@ -134,7 +134,9 @@ const Page = (): JSX.Element => {
           />
 
           <div className='pt-14 space-y-4'>
-            <Button label='Continue' styles='w-full py-2' />
+            <Link href='/success'>
+              <Button label='Continue' styles='w-full py-2' />
+            </Link>
             <p>
               Check your information carefully before you continue.{' '}
               <strong>

@@ -105,10 +105,6 @@ const Page = (): JSX.Element => {
     }
 
     dispatch({ type: 'continue', payload: config })
-
-    if (!!state.isLoading) {
-      query.replace('/preview-info')
-    }
   }
 
   useEffect(() => {
@@ -123,6 +119,12 @@ const Page = (): JSX.Element => {
       clearErrors()
     }
   }, [activeSelect, image, startDate, clearErrors])
+
+  useEffect(() => {
+    if (!!state.isLoading && !!isTermsAndCondition) {
+      query.replace('/preview-info')
+    }
+  }, [state, query])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 

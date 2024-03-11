@@ -19,7 +19,7 @@ import {
   useUploadImage
 } from '@/lib'
 import { useRouter } from 'next/navigation'
-import { mobileNumberFormat } from '@/helpers'
+import { checkFileSize, checkFileType, mobileNumberFormat } from '@/helpers'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 
@@ -240,8 +240,30 @@ const Page = (): JSX.Element => {
                     type='file'
                     ref={fileInputRef}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      if (event.target?.files) {
-                        setImage(event?.target?.files[0] as File)
+                      const file = event.target?.files
+
+                      if (file) {
+                        const isValidExtension = checkFileType(file, [
+                          '.jpeg',
+                          '.jpg',
+                          '.png'
+                        ])
+                        const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
+
+                        if (isValidExtension) {
+                          setError('imageUrl', {
+                            message: 'image format is invalid.'
+                          })
+                          return
+                        }
+
+                        if (isFileSizeValid) {
+                          setError('imageUrl', {
+                            message: 'maximum of 1mb image only.'
+                          })
+                        }
+
+                        setImage(file[0] as File)
                       }
                     }}
                     className='hidden'

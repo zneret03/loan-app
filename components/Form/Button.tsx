@@ -1,3 +1,5 @@
+import { Spinner } from '..'
+
 type ButtonTypes = {
   label: string
   styles?: string
@@ -25,8 +27,9 @@ export const Button = ({
     disabled={isDisabled}
     {...rest}
   >
-    <span className='font-semibold text-base'>
-      {isLoading ? 'please wait...' : label}
+    <span className='font-semibold text-base flex items-center justify-center gap-2'>
+      {isLoading && <Spinner />}
+      {label}
     </span>
   </button>
 )

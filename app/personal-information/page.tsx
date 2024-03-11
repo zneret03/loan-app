@@ -100,19 +100,11 @@ const Page = (): JSX.Element => {
       ...data,
       imageUrl: getUrl,
       idType: activeSelect,
-      dateOfBirth: format(formatDate, 'MM/dd/yyyy'),
-      isLoading: false
+      dateOfBirth: format(formatDate, 'MM/dd/yyyy')
     }
 
     dispatch({ type: 'continue', payload: config })
   }
-
-  useEffect(() => {
-    dispatch({
-      type: 'callback',
-      payload: { callback: handleSubmit(onSubmit) }
-    })
-  }, [dispatch])
 
   useEffect(() => {
     if (!!activeSelect || !!image || !!startDate) {
@@ -279,7 +271,7 @@ const Page = (): JSX.Element => {
         <div className='pt-12 space-y-6'>
           <Button
             type='button'
-            isDisabled={isFormEmpty}
+            isDisabled={isFormEmpty || state.isLoading}
             isLoading={state.isLoading}
             action={handleSubmit(onSubmit)}
             label='Continue'

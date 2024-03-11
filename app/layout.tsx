@@ -1,10 +1,8 @@
 'use client'
 
-import { TopNav } from '@/components'
 import { inter } from '@/utils'
-import { LoanProvider, PersonalInformationProvider } from '@/context'
+import { AppWrapper } from '@/components'
 import { usePathname } from 'next/navigation'
-import '@/styles/tailwind.css'
 
 export default function RootLayout({
   children
@@ -13,30 +11,16 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname()
 
-  const links = [
-    '/terms-and-conditions',
-    '/personal-information',
-    '/preview-info'
-  ]
-
-  const heightFitLinks = links.includes(pathname)
-
   return (
     <html lang='en'>
-      <body className={inter.className}>
-        <TopNav />
-        <PersonalInformationProvider>
-          <LoanProvider>
-            <div
-              className={`
-            ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-default'} 
-            ${heightFitLinks ? 'h-fit' : 'h-dvh'} 
-            laptop:px-0 desktop:px-[3.5rem]`}
-            >
-              {children}
-            </div>
-          </LoanProvider>
-        </PersonalInformationProvider>
+      <title>Loan app</title>
+      <link rel='icon' href='/favicon.ico' />
+      <body
+        className={`${inter.className} ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-default'}`}
+      >
+        <AppWrapper>
+          <div className='px-[3.5rem]'>{children}</div>
+        </AppWrapper>
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
@@ -72,13 +72,22 @@ const Page = (): JSX.Element => {
   }
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
+
   const resetFields = (): void => {
     dispatch({ type: 'reset' })
     setActiveSelect(undefined)
     reset()
   }
 
-  const isDisableButton = !!amount && !!activeSelect && isTermsAndCondition
+  useEffect(() => {
+    dispatch({
+      type: 'callback',
+      payload: { callback: handleSubmit(onSubmit) }
+    })
+  }, [dispatch])
+
+  const isFormFilled = !!amount && !!activeSelect
+  const isDisableButton = isFormFilled && isTermsAndCondition
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
@@ -172,6 +181,8 @@ const Page = (): JSX.Element => {
 
             <Checkbox
               control={control}
+              callback={handleSubmit(onSubmit)}
+              isDisabled={!isFormFilled}
               name='termsAndConditions'
               fromPath='apply-loan'
             />

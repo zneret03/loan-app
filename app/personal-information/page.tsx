@@ -105,19 +105,24 @@ const Page = (): JSX.Element => {
     }
 
     dispatch({ type: 'continue', payload: config })
+
+    if (!!state.isLoading) {
+      query.replace('/preview-info')
+    }
   }
+
+  useEffect(() => {
+    dispatch({
+      type: 'callback',
+      payload: { callback: handleSubmit(onSubmit) }
+    })
+  }, [dispatch])
 
   useEffect(() => {
     if (!!activeSelect || !!image || !!startDate) {
       clearErrors()
     }
   }, [activeSelect, image, startDate, clearErrors])
-
-  useEffect(() => {
-    if (!!state.isLoading) {
-      query.replace('/preview-info')
-    }
-  }, [state, query])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
@@ -130,13 +135,13 @@ const Page = (): JSX.Element => {
     ({ value }) => value !== activeSelect
   )
 
-  const isFormEmpty =
+  const isFormFilled =
     watchForm.findIndex((find) => !find) > -1 ||
     !activeSelect ||
     !image ||
-    !startDate ||
-    state.isLoading ||
-    !isTermsAndCondition
+    !startDate
+
+  const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
 
   return (
     <div className='w-full max-w-6xl mx-auto bg-dark-slate shadow-sm'>
@@ -280,6 +285,8 @@ const Page = (): JSX.Element => {
           />
           <Checkbox
             control={control}
+            callback={handleSubmit(onSubmit)}
+            isDisabled={isFormFilled}
             name='termsAndConditions'
             fromPath='persona-information'
           />

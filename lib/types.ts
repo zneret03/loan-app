@@ -11,6 +11,8 @@ export interface InitialInformationStateTypes {
   dateOfBirth: string
   idType: string
   imageUrl: string
+  referenceNumber?: string
+  dateToday?: string
   isLoading?: boolean
   termsAndConditions?: boolean
 }

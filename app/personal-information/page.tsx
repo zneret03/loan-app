@@ -124,7 +124,7 @@ const Page = (): JSX.Element => {
     if (!!state.isLoading && !!isTermsAndCondition) {
       query.replace('/preview-info')
     }
-  }, [state, query])
+  }, [state, query, isTermsAndCondition])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 

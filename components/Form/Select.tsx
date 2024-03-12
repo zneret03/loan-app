@@ -38,10 +38,10 @@ export const Select = ({
     <section className='relative'>
       <div
         id='loan-term'
-        className={`border ${hasErrors ? 'border-red-500' : 'border-primary'} px-4 py-3 rounded-lg bg-white pt-2 ${isOpen ? 'z-50 absolute' : 'relative'} ${selectStyles}`}
+        className={`border ${hasErrors ? 'border-red-500' : 'border-primary'} py-3 rounded-lg bg-white pt-2 ${isOpen ? 'z-50 absolute' : 'relative'} ${selectStyles}`}
       >
         <div
-          className={`flex items-center justify-between cursor-pointer ${isOpen ? 'mb-6' : 'm-auto'}`}
+          className={`flex items-center justify-between cursor-pointer px-4 ${isOpen ? 'mb-6' : 'm-auto'}`}
           onClick={() => onOpen()}
         >
           <span
@@ -53,11 +53,11 @@ export const Select = ({
         </div>
 
         {isOpen && (
-          <div className='flex flex-col gap-y-6'>
+          <div className='flex flex-col'>
             {selectOptions.map((option) => (
               <option
                 key={option.label}
-                className='cursor-pointer'
+                className='cursor-pointer hover:bg-primary/10 py-3 px-4'
                 onClick={() => setSelectOptions(option)}
                 value={option.value}
               >

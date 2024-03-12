@@ -16,7 +16,7 @@ export default function RootLayout({
       <title>Loan app</title>
       <link rel='icon' href='/favicon.ico' />
       <body
-        className={`${inter.className} ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-default'}`}
+        className={`${inter.className} ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-gray'}`}
       >
         <AppWrapper>
           <div className='px-[3.5rem]'>{children}</div>

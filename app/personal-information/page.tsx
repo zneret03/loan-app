@@ -18,10 +18,10 @@ import {
   useValidation,
   useUploadImage
 } from '@/lib'
-import { useRouter } from 'next/navigation'
 import { checkFileSize, checkFileType, mobileNumberFormat } from '@/helpers'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
@@ -35,8 +35,6 @@ const Page = (): JSX.Element => {
   const { validate } = useValidation()
   const { uploadImage } = useUploadImage()
 
-  const query = useRouter()
-
   const {
     register,
     handleSubmit,
@@ -44,12 +42,15 @@ const Page = (): JSX.Element => {
     clearErrors,
     watch,
     control,
+    reset,
     formState: { errors }
   } = useForm<InitialInformationStateTypes>({
     defaultValues: {
       termsAndConditions: false
     }
   })
+
+  const query = useRouter()
 
   const isTermsAndCondition = watch('termsAndConditions')
 
@@ -100,23 +101,34 @@ const Page = (): JSX.Element => {
       ...data,
       imageUrl: getUrl,
       idType: activeSelect,
-      dateOfBirth: format(formatDate, 'MM/dd/yyyy')
+      dateOfBirth: format(formatDate, 'MM/dd/yyyy'),
+      isLoading: false,
+      rawImage: image,
+      termsAndConditions: isTermsAndCondition
     }
 
     dispatch({ type: 'continue', payload: config })
+    query.push('/preview-info')
   }
+
+  useEffect(() => {
+    if (!!state.firstName) {
+      reset({
+        ...state,
+        termsAndConditions: false
+      })
+
+      setStartDate(new Date(state.dateOfBirth))
+      setActiveSelect(state.idType)
+      setImage(state.rawImage as File)
+    }
+  }, [state, setActiveSelect, setStartDate])
 
   useEffect(() => {
     if (!!activeSelect || !!image || !!startDate) {
       clearErrors()
     }
   }, [activeSelect, image, startDate, clearErrors])
-
-  useEffect(() => {
-    if (!!state.isLoading && !!isTermsAndCondition) {
-      query.replace('/preview-info')
-    }
-  }, [state, query, isTermsAndCondition])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
@@ -145,6 +157,8 @@ const Page = (): JSX.Element => {
         dividerColor='divide-divider-slate'
         isCenterTitle={true}
         divider={true}
+        hasBackButton
+        historyPath='/apply-loan'
       >
         <main className='mb-14 text-left space-y-14'>
           <div
@@ -189,7 +203,7 @@ const Page = (): JSX.Element => {
                   required: 'required field.',
                   validate: (value) =>
                     mobileNumberFormat.test(value as string) ||
-                    'mobile number should be in 09XX-XXX-XXX format.'
+                    'mobile number should be in 09XX-XXX-XXXX format.'
                 })}
               />
               <InputField
@@ -305,6 +319,7 @@ const Page = (): JSX.Element => {
             isDisabled={isFormFilled}
             name='termsAndConditions'
             fromPath='persona-information'
+            tAndCLabel='Terms and Conditions and Privacy Policy'
           />
         </div>
       </BaseLine>

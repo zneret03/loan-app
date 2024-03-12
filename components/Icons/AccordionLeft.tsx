@@ -1,20 +1,21 @@
 export const AccordionLeft = ({
-  action
+  action,
+  color
 }: {
-  action: () => void
+  action?: () => void
+  color?: string
 }): JSX.Element => (
   <svg
     onClick={action}
-    className='cursor-pointer'
+    className={`cursor-pointer ${color || 'stroke-[#333333]'}`}
     width='8'
     height='14'
     viewBox='0 0 8 14'
-    fill='none'
     xmlns='http://www.w3.org/2000/svg'
+    fill='none'
   >
     <path
       d='M6.65685 1.00001L1 6.65686L6.65685 12.3137'
-      stroke='#333333'
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'

@@ -107,8 +107,11 @@ const Page = (): JSX.Element => {
       termsAndConditions: isTermsAndCondition
     }
 
-    dispatch({ type: 'continue', payload: config })
     query.push('/preview-info')
+
+    setTimeout(() => {
+      dispatch({ type: 'continue', payload: config })
+    }, 800)
   }
 
   useEffect(() => {

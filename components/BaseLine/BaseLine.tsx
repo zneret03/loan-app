@@ -1,4 +1,6 @@
 import { ReactNode } from 'react'
+import { AccordionLeft } from '..'
+import Link from 'next/link'
 
 interface BaseLineTypes {
   title: string
@@ -7,7 +9,9 @@ interface BaseLineTypes {
   styles?: string
   contentStyle?: string
   isCenterTitle?: boolean
+  hasBackButton?: boolean
   divider?: boolean
+  historyPath?: string
 }
 
 export const BaseLine = ({
@@ -17,7 +21,9 @@ export const BaseLine = ({
   styles,
   isCenterTitle = false,
   divider,
-  contentStyle
+  contentStyle,
+  hasBackButton,
+  historyPath
 }: BaseLineTypes): JSX.Element => {
   return (
     <section className={`${styles}`}>
@@ -27,7 +33,18 @@ export const BaseLine = ({
           ${dividerColor}
           ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] py-[5rem]`}
       >
-        <h1 className='text-[2rem] text-dark-primary'>{title}</h1>
+        <h1 className='text-[2rem] text-dark-primary'>
+          {hasBackButton && (
+            <Link href={historyPath as string}>
+              <div className='flex items-center gap-2 mb-6 cursor-pointer'>
+                <AccordionLeft color='stroke-dark-primary' />
+                <h2 className='text-sm text-left'>BACK</h2>
+              </div>
+            </Link>
+          )}
+
+          {title}
+        </h1>
         <section
           className={`pt-[2.5rem] ${contentStyle} ${divider && 'divide-y divide-divider-slate'}`}
         >

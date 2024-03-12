@@ -19,7 +19,8 @@ const config: Config = {
     extend: {
       colors: {
         'T&C': '#8E9293',
-        banner: '#CDE2E7',
+        'confirm-page': '#F4F8F9',
+        banner: '#529EB1',
         'dark-primary': '#29515C',
         'dark-secondary': '#BDC2C4',
         'dark-tertiary': '#D7DADC',
@@ -35,8 +36,7 @@ const config: Config = {
         primary: '#76ADBC',
         'gray.4': '#A3BEC6',
         divider: '#6EA6B6',
-        secondary: '#350840',
-        default: '#F9F4F4'
+        secondary: '#350840'
       }
     }
   },

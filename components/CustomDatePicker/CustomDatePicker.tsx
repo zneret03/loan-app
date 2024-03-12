@@ -77,7 +77,6 @@ export const CustomDatePicker = ({
         onChange={(date) => setCurrentDate(date as Date)}
         placeholderText='Select date'
         showPopperArrow={false}
-        minDate={new Date()}
         renderCustomHeader={({ date, increaseMonth, decreaseMonth }) => (
           <CustomHeader
             date={date}

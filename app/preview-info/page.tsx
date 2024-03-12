@@ -74,14 +74,16 @@ const Page = (): JSX.Element => {
   } = personalDetails
 
   return (
-    <div className='w-full max-w-6xl mx-auto bg-dark-slate text-dark-primary shadow-sm'>
+    <div className='w-full max-w-6xl bg-gray mx-auto text-dark-primary shadow-sm'>
       <BaseLine
         title='Please confirm your details below'
-        styles='bg-dark-slate rounded-lg h-content'
+        styles='bg-gray/20 h-content'
         contentStyle='space-y-14'
         dividerColor='divide-divider-slate'
         isCenterTitle={false}
         divider={true}
+        hasBackButton
+        historyPath='/personal-information'
       >
         <section className='space-y-10'>
           <h1 className='text-lg font-medium'>Loan Terms</h1>

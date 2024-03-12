@@ -5,8 +5,8 @@ import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
 import { useForm } from 'react-hook-form'
-import Link from 'next/link'
 import { selectOptionsData } from './helpers/constants'
+import Link from 'next/link'
 
 interface FormTypes {
   loanAmount: number
@@ -80,11 +80,15 @@ const Page = (): JSX.Element => {
   }
 
   useEffect(() => {
-    dispatch({
-      type: 'callback',
-      payload: { callback: handleSubmit(onSubmit) }
-    })
-  }, [dispatch])
+    if (!!state.loanAmount) {
+      reset({
+        loanAmount: state.loanAmount,
+        termsAndConditions: false
+      })
+
+      setActiveSelect(state.loanTerm)
+    }
+  }, [state, setActiveSelect])
 
   const isFormFilled = !!amount && !!activeSelect
   const isDisableButton = isFormFilled && isTermsAndCondition
@@ -185,6 +189,7 @@ const Page = (): JSX.Element => {
               isDisabled={!isFormFilled}
               name='termsAndConditions'
               fromPath='apply-loan'
+              tAndCLabel='Terms and Conditions and Privacy Policy'
             />
           </section>
         </section>

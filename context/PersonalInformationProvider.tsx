@@ -18,7 +18,8 @@ const initialInformationState: InitialInformationStateTypes = {
   idType: '',
   imageUrl: '',
   referenceNumber: '',
-  isLoading: false
+  isLoading: false,
+  rawImage: null
 } as const
 
 interface CreateContextTypes {

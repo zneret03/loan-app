@@ -7,12 +7,13 @@ type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T> & {
   fromPath: string
   isDisabled: boolean
   callback: () => void
+  tAndCLabel?: string
 }
 
 export const Checkbox = <T extends FieldValues>(
   props: CheckBoxTypes<T>
 ): JSX.Element => {
-  const { control, name, fromPath, isDisabled, callback } = props
+  const { control, name, fromPath, isDisabled, callback, tAndCLabel } = props
   const router = useRouter()
 
   const toTermsAndConditionPage = (): void => {
@@ -38,7 +39,7 @@ export const Checkbox = <T extends FieldValues>(
           onClick={toTermsAndConditionPage}
           className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
         >
-          Terms and Conditions
+          {tAndCLabel}
         </span>
       </label>
     </div>

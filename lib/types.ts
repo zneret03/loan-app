@@ -15,4 +15,5 @@ export interface InitialInformationStateTypes {
   dateToday?: string
   isLoading?: boolean
   termsAndConditions?: boolean
+  rawImage?: File | null
 }

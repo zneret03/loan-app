@@ -111,7 +111,7 @@ const Page = (): JSX.Element => {
 
     setTimeout(() => {
       dispatch({ type: 'continue', payload: config })
-    }, 800)
+    }, 1500)
   }
 
   useEffect(() => {

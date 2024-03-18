@@ -22,7 +22,7 @@
 }
 
 .react-datepicker {
-  @apply z-50 border-none shadow-lg px-4 py-2 w-[20rem] h-[20rem] !important;
+  @apply z-50 border-none shadow-lg px-2 py-2 w-[22rem] h-[22rem] !important;
 }
 
 .react-datepicker-popper {
@@ -46,15 +46,15 @@
 }
 
 .react-datepicker__week {
-  @apply flex justify-around mb-[1rem] font-bold flex flex-row items-center justify-center !important;
+  @apply flex justify-around mb-[0.5rem] font-bold flex flex-row items-center justify-center !important;
 }
 
 .react-datepicker__day {
-  @apply text-calendar-day text-sm !important;
+  @apply text-[#666666] w-[27px] h-8 flex items-center justify-center text-sm !important;
 }
 
 .react-datepicker__day:hover {
-  @apply bg-primary text-white transition-all flex items-center justify-center rounded-full !important;
+  @apply bg-primary text-white transition-all w-8 h-8 m-0 p-0 flex items-center justify-center rounded-full !important;
 }
 
 .react-datepicker__day--selected {

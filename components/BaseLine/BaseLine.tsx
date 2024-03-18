@@ -31,7 +31,7 @@ export const BaseLine = ({
         className={`grid grid-row-2 gap-y-[2.5rem] 
           divide-y 
           ${dividerColor}
-          ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] py-[5rem]`}
+          ${isCenterTitle ? 'text-center' : 'text-left'} px-[3.5rem] pt-[5rem]`}
       >
         <h1 className='text-[2rem] text-dark-primary'>
           {hasBackButton && (

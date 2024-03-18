@@ -322,7 +322,8 @@ const Page = (): JSX.Element => {
             isDisabled={isFormFilled}
             name='termsAndConditions'
             fromPath='persona-information'
-            tAndCLabel='Terms and Conditions and Privacy Policy'
+            tAndCLabel='Terms and Conditions'
+            policyLabel='Privacy Policy'
           />
         </div>
       </BaseLine>

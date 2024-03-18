@@ -95,8 +95,8 @@ const Page = (): JSX.Element => {
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
-      label: options,
-      value: options
+      label: options.label,
+      value: options.value
     })
   )
 
@@ -105,7 +105,7 @@ const Page = (): JSX.Element => {
   )
 
   return (
-    <main className='flex'>
+    <main className='flex bg-gray-secondary'>
       <BaseLine
         title='Apply for a Loan'
         dividerColor='divide-divider-slate'
@@ -129,7 +129,11 @@ const Page = (): JSX.Element => {
             isOpen={isOpenSelect}
             onOpen={onOpenSelect}
             label='LOAN TERM'
-            activeSelect={activeSelect as number}
+            activeSelect={
+              !!activeSelect
+                ? `${activeSelect} months`
+                : (activeSelect as number)
+            }
             setSelectOptions={setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
@@ -189,7 +193,8 @@ const Page = (): JSX.Element => {
               isDisabled={!isFormFilled}
               name='termsAndConditions'
               fromPath='apply-loan'
-              tAndCLabel='Terms and Conditions and Privacy Policy'
+              tAndCLabel='Terms and Conditions'
+              policyLabel='Privacy Policy'
             />
           </section>
         </section>

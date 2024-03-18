@@ -11,15 +11,20 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname()
 
+  const bgColor =
+    pathname === '/terms-and-conditions'
+      ? 'bg-dark-tertiary'
+      : pathname === 'apply-loan'
+        ? 'bg-secondary'
+        : 'bg-gray'
+
   return (
     <html lang='en'>
       <title>Loan app</title>
       <link rel='icon' href='/favicon.ico' />
-      <body
-        className={`${inter.className} ${pathname === '/terms-and-conditions' ? 'bg-dark-tertiary' : 'bg-gray'}`}
-      >
+      <body className={`${inter.className} ${bgColor}`}>
         <AppWrapper>
-          <div className='px-[3.5rem]'>{children}</div>
+          <div>{children}</div>
         </AppWrapper>
       </body>
     </html>

@@ -32,6 +32,7 @@ const config: Config = {
         'calendar-day': '#FB3F4A',
         'calendar-primary': '#333333',
         gray: '#ECF3F5',
+        'gray-secondary': '#F9F4F4',
         white: '#FFFFFF',
         primary: '#76ADBC',
         'gray.4': '#A3BEC6',

@@ -8,17 +8,26 @@ type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T> & {
   isDisabled: boolean
   callback: () => void
   tAndCLabel?: string
+  policyLabel?: string
 }
 
 export const Checkbox = <T extends FieldValues>(
   props: CheckBoxTypes<T>
 ): JSX.Element => {
-  const { control, name, fromPath, isDisabled, callback, tAndCLabel } = props
+  const {
+    control,
+    name,
+    fromPath,
+    isDisabled,
+    callback,
+    tAndCLabel,
+    policyLabel
+  } = props
   const router = useRouter()
 
-  const toTermsAndConditionPage = (): void => {
+  const toRedirect = (url: string): void => {
     callback()
-    router.push(`/terms-and-conditions?fromPath=${fromPath}`)
+    router.push(url)
   }
 
   const {
@@ -35,12 +44,20 @@ export const Checkbox = <T extends FieldValues>(
       />
       <label className='text-base text-dark-primary'>
         I agree to the{' '}
-        <span
-          onClick={toTermsAndConditionPage}
+        <label
           className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
+          onClick={() =>
+            toRedirect(`/terms-and-conditions?fromPath=${fromPath}`)
+          }
         >
           {tAndCLabel}
-        </span>
+        </label>{' '}
+        <label
+          className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
+          onClick={() => toRedirect(`/privacy-policy`)}
+        >
+          {policyLabel}
+        </label>
       </label>
     </div>
   )

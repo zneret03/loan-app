@@ -6,11 +6,11 @@ import Link from 'next/link'
 const ButtonObj = [
   {
     label: 'Yes',
-    path: '/create-account'
+    path: '/apply-loan'
   },
   {
     label: 'No',
-    path: '/apply-loan'
+    path: '/create-account'
   }
 ]
 

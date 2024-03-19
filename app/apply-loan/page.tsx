@@ -43,7 +43,8 @@ const Page = (): JSX.Element => {
     setError,
     control,
     watch,
-    reset
+    reset,
+    clearErrors
   } = useForm<FormTypes>({
     defaultValues: {
       termsAndConditions: false
@@ -64,16 +65,16 @@ const Page = (): JSX.Element => {
       return
     }
 
-    if (!activeSelect) {
-      setError('loanTerm', {
+    if (!activeLoanOption) {
+      setError('loanPurpose', {
         message: 'required field.'
       })
 
       return
     }
 
-    if (!activeLoanOption) {
-      setError('loanPurpose', {
+    if (!activeSelect) {
+      setError('loanTerm', {
         message: 'required field.'
       })
 
@@ -114,19 +115,14 @@ const Page = (): JSX.Element => {
     reset({
       loanAmount: 0
     })
+    clearErrors()
   }
 
   useEffect(() => {
-    if (!!state.loanAmount || !!state.loanPurpose) {
-      reset({
-        loanAmount: state.loanAmount,
-        loanPurpose: state.loanPurpose,
-        termsAndConditions: false
-      })
-
-      setActiveSelect(state.loanTerm)
+    if (!!activeSelect || !!activeLoanOption) {
+      clearErrors()
     }
-  }, [state, setActiveSelect])
+  }, [activeSelect, activeLoanOption])
 
   const isFormFilled = !!amount && !!activeSelect
   const isDisableButton = isFormFilled && isTermsAndCondition

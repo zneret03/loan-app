@@ -13,6 +13,9 @@ interface InitialStateTypes {
   total: number
   loanAmount: number
   loanTerm: number
+  loanPurpose: string
+  documentaryStampFee: number
+  disbursementFee: number
 }
 
 interface CreateContextTypes {
@@ -25,7 +28,10 @@ const initialState: InitialStateTypes = {
   interestRates: 0,
   total: 0,
   loanAmount: 0,
-  loanTerm: 0
+  loanTerm: 0,
+  loanPurpose: '',
+  documentaryStampFee: 0,
+  disbursementFee: 0
 } as const
 
 export const LoanContext = createContext<CreateContextTypes>({
@@ -41,16 +47,16 @@ const reducer = (
     case 'computation':
       const { loanAmount: principal, loanTerm } = action.payload
 
-      const monthlyInterest = 1.75
-      const documentaryStampFee = principal >= 250_000 && 0.075 * principal
+      const monthlyInterest = 0.02
+      const documentaryStampFee = principal > 250_000 && 0.075 * principal
 
-      const monthlyInterestRate = monthlyInterest / 100 / 12
       const disbursmentFee = 1500
 
-      const { monthlyPayment, totalInterest, totalPayment } =
-        calculateLoanPayment(Number(principal), loanTerm, monthlyInterestRate)
-
-      const interestInPercent = (totalInterest / totalPayment) * 100
+      const { monthlyPayment, totalPayment } = calculateLoanPayment(
+        Number(principal),
+        loanTerm,
+        monthlyInterest
+      )
 
       const grandTotal =
         Number(totalPayment) +
@@ -59,8 +65,9 @@ const reducer = (
 
       const config = {
         amortization: Number(monthlyPayment.toFixed(2)),
-        interestRates: Math.floor(interestInPercent),
-        total: Number(grandTotal.toFixed(2))
+        interestRates: monthlyInterest * 100,
+        total: Number(grandTotal.toFixed(2)),
+        documentaryStampFee: Number(documentaryStampFee)
       }
 
       return { ...state, ...action.payload, ...config }

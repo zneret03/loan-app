@@ -5,24 +5,36 @@ import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
 import { useForm } from 'react-hook-form'
-import { selectOptionsData } from './helpers/constants'
+import { loanPurpose, selectOptionsData } from './helpers/constants'
 import Link from 'next/link'
 
 interface FormTypes {
   loanAmount: number
   loanTerm: number
   termsAndConditions: boolean
+  loanPurpose: string
 }
 
 const Page = (): JSX.Element => {
   const [activeSelect, setActiveSelect] = useState<number | undefined>(
     undefined
   )
-  const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
+
+  const [activeLoanOption, setActiveLoanOptions] = useState<string>('')
+  const [isOpenSelect, setIsOpenSelect] = useState<{
+    isOpen: boolean
+    status: '' | 'loan-option' | 'loan-term'
+  }>({ isOpen: false, status: '' })
 
   const { state, dispatch } = useContext(LoanContext)
 
-  const { amortization, interestRates, total } = state
+  const {
+    amortization,
+    interestRates,
+    total,
+    documentaryStampFee,
+    disbursementFee
+  } = state
 
   const {
     register,
@@ -60,29 +72,55 @@ const Page = (): JSX.Element => {
       return
     }
 
+    if (!activeLoanOption) {
+      setError('loanPurpose', {
+        message: 'required field.'
+      })
+
+      return
+    }
+
     dispatch({
       type: 'computation',
-      payload: { loanAmount, loanTerm: activeSelect }
+      payload: {
+        loanAmount,
+        loanTerm: activeSelect,
+        loanPurpose: activeLoanOption,
+        disbursementFee: 1_500
+      }
     })
   }
 
   const setActiveOptions = (option: MenuOptions): void => {
-    setIsOpenSelect(false)
+    setIsOpenSelect({ isOpen: false, status: '' })
     setActiveSelect(option.value as number)
   }
 
-  const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
+  const setActiveLoan = (option: MenuOptions): void => {
+    setIsOpenSelect({ isOpen: false, status: '' })
+    setActiveLoanOptions(option.value as string)
+  }
+
+  const onOpenSelect = (status: 'loan-term' | 'loan-option'): void =>
+    setIsOpenSelect((prevState) => ({
+      isOpen: !prevState.isOpen,
+      status: status
+    }))
 
   const resetFields = (): void => {
     dispatch({ type: 'reset' })
     setActiveSelect(undefined)
-    reset()
+    setActiveLoanOptions('')
+    reset({
+      loanAmount: 0
+    })
   }
 
   useEffect(() => {
-    if (!!state.loanAmount) {
+    if (!!state.loanAmount || !!state.loanPurpose) {
       reset({
         loanAmount: state.loanAmount,
+        loanPurpose: state.loanPurpose,
         termsAndConditions: false
       })
 
@@ -95,8 +133,8 @@ const Page = (): JSX.Element => {
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
-      label: options,
-      value: options
+      label: options.label,
+      value: options.value
     })
   )
 
@@ -104,32 +142,59 @@ const Page = (): JSX.Element => {
     ({ value }) => value !== activeSelect
   )
 
+  const loanPurposeOptions = loanPurpose.map((option) => ({
+    label: option,
+    value: option
+  }))
+
   return (
-    <main className='flex'>
+    <main className='flex bg-gray-secondary'>
       <BaseLine
         title='Apply for a Loan'
         dividerColor='divide-divider-slate'
         styles='flex-[2.5]'
       >
         <form className='w-1/2 relative' onSubmit={handleSubmit(onSubmit)}>
-          <InputField
-            type='number'
-            label='LOAN AMOUNT'
-            hasError={!!errors.loanAmount}
-            errorMessage={errors?.loanAmount?.message as string}
-            hasSubText={true}
-            placeholder='Enter amount'
-            {...register('loanAmount', {
-              required: 'required field.'
-            })}
-          />
+          <div className='grid grid-cols-2 gap-4'>
+            <InputField
+              type='number'
+              label='LOAN AMOUNT'
+              hasError={!!errors.loanAmount}
+              errorMessage={errors?.loanAmount?.message as string}
+              hasSubText={true}
+              placeholder='Enter amount'
+              {...register('loanAmount', {
+                required: 'required field.'
+              })}
+            />
+
+            <Select
+              styles='-mt-2'
+              selectStyles='w-full'
+              isOpen={
+                isOpenSelect.isOpen && isOpenSelect.status === 'loan-option'
+              }
+              onOpen={() => onOpenSelect('loan-option')}
+              label='LOAN PURPOSE (optional)'
+              activeSelect={activeLoanOption}
+              setSelectOptions={setActiveLoan}
+              selectOptions={loanPurposeOptions as MenuOptions[]}
+              hasErrors={!!errors.loanPurpose}
+              errorMessage={errors.loanPurpose?.message as string}
+              placeholder='Select Loan Purpose'
+            />
+          </div>
           <Select
             styles='mt-6'
             selectStyles='w-full'
-            isOpen={isOpenSelect}
-            onOpen={onOpenSelect}
+            isOpen={isOpenSelect.isOpen && isOpenSelect.status === 'loan-term'}
+            onOpen={() => onOpenSelect('loan-term')}
             label='LOAN TERM'
-            activeSelect={activeSelect as number}
+            activeSelect={
+              !!activeSelect
+                ? `${activeSelect} months`
+                : (activeSelect as number)
+            }
             setSelectOptions={setActiveOptions}
             selectOptions={filteredOptions}
             hasErrors={!!errors.loanTerm}
@@ -161,9 +226,38 @@ const Page = (): JSX.Element => {
           </section>
 
           <aside className='divide divide-y divide-divider-dark space-y-6'>
-            <div className='space-y-6'>
-              <label className='text-sm '>INTEREST RATE</label>
-              <h2 className='text-2xl'>{interestRates}%</h2>
+            <div className='space-y-10'>
+              <div className='space-y-4'>
+                <label className='text-sm '>INTEREST RATE</label>
+                <h2 className='text-2xl'>{interestRates}%</h2>
+              </div>
+
+              <section className='space-y-4'>
+                <label className=' text-xs'>
+                  BREAKDOWN OF FEES AND CHARGES
+                </label>
+
+                <aside className='bg-banner/20 p-4 space-y-6'>
+                  <div className='space-y-4'>
+                    <label className='text-xs'>DISBURSEMENT FEE</label>
+                    <h2 className='text-base font-bold'>
+                      Php {disbursementFee || 0}
+                    </h2>
+                  </div>
+                  <div className='space-y-4 text-xs'>
+                    <div className='flex flex-col gap-1'>
+                      <label>DOCUMENTARY STAMP TAX</label>
+
+                      <label className='text-[#3C8BA2]'>
+                        (IF PHP 250,000 AND ABOVE)
+                      </label>
+                    </div>
+                    <h2 className='text-base font-bold'>
+                      Php {documentaryStampFee.toLocaleString()}
+                    </h2>
+                  </div>
+                </aside>
+              </section>
             </div>
 
             <div className='space-y-6 pt-6'>
@@ -189,7 +283,8 @@ const Page = (): JSX.Element => {
               isDisabled={!isFormFilled}
               name='termsAndConditions'
               fromPath='apply-loan'
-              tAndCLabel='Terms and Conditions and Privacy Policy'
+              tAndCLabel='Terms and Conditions'
+              policyLabel='Privacy Policy'
             />
           </section>
         </section>

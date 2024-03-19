@@ -42,7 +42,7 @@ const CustomHeader = ({
   decreaseMonth,
   increaseMonth
 }: CustomHeader): JSX.Element => (
-  <main className='flex items-center justify-between px-3 py-2'>
+  <main className='flex items-center justify-between px-4 py-2'>
     <span className='text-lg font-bold text-calendar-primary'>
       {months[getMonth(date)]}
     </span>

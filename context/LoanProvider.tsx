@@ -13,6 +13,7 @@ interface InitialStateTypes {
   total: number
   loanAmount: number
   loanTerm: number
+  loanPurpose: string
 }
 
 interface CreateContextTypes {
@@ -25,7 +26,8 @@ const initialState: InitialStateTypes = {
   interestRates: 0,
   total: 0,
   loanAmount: 0,
-  loanTerm: 0
+  loanTerm: 0,
+  loanPurpose: ''
 } as const
 
 export const LoanContext = createContext<CreateContextTypes>({

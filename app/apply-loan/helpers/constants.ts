@@ -18,3 +18,15 @@ export const selectOptionsData: MenuOptions[] = [
     value: 24
   }
 ]
+
+export const loanPurpose = [
+  'Appliance/Gadgets',
+  'Bussines',
+  'Car Repair',
+  'Debt Consolidation',
+  'Home Repair',
+  'Medical Emergency',
+  'Personal Consumption',
+  'Travel',
+  'Wdding'
+]

@@ -5,20 +5,26 @@ import { BaseLine, Button, InputField, Select, Checkbox } from '@/components'
 import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
 import { useForm } from 'react-hook-form'
-import { selectOptionsData } from './helpers/constants'
+import { loanPurpose, selectOptionsData } from './helpers/constants'
 import Link from 'next/link'
 
 interface FormTypes {
   loanAmount: number
   loanTerm: number
   termsAndConditions: boolean
+  loanPurpose: string
 }
 
 const Page = (): JSX.Element => {
   const [activeSelect, setActiveSelect] = useState<number | undefined>(
     undefined
   )
-  const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
+
+  const [activeLoanOption, setActiveLoanOptions] = useState<string>('')
+  const [isOpenSelect, setIsOpenSelect] = useState<{
+    isOpen: boolean
+    status: '' | 'loan-option' | 'loan-term'
+  }>({ isOpen: false, status: '' })
 
   const { state, dispatch } = useContext(LoanContext)
 
@@ -29,6 +35,7 @@ const Page = (): JSX.Element => {
     handleSubmit,
     formState: { errors },
     setError,
+    setValue,
     control,
     watch,
     reset
@@ -60,29 +67,54 @@ const Page = (): JSX.Element => {
       return
     }
 
+    if (!activeLoanOption) {
+      setError('loanPurpose', {
+        message: 'required field.'
+      })
+
+      return
+    }
+
     dispatch({
       type: 'computation',
-      payload: { loanAmount, loanTerm: activeSelect }
+      payload: {
+        loanAmount,
+        loanTerm: activeSelect,
+        loanPurpose: activeLoanOption
+      }
     })
   }
 
   const setActiveOptions = (option: MenuOptions): void => {
-    setIsOpenSelect(false)
+    setIsOpenSelect({ isOpen: false, status: '' })
     setActiveSelect(option.value as number)
   }
 
-  const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
+  const setActiveLoan = (option: MenuOptions): void => {
+    setActiveLoanOptions(option.value as string)
+  }
+
+  const onOpenSelect = (status: 'loan-term' | 'loan-option'): void =>
+    setIsOpenSelect((prevState) => ({
+      isOpen: !prevState.isOpen,
+      status: status
+    }))
 
   const resetFields = (): void => {
     dispatch({ type: 'reset' })
     setActiveSelect(undefined)
+    setValue('loanPurpose', '')
+    setValue('loanAmount', 0)
     reset()
   }
 
+  console.log(state)
+
   useEffect(() => {
-    if (!!state.loanAmount) {
+    if (!!state.loanAmount || !!state.loanPurpose) {
       reset({
         loanAmount: state.loanAmount,
+        loanPurpose: state.loanPurpose,
         termsAndConditions: false
       })
 
@@ -104,6 +136,11 @@ const Page = (): JSX.Element => {
     ({ value }) => value !== activeSelect
   )
 
+  const loanPurposeOptions = loanPurpose.map((option) => ({
+    label: option,
+    value: option
+  }))
+
   return (
     <main className='flex bg-gray-secondary'>
       <BaseLine
@@ -112,22 +149,40 @@ const Page = (): JSX.Element => {
         styles='flex-[2.5]'
       >
         <form className='w-1/2 relative' onSubmit={handleSubmit(onSubmit)}>
-          <InputField
-            type='number'
-            label='LOAN AMOUNT'
-            hasError={!!errors.loanAmount}
-            errorMessage={errors?.loanAmount?.message as string}
-            hasSubText={true}
-            placeholder='Enter amount'
-            {...register('loanAmount', {
-              required: 'required field.'
-            })}
-          />
+          <div className='grid grid-cols-2 gap-4'>
+            <InputField
+              type='number'
+              label='LOAN AMOUNT'
+              hasError={!!errors.loanAmount}
+              errorMessage={errors?.loanAmount?.message as string}
+              hasSubText={true}
+              placeholder='Enter amount'
+              {...register('loanAmount', {
+                required: 'required field.'
+              })}
+            />
+
+            <Select
+              styles='-mt-2'
+              selectStyles='w-full'
+              isOpen={
+                isOpenSelect.isOpen && isOpenSelect.status === 'loan-option'
+              }
+              onOpen={() => onOpenSelect('loan-option')}
+              label='LOAN PURPOSE (optional)'
+              activeSelect={activeLoanOption}
+              setSelectOptions={setActiveLoan}
+              selectOptions={loanPurposeOptions as MenuOptions[]}
+              hasErrors={!!errors.loanPurpose}
+              errorMessage={errors.loanPurpose?.message as string}
+              placeholder='Select Loan Purpose'
+            />
+          </div>
           <Select
             styles='mt-6'
             selectStyles='w-full'
-            isOpen={isOpenSelect}
-            onOpen={onOpenSelect}
+            isOpen={isOpenSelect.isOpen && isOpenSelect.status === 'loan-term'}
+            onOpen={() => onOpenSelect('loan-term')}
             label='LOAN TERM'
             activeSelect={
               !!activeSelect

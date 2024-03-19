@@ -87,9 +87,12 @@ const Page = (): JSX.Element => {
           <h1 className='text-lg font-medium'>Loan Terms</h1>
 
           <Items
-            type='single'
-            label='LOAN AMOUNT'
-            value={`Php ${Number(loanAmount).toLocaleString()}`}
+            type='multiple'
+            hasImage={false}
+            firstLabel='LOAN AMOUNT'
+            firstValue={`Php ${Number(loanAmount).toLocaleString()}`}
+            secondLabel='LOAN PURPOSE'
+            secondValue={'---'}
           />
           <Items
             type='multiple'
@@ -108,18 +111,18 @@ const Page = (): JSX.Element => {
             type='multiple'
             hasImage={false}
             firstLabel='FIRST NAME'
-            firstValue={firstName || 'empty'}
+            firstValue={firstName || '---'}
             secondLabel='LAST NAME'
-            secondValue={lastName || 'empty'}
+            secondValue={lastName || '---'}
           />
 
           <Items
             type='multiple'
             hasImage={false}
             firstLabel='MOBILE NUMBER'
-            firstValue={mobileNumber || 'empty'}
+            firstValue={mobileNumber || '---'}
             secondLabel='EMAIL ADDRESS'
-            secondValue={email || 'empty'}
+            secondValue={email || '---'}
           />
 
           <Items type='single' label='DATE OF BIRTH' value={dateOfBirth} />
@@ -128,9 +131,9 @@ const Page = (): JSX.Element => {
             type='multiple'
             hasImage={true}
             firstLabel='ID TYPE'
-            firstValue={idType || 'empty'}
+            firstValue={idType || '---'}
             secondLabel='ID IMAGE'
-            secondValue={imageUrl || 'empty'}
+            secondValue={imageUrl}
           />
 
           <div className='pt-14 space-y-4'>

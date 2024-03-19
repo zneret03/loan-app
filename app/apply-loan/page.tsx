@@ -91,6 +91,7 @@ const Page = (): JSX.Element => {
   }
 
   const setActiveLoan = (option: MenuOptions): void => {
+    setIsOpenSelect({ isOpen: false, status: '' })
     setActiveLoanOptions(option.value as string)
   }
 
@@ -103,6 +104,7 @@ const Page = (): JSX.Element => {
   const resetFields = (): void => {
     dispatch({ type: 'reset' })
     setActiveSelect(undefined)
+    setActiveLoanOptions('')
     setValue('loanPurpose', '')
     setValue('loanAmount', 0)
     reset()

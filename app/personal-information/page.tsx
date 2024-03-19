@@ -153,7 +153,7 @@ const Page = (): JSX.Element => {
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
 
   return (
-    <div className='w-full max-w-6xl mx-auto bg-dark-slate shadow-sm'>
+    <div className='w-full pb-[5rem] max-w-6xl mx-auto bg-dark-slate shadow-sm'>
       <BaseLine
         title='Personal Information'
         styles='bg-dark-slate rounded-lg h-content'

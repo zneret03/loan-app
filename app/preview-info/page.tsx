@@ -74,7 +74,7 @@ const Page = (): JSX.Element => {
   } = personalDetails
 
   return (
-    <div className='w-full max-w-6xl bg-gray mx-auto text-dark-primary shadow-sm'>
+    <div className='w-full max-w-6xl bg-gray mx-auto text-dark-primary shadow-sm pb-[5rem]'>
       <BaseLine
         title='Please confirm your details below'
         styles='bg-gray/20 h-content'

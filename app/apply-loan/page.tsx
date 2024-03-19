@@ -28,14 +28,19 @@ const Page = (): JSX.Element => {
 
   const { state, dispatch } = useContext(LoanContext)
 
-  const { amortization, interestRates, total } = state
+  const {
+    amortization,
+    interestRates,
+    total,
+    documentaryStampFee,
+    disbursementFee
+  } = state
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
-    setValue,
     control,
     watch,
     reset
@@ -80,7 +85,8 @@ const Page = (): JSX.Element => {
       payload: {
         loanAmount,
         loanTerm: activeSelect,
-        loanPurpose: activeLoanOption
+        loanPurpose: activeLoanOption,
+        disbursementFee: 1_500
       }
     })
   }
@@ -105,12 +111,10 @@ const Page = (): JSX.Element => {
     dispatch({ type: 'reset' })
     setActiveSelect(undefined)
     setActiveLoanOptions('')
-    setValue('loanPurpose', '')
-    setValue('loanAmount', 0)
-    reset()
+    reset({
+      loanAmount: 0
+    })
   }
-
-  console.log(state)
 
   useEffect(() => {
     if (!!state.loanAmount || !!state.loanPurpose) {
@@ -222,9 +226,38 @@ const Page = (): JSX.Element => {
           </section>
 
           <aside className='divide divide-y divide-divider-dark space-y-6'>
-            <div className='space-y-6'>
-              <label className='text-sm '>INTEREST RATE</label>
-              <h2 className='text-2xl'>{interestRates}%</h2>
+            <div className='space-y-10'>
+              <div className='space-y-4'>
+                <label className='text-sm '>INTEREST RATE</label>
+                <h2 className='text-2xl'>{interestRates}%</h2>
+              </div>
+
+              <section className='space-y-4'>
+                <label className=' text-xs'>
+                  BREAKDOWN OF FEES AND CHARGES
+                </label>
+
+                <aside className='bg-banner/20 p-4 space-y-6'>
+                  <div className='space-y-4'>
+                    <label className='text-xs'>DISBURSEMENT FEE</label>
+                    <h2 className='text-base font-bold'>
+                      Php {disbursementFee || 0}
+                    </h2>
+                  </div>
+                  <div className='space-y-4 text-xs'>
+                    <div className='flex flex-col gap-1'>
+                      <label>DOCUMENTARY STAMP TAX</label>
+
+                      <label className='text-[#3C8BA2]'>
+                        (IF PHP 250,000 AND ABOVE)
+                      </label>
+                    </div>
+                    <h2 className='text-base font-bold'>
+                      Php {documentaryStampFee.toLocaleString()}
+                    </h2>
+                  </div>
+                </aside>
+              </section>
             </div>
 
             <div className='space-y-6 pt-6'>

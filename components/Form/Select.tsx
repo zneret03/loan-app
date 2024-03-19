@@ -31,7 +31,7 @@ export const Select = ({
 }: SelectTypes): JSX.Element => (
   <main className={`${styles}`}>
     <div className='mb-2'>
-      <label htmlFor='loan-term' className='text-xs text-primary-dark'>
+      <label htmlFor='loan-term' className='text-xs text-dark-primary'>
         {label}
       </label>
     </div>

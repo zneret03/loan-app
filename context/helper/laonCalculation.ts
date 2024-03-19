@@ -11,7 +11,7 @@ export const calculateLoanPayment = (
     (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1)
 
   // Calculate total interest paid
-  const totalInterest = monthlyPayment * loanTermMonths - loanAmount
+  const totalInterest = loanAmount * monthlyInterestRate * loanTermMonths
 
   // Calculate total payment
   const totalPayment = loanAmount + totalInterest

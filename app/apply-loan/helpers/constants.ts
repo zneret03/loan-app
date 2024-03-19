@@ -28,5 +28,5 @@ export const loanPurpose = [
   'Medical Emergency',
   'Personal Consumption',
   'Travel',
-  'Wdding'
+  'Wedding'
 ]

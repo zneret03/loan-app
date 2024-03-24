@@ -1,7 +1,8 @@
 'use client'
 
+import { useContext } from 'react'
 import { UseControllerProps, FieldValues, useController } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { ModalContext } from '..'
 
 type CheckBoxTypes<T extends FieldValues> = UseControllerProps<T> & {
   fromPath: string
@@ -17,17 +18,18 @@ export const Checkbox = <T extends FieldValues>(
   const {
     control,
     name,
-    fromPath,
+    // fromPath,
     isDisabled,
     callback,
     tAndCLabel,
     policyLabel
   } = props
-  const router = useRouter()
+
+  const { onToggle } = useContext(ModalContext)
 
   const toRedirect = (url: string): void => {
     callback()
-    router.push(url)
+    window.open(url)
   }
 
   const {
@@ -46,9 +48,7 @@ export const Checkbox = <T extends FieldValues>(
         I agree to the{' '}
         <label
           className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
-          onClick={() =>
-            toRedirect(`/terms-and-conditions?fromPath=${fromPath}`)
-          }
+          onClick={onToggle}
         >
           {tAndCLabel}
         </label>{' '}

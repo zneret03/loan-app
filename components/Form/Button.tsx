@@ -28,7 +28,7 @@ export const Button = ({
     {...rest}
   >
     <span className='font-semibold text-base flex items-center justify-center gap-2'>
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner style='w-4 h-4' />}
       {label}
     </span>
   </button>

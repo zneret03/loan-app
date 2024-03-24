@@ -10,7 +10,8 @@ import {
   CustomDatePicker,
   Select,
   Button,
-  Checkbox
+  Checkbox,
+  TermsAndConditionModal
 } from '@/components'
 import {
   InitialInformationStateTypes,
@@ -153,181 +154,187 @@ const Page = (): JSX.Element => {
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
 
   return (
-    <div className='w-full pb-[5rem] max-w-6xl mx-auto bg-dark-slate shadow-sm'>
-      <BaseLine
-        title='Personal Information'
-        styles='bg-dark-slate rounded-lg h-content'
-        dividerColor='divide-divider-slate'
-        isCenterTitle={true}
-        divider={true}
-        hasBackButton
-        historyPath='/apply-loan'
-      >
-        <main className='mb-14 text-left space-y-14'>
-          <div
-            className='bg-iris-slate w-[22.188rem]  border border-iris-dark text-sm
+    <>
+      <div className='w-full pb-[5rem] max-w-6xl mx-auto bg-dark-slate shadow-sm'>
+        <BaseLine
+          title='Personal Information'
+          styles='bg-dark-slate rounded-lg h-content'
+          dividerColor='divide-divider-slate'
+          isCenterTitle={true}
+          divider={true}
+          hasBackButton
+          historyPath='/apply-loan'
+        >
+          <main className='mb-14 text-left space-y-14'>
+            <div
+              className='bg-iris-slate w-[22.188rem]  border border-iris-dark text-sm
         text-white text-center px-3.5 py-[0.8rem] rounded-lg'
-          >
-            Ensure that all required details are filled up
-          </div>
+            >
+              Ensure that all required details are filled up
+            </div>
 
-          <div className='space-y-6'>
-            <section className='grid grid-cols-2 gap-8'>
-              <InputField
-                type='text'
-                label='FIRST NAME'
-                placeholder='Your first name'
-                hasError={!!errors.firstName}
-                errorMessage={errors.firstName?.message}
-                {...register('firstName', {
-                  required: 'required field.'
-                })}
-              />
-              <InputField
-                type='text'
-                label='LAST NAME'
-                placeholder='Your last name'
-                hasError={!!errors.lastName}
-                errorMessage={errors.lastName?.message}
-                {...register('lastName', {
-                  required: 'required field.'
-                })}
-              />
-            </section>
-
-            <section className='grid grid-cols-2 gap-8'>
-              <InputField
-                type='text'
-                label='MOBILE NUMBER'
-                placeholder='In 09XX-XXX-XXXX format'
-                hasError={!!errors.mobileNumber}
-                errorMessage={errors.mobileNumber?.message}
-                {...register('mobileNumber', {
-                  required: 'required field.',
-                  validate: (value) =>
-                    mobileNumberFormat.test(value as string) ||
-                    'mobile number should be in 09XX-XXX-XXXX format.'
-                })}
-              />
-              <InputField
-                label='EMAIL ADDRESS'
-                placeholder='Your Email address'
-                hasError={!!errors.email}
-                errorMessage={errors.email?.message}
-                {...register('email', {
-                  required: 'required field.',
-                  validate: (value) => validate(value)
-                })}
-              />
-            </section>
-            <section className='grd grid-cols-2'>
-              <CustomDatePicker
-                label='DATE OF BIRTH'
-                currentDate={startDate}
-                setCurrentDate={setStartDate}
-                hasError={!!errors.dateOfBirth}
-                errorMessage={errors.dateOfBirth?.message}
-              />
-            </section>
-
-            <section className='grid grid-cols-2 gap-8'>
-              <div className='relative'>
-                <Select
-                  styles='-mt-1.5'
-                  selectStyles='w-full'
-                  isOpen={isOpenSelect}
-                  onOpen={onOpenSelect}
-                  label='ID TYPE'
-                  hasErrors={!!errors.idType}
-                  errorMessage={errors.idType?.message}
-                  activeSelect={activeSelect as string}
-                  setSelectOptions={setActiveOptions}
-                  selectOptions={filteredOptions}
-                  placeholder='Select an ID type to upload'
+            <div className='space-y-6'>
+              <section className='grid grid-cols-2 gap-8'>
+                <InputField
+                  type='text'
+                  label='FIRST NAME'
+                  placeholder='Your first name'
+                  hasError={!!errors.firstName}
+                  errorMessage={errors.firstName?.message}
+                  {...register('firstName', {
+                    required: 'required field.'
+                  })}
                 />
-              </div>
-              <aside className='-mt-1'>
-                <label
-                  className={`text-dark-primary text-xs ${inter.className}`}
-                >
-                  UPLOAD IMAGE
-                </label>
-                <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
-                  <input
-                    type='file'
-                    ref={fileInputRef}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      const file = event.target?.files
+                <InputField
+                  type='text'
+                  label='LAST NAME'
+                  placeholder='Your last name'
+                  hasError={!!errors.lastName}
+                  errorMessage={errors.lastName?.message}
+                  {...register('lastName', {
+                    required: 'required field.'
+                  })}
+                />
+              </section>
 
-                      if (file) {
-                        const isValidExtension = checkFileType(file, [
-                          '.jpeg',
-                          '.jpg',
-                          '.png'
-                        ])
-                        const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
+              <section className='grid grid-cols-2 gap-8'>
+                <InputField
+                  type='text'
+                  label='MOBILE NUMBER'
+                  placeholder='In 09XX-XXX-XXXX format'
+                  hasError={!!errors.mobileNumber}
+                  errorMessage={errors.mobileNumber?.message}
+                  {...register('mobileNumber', {
+                    required: 'required field.',
+                    validate: (value) =>
+                      mobileNumberFormat.test(value as string) ||
+                      'mobile number should be in 09XX-XXX-XXXX format.'
+                  })}
+                />
+                <InputField
+                  label='EMAIL ADDRESS'
+                  placeholder='Your Email address'
+                  hasError={!!errors.email}
+                  errorMessage={errors.email?.message}
+                  {...register('email', {
+                    required: 'required field.',
+                    validate: (value) => validate(value)
+                  })}
+                />
+              </section>
+              <section className='grd grid-cols-2'>
+                <CustomDatePicker
+                  label='DATE OF BIRTH'
+                  currentDate={startDate}
+                  setCurrentDate={setStartDate}
+                  hasError={!!errors.dateOfBirth}
+                  errorMessage={errors.dateOfBirth?.message}
+                />
+              </section>
 
-                        if (isValidExtension) {
-                          setError('imageUrl', {
-                            message: 'image format is invalid.'
-                          })
-                          return
-                        }
-
-                        if (isFileSizeValid) {
-                          setError('imageUrl', {
-                            message: 'maximum of 1mb image only.'
-                          })
-                        }
-
-                        setImage(file[0] as File)
-                      }
-                    }}
-                    className='hidden'
+              <section className='grid grid-cols-2 gap-8'>
+                <div className='relative'>
+                  <Select
+                    styles='-mt-1.5'
+                    selectStyles='w-full'
+                    isOpen={isOpenSelect}
+                    onOpen={onOpenSelect}
+                    label='ID TYPE'
+                    hasErrors={!!errors.idType}
+                    errorMessage={errors.idType?.message}
+                    activeSelect={activeSelect as string}
+                    setSelectOptions={setActiveOptions}
+                    selectOptions={filteredOptions}
+                    placeholder='Select an ID type to upload'
                   />
-                  <span className={`text-gray.4 ${inter.className}`}>
-                    {image?.name || 'Upload ID'}
-                  </span>
-                  <button
-                    className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
-                    onClick={onUploadAction}
-                  >
-                    Choose
-                  </button>
                 </div>
-                {!!errors.imageUrl && (
-                  <span
-                    className={`${poppins.className} text-xs text-red-500 mt-2`}
+                <aside className='-mt-1'>
+                  <label
+                    className={`text-dark-primary text-xs ${inter.className}`}
                   >
-                    {errors.imageUrl?.message}
-                  </span>
-                )}
-              </aside>
-            </section>
-          </div>
-        </main>
+                    UPLOAD IMAGE
+                  </label>
+                  <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
+                    <input
+                      type='file'
+                      ref={fileInputRef}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        const file = event.target?.files
 
-        <div className='pt-12 space-y-6'>
-          <Button
-            type='button'
-            isDisabled={isFormEmpty || state.isLoading}
-            isLoading={state.isLoading}
-            action={handleSubmit(onSubmit)}
-            label='Continue'
-            styles='mt-6 w-full py-2'
-          />
-          <Checkbox
-            control={control}
-            callback={handleSubmit(onSubmit)}
-            isDisabled={isFormFilled}
-            name='termsAndConditions'
-            fromPath='persona-information'
-            tAndCLabel='Terms and Conditions'
-            policyLabel='Privacy Policy'
-          />
-        </div>
-      </BaseLine>
-    </div>
+                        if (file) {
+                          const isValidExtension = checkFileType(file, [
+                            '.jpeg',
+                            '.jpg',
+                            '.png'
+                          ])
+                          const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
+
+                          if (isValidExtension) {
+                            setError('imageUrl', {
+                              message: 'image format is invalid.'
+                            })
+                            return
+                          }
+
+                          if (isFileSizeValid) {
+                            setError('imageUrl', {
+                              message: 'maximum of 1mb image only.'
+                            })
+                          }
+
+                          setImage(file[0] as File)
+                        }
+                      }}
+                      className='hidden'
+                    />
+                    <span className={`text-gray.4 ${inter.className}`}>
+                      {image?.name || 'Upload ID'}
+                    </span>
+                    <button
+                      className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
+                      onClick={onUploadAction}
+                    >
+                      Choose
+                    </button>
+                  </div>
+                  {!!errors.imageUrl && (
+                    <span
+                      className={`${poppins.className} text-xs text-red-500 mt-2`}
+                    >
+                      {errors.imageUrl?.message}
+                    </span>
+                  )}
+                </aside>
+              </section>
+            </div>
+          </main>
+
+          <div className='pt-12 space-y-6'>
+            <Button
+              type='button'
+              isDisabled={isFormEmpty || state.isLoading}
+              isLoading={state.isLoading}
+              action={handleSubmit(onSubmit)}
+              label='Continue'
+              styles='mt-6 w-full py-2'
+            />
+            <Checkbox
+              control={control}
+              callback={handleSubmit(onSubmit)}
+              isDisabled={isFormFilled}
+              name='termsAndConditions'
+              fromPath='persona-information'
+              tAndCLabel='Terms and Conditions'
+              policyLabel='Privacy Policy'
+            />
+          </div>
+        </BaseLine>
+      </div>
+      <TermsAndConditionModal
+        callback={handleSubmit(onSubmit)}
+        path='preview-info'
+      />
+    </>
   )
 }
 export default Page

@@ -233,7 +233,7 @@ const Page = (): JSX.Element => {
 
             <aside className='divide divide-y divide-divider-dark space-y-6'>
               <div className='space-y-10'>
-                <div className='space-y-4'>
+                <div className='space-y-4 text-right'>
                   <label className='text-sm '>INTEREST RATE</label>
                   <h2 className='text-2xl'>{interestRates}%</h2>
                 </div>

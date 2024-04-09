@@ -58,13 +58,13 @@ const Page = (): JSX.Element => {
     }
   })
 
-  const isTermsAndCondition = watch('termsAndConditions')
+  // const isTermsAndCondition = watch('termsAndConditions')
   const amount = watch('loanAmount')
 
   const onSubmit = (data: FormTypes): void => {
     const { loanAmount } = data
 
-    if (Number(loanAmount) > 2_000_000 || Number(loanAmount) < 20_000) {
+    if (Number(loanAmount) > 2_000_001 || Number(loanAmount) < 20_000) {
       setError('loanAmount', {
         message: 'loan amount should be in 20,000.00 to 2,000,000.00 only.'
       })
@@ -132,7 +132,7 @@ const Page = (): JSX.Element => {
   }, [activeSelect, activeLoanOption])
 
   const isFormFilled = !!amount && !!activeSelect
-  const isDisableButton = isFormFilled && isTermsAndCondition
+  const isDisableButton = isFormFilled
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
@@ -266,7 +266,7 @@ const Page = (): JSX.Element => {
                 </section>
               </div>
 
-              <div className='space-y-6 pt-6'>
+              <div className='space-y-6 pt-6 text-right'>
                 <label className='text-sm'>TOTAL</label>
                 <h2 className='text-2xl'>
                   Php {Number(total).toLocaleString('en-US')}

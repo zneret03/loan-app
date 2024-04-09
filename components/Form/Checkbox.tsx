@@ -53,7 +53,7 @@ export const Checkbox = <T extends FieldValues>(
           {tAndCLabel}
         </label>{' '}
         <label
-          className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
+          className='underline font-bold cursor-pointer'
           onClick={() => toRedirect(`/privacy-policy`)}
         >
           {policyLabel}

@@ -11,6 +11,13 @@
   }
 }
 
+.center-screen {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  margin-right: -50%;
+}
+
 .react-datepicker {
   @apply z-50 border-none shadow-lg px-2 py-2 w-[22rem] h-[22rem] !important;
 }

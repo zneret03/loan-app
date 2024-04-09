@@ -37,7 +37,7 @@ const Page = (): JSX.Element => {
           </p>
         </section>
 
-        <section className='w-[27rem] bg-banner/20 px-4 py-6 space-y-4'>
+        <section className='w-[27rem] rounded-sm rounded-tl-none bg-banner/20 px-4 py-6 space-y-4'>
           <PageItems
             label='Reference Number'
             value={referenceNumber as string}

@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/components'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Page = (): JSX.Element => {
   const router = useRouter()
@@ -17,7 +18,9 @@ const Page = (): JSX.Element => {
         </h1>
       </div>
 
-      <Button label='Create an account' styles='mt-16 mb-6 py-4 px-16 ' />
+      <Link href='/sign-up'>
+        <Button label='Create an account' styles='mt-16 mb-6 py-4 px-16 ' />
+      </Link>
       <span
         className='cursor-pointer text-base text-dark-primary'
         onClick={previousPage}

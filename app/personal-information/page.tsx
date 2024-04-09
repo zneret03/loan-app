@@ -262,19 +262,19 @@ const Page = (): JSX.Element => {
                         const file = event.target?.files
 
                         if (file) {
-                          const isValidExtension = checkFileType(file, [
-                            '.jpeg',
-                            '.jpg',
-                            '.png'
-                          ])
+                          // const isValidExtension = checkFileType(file, [
+                          //   '.jpeg',
+                          //   '.jpg',
+                          //   '.png'
+                          // ])
                           const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
 
-                          if (isValidExtension) {
-                            setError('imageUrl', {
-                              message: 'image format is invalid.'
-                            })
-                            return
-                          }
+                          // if (isValidExtension) {
+                          //   setError('imageUrl', {
+                          //     message: 'image format is invalid.'
+                          //   })
+                          //   return
+                          // }
 
                           if (isFileSizeValid) {
                             setError('imageUrl', {

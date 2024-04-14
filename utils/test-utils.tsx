@@ -1,0 +1,38 @@
+import { act } from '@testing-library/react'
+
+export const waitScreenUpdate = async (timer?: number): Promise<void> => {
+  // ? Wait for the lazy component to load
+  await act(
+    () =>
+      new Promise((resolve) => {
+        setTimeout(resolve, timer || 0)
+      })
+  )
+}
+
+export const mockUseRouter = (
+  push?: () => void,
+  pathname?: string,
+  route?: string,
+  query?: { id: string } | { token: string },
+  asPath?: string,
+  back?: () => void
+): void => {
+  /* eslint-disable unicorn/prefer-module */
+  /* eslint-disable @typescript-eslint/no-var-requires */
+  const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+  /* eslint-enable unicorn/prefer-module */
+  /* eslint-enable @typescript-eslint/no-var-requires */
+  useRouter.mockImplementation(() => ({
+    push,
+    route,
+    pathname,
+    query,
+    asPath,
+    back
+  }))
+}
+
+// Re-export all of react testing lib here
+export * from '@testing-library/react'
+export { default as userEvent } from '@testing-library/user-event'

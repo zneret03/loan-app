@@ -36,6 +36,7 @@ export const InputField = forwardRef<Ref, InputFieldTypes>(
         <input
           id='loan-amount'
           type={type}
+          role='textbox'
           className={`${poppins.className} 
             border ${hasError ? 'border-red-500' : 'border-primary'} 
             focus:border-dark-primary 

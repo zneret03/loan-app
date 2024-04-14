@@ -29,7 +29,7 @@ export const Select = ({
   styles,
   selectStyles
 }: SelectTypes): JSX.Element => (
-  <main className={`${styles}`}>
+  <main className={`${styles}`} aria-label='menu-dropdown'>
     <div className='mb-2'>
       <label htmlFor='loan-term' className='text-xs text-dark-primary'>
         {label}
@@ -53,7 +53,7 @@ export const Select = ({
         </div>
 
         {isOpen && (
-          <div className='flex flex-col'>
+          <div className='flex flex-col' role='menuitem'>
             {selectOptions.map((option) => (
               <option
                 key={option.label}

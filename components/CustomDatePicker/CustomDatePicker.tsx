@@ -44,7 +44,7 @@ const CustomHeader = ({
 }: CustomHeader): JSX.Element => (
   <main className='flex items-center justify-between px-4 py-2'>
     <span className='text-lg font-bold text-calendar-primary'>
-      {months[getMonth(date)]}
+      {months[getMonth(date)]} {date.getFullYear()}
     </span>
     <section className='flex items-center gap-6'>
       <AccordionLeft action={decreaseMonth} />

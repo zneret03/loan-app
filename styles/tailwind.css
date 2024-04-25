@@ -59,7 +59,12 @@
 }
 
 .react-datepicker__day--keyboard-selected {
-  @apply bg-calendar-day text-white rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
+  background-color: inherit;
+  color: inherit;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-transparent text-[#666666] rounded-full w-8 h-8 m-0 p-0 flex items-center justify-center !important;
 }
 
 .react-datepicker__day--disabled {

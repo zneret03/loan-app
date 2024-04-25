@@ -35,7 +35,7 @@ export const BaseLine = ({
       >
         <h1 className='text-[2rem] text-dark-primary'>
           {hasBackButton && (
-            <Link href={historyPath as string}>
+            <Link href={`${historyPath as string}?previous=true`}>
               <div className='flex items-center gap-2 mb-6 cursor-pointer'>
                 <AccordionLeft color='stroke-dark-primary' />
                 <h2 className='text-sm text-left'>BACK</h2>

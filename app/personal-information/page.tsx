@@ -19,14 +19,14 @@ import {
   useValidation,
   useUploadImage
 } from '@/lib'
-import { checkFileSize, checkFileType, mobileNumberFormat } from '@/helpers'
+import { checkFileSize, mobileNumberFormat } from '@/helpers'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
-  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [startDate, setStartDate] = useState<Date | null>(new Date())
   const [activeSelect, setActiveSelect] = useState<string | undefined>(
     undefined
   )
@@ -52,6 +52,7 @@ const Page = (): JSX.Element => {
   })
 
   const query = useRouter()
+  const queryParams = useSearchParams()
 
   const isTermsAndCondition = watch('termsAndConditions')
 
@@ -112,11 +113,12 @@ const Page = (): JSX.Element => {
 
     setTimeout(() => {
       dispatch({ type: 'continue', payload: config })
+      reset()
     }, 3000)
   }
 
   useEffect(() => {
-    if (!!state.firstName) {
+    if (!!state.firstName && queryParams.get('previous') === 'true') {
       reset({
         ...state,
         termsAndConditions: false

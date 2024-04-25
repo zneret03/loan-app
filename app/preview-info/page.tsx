@@ -88,6 +88,8 @@ const Page = (): JSX.Element => {
             dividerColor='divide-divider-slate'
             isCenterTitle={false}
             divider={true}
+            hasBackButton
+            historyPath='/personal-information'
           >
             <section className='space-y-10'>
               <h1 className='text-lg font-medium'>Loan Terms</h1>

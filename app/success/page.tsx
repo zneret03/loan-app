@@ -2,8 +2,7 @@
 
 import { useContext } from 'react'
 import { PersonalInformationContext } from '@/context'
-import { Center, Button } from '@/components'
-import { useRouter } from 'next/navigation'
+import { Center } from '@/components'
 
 const PageItems = ({
   label,
@@ -19,7 +18,6 @@ const PageItems = ({
 )
 
 const Page = (): JSX.Element => {
-  const router = useRouter()
   const { state } = useContext(PersonalInformationContext)
 
   const { referenceNumber, dateToday } = state
@@ -44,14 +42,6 @@ const Page = (): JSX.Element => {
           />
           <PageItems label='Date' value={dateToday as string} />
         </section>
-
-        <div className='pt-16'>
-          <Button
-            label='Go Back'
-            action={() => router.back()}
-            styles='py-4 px-12'
-          />
-        </div>
       </main>
     </Center>
   )

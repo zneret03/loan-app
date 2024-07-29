@@ -19,7 +19,7 @@ import {
   useValidation,
   useUploadImage
 } from '@/lib'
-import { checkFileSize, mobileNumberFormat } from '@/helpers'
+import { checkFileSize, mobileNumberFormat, checkFileType } from '@/helpers'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -118,7 +118,7 @@ const Page = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (!!state.firstName && queryParams.get('previous') === 'true') {
+    if (!!state.firstName || queryParams.get('previous') === 'true') {
       reset({
         ...state,
         termsAndConditions: false
@@ -154,6 +154,8 @@ const Page = (): JSX.Element => {
     !startDate
 
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
+  const isDisableContinue =
+    isFormEmpty || state.isLoading || !isTermsAndCondition
 
   return (
     <>
@@ -201,7 +203,7 @@ const Page = (): JSX.Element => {
 
               <section className='grid grid-cols-2 gap-8'>
                 <InputField
-                  type='text'
+                  type='number'
                   label='MOBILE NUMBER'
                   placeholder='In 09XX-XXX-XXXX format'
                   hasError={!!errors.mobileNumber}
@@ -264,23 +266,27 @@ const Page = (): JSX.Element => {
                         const file = event.target?.files
 
                         if (file) {
-                          // const isValidExtension = checkFileType(file, [
-                          //   '.jpeg',
-                          //   '.jpg',
-                          //   '.png'
-                          // ])
-                          const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
+                          const isValidExtension = checkFileType(file, [
+                            '.jpeg',
+                            '.jpg',
+                            '.png'
+                          ])
 
-                          // if (isValidExtension) {
-                          //   setError('imageUrl', {
-                          //     message: 'image format is invalid.'
-                          //   })
-                          //   return
-                          // }
+                          const isFileSizeValid = checkFileSize(
+                            file,
+                            10_000_000
+                          ) // fileSize limit to 10mb only
+
+                          if (isValidExtension) {
+                            setError('imageUrl', {
+                              message: 'image format is invalid.'
+                            })
+                            return
+                          }
 
                           if (isFileSizeValid) {
                             setError('imageUrl', {
-                              message: 'maximum of 1mb image only.'
+                              message: 'The file exceeds 10mb.'
                             })
                           }
 
@@ -314,7 +320,7 @@ const Page = (): JSX.Element => {
           <div className='pt-12 space-y-6'>
             <Button
               type='button'
-              isDisabled={isFormEmpty || state.isLoading}
+              isDisabled={isDisableContinue}
               isLoading={state.isLoading}
               action={handleSubmit(onSubmit)}
               label='Continue'
@@ -326,7 +332,7 @@ const Page = (): JSX.Element => {
               isDisabled={isFormFilled}
               name='termsAndConditions'
               fromPath='persona-information'
-              tAndCLabel='Terms and Conditions'
+              tAndCLabel='Terms and Conditions and'
               policyLabel='Privacy Policy'
             />
           </div>

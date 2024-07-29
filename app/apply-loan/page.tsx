@@ -13,6 +13,7 @@ import { MenuOptions } from '@/lib'
 import { LoanContext } from '@/context'
 import { useForm } from 'react-hook-form'
 import { loanPurpose, selectOptionsData } from './helpers/constants'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 interface FormTypes {
@@ -34,6 +35,9 @@ const Page = (): JSX.Element => {
   }>({ isOpen: false, status: '' })
 
   const { state, dispatch } = useContext(LoanContext)
+
+  const params = useSearchParams()
+  const isPrevious = params.get('previous')
 
   const {
     amortization,
@@ -58,7 +62,7 @@ const Page = (): JSX.Element => {
     }
   })
 
-  // const isTermsAndCondition = watch('termsAndConditions')
+  const isTermsAndCondition = watch('termsAndConditions')
   const amount = watch('loanAmount')
 
   const onSubmit = (data: FormTypes): void => {
@@ -66,7 +70,7 @@ const Page = (): JSX.Element => {
 
     if (Number(loanAmount) > 2_000_001 || Number(loanAmount) < 20_000) {
       setError('loanAmount', {
-        message: 'loan amount should be in 20,000.00 to 2,000,000.00 only.'
+        message: 'Loan amount should be in 20,000.00 to 2,000,000.00 only.'
       })
 
       return
@@ -132,7 +136,7 @@ const Page = (): JSX.Element => {
   }, [activeSelect, activeLoanOption])
 
   const isFormFilled = !!amount && !!activeSelect
-  const isDisableButton = isFormFilled
+  const isDisableButton = isFormFilled && isTermsAndCondition
 
   const selectOptionsFormat: MenuOptions[] = selectOptionsData.map(
     (options) => ({
@@ -149,6 +153,17 @@ const Page = (): JSX.Element => {
     label: option,
     value: option
   }))
+
+  useEffect(() => {
+    if (isPrevious === 'true') {
+      reset({
+        ...state
+      })
+
+      setActiveSelect(state.loanTerm)
+      setActiveLoanOptions(state.loanPurpose)
+    }
+  }, [isPrevious])
 
   return (
     <>
@@ -289,7 +304,7 @@ const Page = (): JSX.Element => {
                 isDisabled={!isFormFilled}
                 name='termsAndConditions'
                 fromPath='apply-loan'
-                tAndCLabel='Terms and Conditions'
+                tAndCLabel='Terms and Conditions and'
                 policyLabel='Privacy Policy'
               />
             </section>

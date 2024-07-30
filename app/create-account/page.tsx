@@ -1,7 +1,8 @@
 'use client'
+
+import { Tooltip } from '@chakra-ui/react'
 import { Button } from '@/components'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 const Page = (): JSX.Element => {
   const router = useRouter()
@@ -18,9 +19,28 @@ const Page = (): JSX.Element => {
         </h1>
       </div>
 
-      <Link href='/sign-up'>
-        <Button label='Create an account' styles='mt-16 mb-6 py-4 px-16 ' />
-      </Link>
+      <div
+        className='
+mt-16 mb-6 
+      '
+      >
+        <Tooltip
+          label='Coming soon.'
+          hasArrow
+          placement='top'
+          background='white'
+          color='#29515C'
+          p='2'
+          mb='2'
+        >
+          <div>
+            <Button
+              label='Create an account'
+              styles='opacity-50 cursor-auto py-4 px-16 '
+            />
+          </div>
+        </Tooltip>
+      </div>
       <span
         className='cursor-pointer text-base text-dark-primary'
         onClick={previousPage}

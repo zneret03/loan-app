@@ -19,10 +19,36 @@ import {
   useValidation,
   useUploadImage
 } from '@/lib'
-import { checkFileSize, mobileNumberFormat } from '@/helpers'
+import {
+  checkFileSize,
+  mobileNumberFormat,
+  checkFileType,
+  numberOnly
+} from '@/helpers'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
+
+const formatPhoneNumber = (value: string): string => {
+  // Remove all non-digit characters
+  const cleaned = ('' + value).replace(/\D/g, '')
+
+  // Check if the input is of correct length
+  const match = cleaned.match(/^(\d{0,4})(\d{0,3})(\d{0,4})$/)
+
+  if (match) {
+    // Reformat and return the phone number
+    const formatted = `${match[1]}${match[2] ? '-' : ''}${match[2]}${match[3] ? '-' : ''}${match[3]}`
+    return formatted
+  }
+  return value
+}
+
+const validateNumber = (value: string): string | boolean => {
+  let message = ''
+
+  return message
+}
 
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
@@ -44,7 +70,8 @@ const Page = (): JSX.Element => {
     watch,
     control,
     reset,
-    formState: { errors }
+    formState: { errors },
+    setValue
   } = useForm<InitialInformationStateTypes>({
     defaultValues: {
       termsAndConditions: false
@@ -57,6 +84,7 @@ const Page = (): JSX.Element => {
   const isTermsAndCondition = watch('termsAndConditions')
 
   const watchForm = watch(['firstName', 'lastName', 'mobileNumber', 'email'])
+  const mobileNumber = watch('mobileNumber')
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -97,6 +125,18 @@ const Page = (): JSX.Element => {
       return
     }
 
+    if (!mobileNumberFormat.test(data.mobileNumber)) {
+      setError('mobileNumber', {
+        message: 'Mobile number should be in 09XX-XXX-XXXX format.'
+      })
+    }
+
+    if (!numberOnly.test(data.mobileNumber)) {
+      setError('mobileNumber', {
+        message: 'Number only.'
+      })
+    }
+
     const { getUrl } = await uploadImage(image)
 
     const config = {
@@ -118,7 +158,7 @@ const Page = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (!!state.firstName && queryParams.get('previous') === 'true') {
+    if (!!state.firstName || queryParams.get('previous') === 'true') {
       reset({
         ...state,
         termsAndConditions: false
@@ -135,6 +175,18 @@ const Page = (): JSX.Element => {
       clearErrors()
     }
   }, [activeSelect, image, startDate, clearErrors])
+
+  useEffect(() => {
+    const formatNumber = formatPhoneNumber(mobileNumber)
+
+    const delayDebounceFn = setTimeout(() => {
+      if (formatNumber) {
+        setValue('mobileNumber', formatNumber)
+      }
+    }, 2000)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [mobileNumber])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
@@ -154,6 +206,8 @@ const Page = (): JSX.Element => {
     !startDate
 
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
+  const isDisableContinue =
+    isFormEmpty || state.isLoading || !isTermsAndCondition
 
   return (
     <>
@@ -207,10 +261,7 @@ const Page = (): JSX.Element => {
                   hasError={!!errors.mobileNumber}
                   errorMessage={errors.mobileNumber?.message}
                   {...register('mobileNumber', {
-                    required: 'required field.',
-                    validate: (value) =>
-                      mobileNumberFormat.test(value as string) ||
-                      'mobile number should be in 09XX-XXX-XXXX format.'
+                    required: 'required field.'
                   })}
                 />
                 <InputField
@@ -264,23 +315,27 @@ const Page = (): JSX.Element => {
                         const file = event.target?.files
 
                         if (file) {
-                          // const isValidExtension = checkFileType(file, [
-                          //   '.jpeg',
-                          //   '.jpg',
-                          //   '.png'
-                          // ])
-                          const isFileSizeValid = checkFileSize(file, 1_000_000) // fileSize limit to 1mb only
+                          const isValidExtension = checkFileType(file, [
+                            '.jpeg',
+                            '.jpg',
+                            '.png'
+                          ])
 
-                          // if (isValidExtension) {
-                          //   setError('imageUrl', {
-                          //     message: 'image format is invalid.'
-                          //   })
-                          //   return
-                          // }
+                          const isFileSizeValid = checkFileSize(
+                            file,
+                            10_000_000
+                          ) // fileSize limit to 10mb only
+
+                          if (isValidExtension) {
+                            setError('imageUrl', {
+                              message: 'image format is invalid.'
+                            })
+                            return
+                          }
 
                           if (isFileSizeValid) {
                             setError('imageUrl', {
-                              message: 'maximum of 1mb image only.'
+                              message: 'The file exceeds 10mb.'
                             })
                           }
 
@@ -314,7 +369,7 @@ const Page = (): JSX.Element => {
           <div className='pt-12 space-y-6'>
             <Button
               type='button'
-              isDisabled={isFormEmpty || state.isLoading}
+              isDisabled={isDisableContinue}
               isLoading={state.isLoading}
               action={handleSubmit(onSubmit)}
               label='Continue'
@@ -326,7 +381,7 @@ const Page = (): JSX.Element => {
               isDisabled={isFormFilled}
               name='termsAndConditions'
               fromPath='persona-information'
-              tAndCLabel='Terms and Conditions'
+              tAndCLabel='Terms and Conditions and'
               policyLabel='Privacy Policy'
             />
           </div>

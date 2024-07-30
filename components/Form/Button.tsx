@@ -20,7 +20,7 @@ export const Button = ({
 }: ButtonTypes): JSX.Element => (
   <button
     type={type}
-    className={`border border-2 border-primary bg-transparent 
+    className={`border border-2 border-primary bg-transparent
       ${isDisabled ? 'bg-transparent text-dark-primary ' : 'hover:bg-primary hover:text-white '} 
       rounded-lg ${isDisabled && 'opacity-50 cursor-not-allowed'} ${styles}`}
     onClick={action}

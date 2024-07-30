@@ -11,8 +11,8 @@ export const TopNav = (): JSX.Element => (
       hasArrow
       placement='right'
       background='white'
+      color='#29515C'
       p='2'
-      color=''
     >
       <aside className='flex items-center gap-2 cursor-pointer relative h-fit'>
         <HamburgerIcon />

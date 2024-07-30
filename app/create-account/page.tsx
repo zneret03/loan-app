@@ -29,7 +29,7 @@ mt-16 mb-6
           hasArrow
           placement='top'
           background='white'
-          color='black'
+          color='#29515C'
           p='2'
           mb='2'
         >

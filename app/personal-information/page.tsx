@@ -44,12 +44,6 @@ const formatPhoneNumber = (value: string): string => {
   return value
 }
 
-const validateNumber = (value: string): string | boolean => {
-  let message = ''
-
-  return message
-}
-
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
   const [startDate, setStartDate] = useState<Date | null>(new Date())

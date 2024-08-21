@@ -318,7 +318,9 @@ const Page = (): JSX.Element => {
                           const isValidExtension = checkFileType(file, [
                             '.jpeg',
                             '.jpg',
-                            '.png'
+                            '.png',
+                            '.xlsx',
+                            '.csv'
                           ])
 
                           const isFileSizeValid = checkFileSize(
@@ -337,6 +339,7 @@ const Page = (): JSX.Element => {
                             setError('imageUrl', {
                               message: 'The file exceeds 10mb.'
                             })
+                            return
                           }
 
                           setImage(file[0] as File)

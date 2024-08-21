@@ -92,6 +92,8 @@ const Page = (): JSX.Element => {
       return
     }
 
+    console.log(activeLoanOption)
+
     dispatch({
       type: 'computation',
       payload: {

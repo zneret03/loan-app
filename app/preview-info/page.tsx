@@ -62,7 +62,7 @@ const Page = (): JSX.Element => {
   const { state: personalDetails } = useContext(PersonalInformationContext)
   const { state: loanDetails } = useContext(LoanContext)
 
-  const { loanAmount, loanTerm, total } = loanDetails
+  const { loanAmount, loanPurpose, loanTerm, total } = loanDetails
   const {
     firstName,
     lastName,
@@ -72,6 +72,8 @@ const Page = (): JSX.Element => {
     imageUrl,
     idType
   } = personalDetails
+
+  console.log(loanPurpose)
 
   return (
     <>
@@ -100,7 +102,7 @@ const Page = (): JSX.Element => {
                 firstLabel='LOAN AMOUNT'
                 firstValue={`Php ${Number(loanAmount).toLocaleString()}`}
                 secondLabel='LOAN PURPOSE'
-                secondValue={'---'}
+                secondValue={loanPurpose === 'Wedding' ? '---' : loanPurpose}
               />
               <Items
                 type='multiple'

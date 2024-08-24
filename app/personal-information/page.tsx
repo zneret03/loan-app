@@ -44,11 +44,11 @@ const formatPhoneNumber = (value: string): string => {
   return value
 }
 
-const validateNumber = (value: string): string | boolean => {
-  let message = ''
-
-  return message
-}
+// const validateNumber = (value: string): string | boolean => {
+//   let message = ''
+//
+//   return message
+// }
 
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
@@ -183,7 +183,7 @@ const Page = (): JSX.Element => {
       if (formatNumber) {
         setValue('mobileNumber', formatNumber)
       }
-    }, 2000)
+    }, 100)
 
     return () => clearTimeout(delayDebounceFn)
   }, [mobileNumber])

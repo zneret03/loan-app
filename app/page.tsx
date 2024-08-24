@@ -14,11 +14,11 @@ const ButtonObj = [
   }
 ]
 
-const isApplyLoan =
-  typeof window !== 'undefined' &&
-  window.history.state?.tree[1]?.children[0] === 'apply-loan'
-
 const Home = (): JSX.Element => {
+  const isApplyLoan =
+    typeof window !== 'undefined' &&
+    window.history.state?.tree[1]?.children[0] === 'apply-loan'
+
   return (
     <Center>
       <div className='text-center'>

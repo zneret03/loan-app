@@ -18,19 +18,19 @@ export const Checkbox = <T extends FieldValues>(
   const {
     control,
     name,
-    // fromPath,
+    fromPath,
     isDisabled,
-    // callback,
+    callback,
     tAndCLabel,
     policyLabel
   } = props
 
   const { onToggle } = useContext(ModalContext)
 
-  // const toRedirect = (url: string): void => {
-  //   callback()
-  //   window.open(url)
-  // }
+  const toRedirect = (url: string): void => {
+    callback()
+    window.open(url)
+  }
 
   const {
     field: { ref, ...rest }
@@ -52,7 +52,14 @@ export const Checkbox = <T extends FieldValues>(
         >
           {tAndCLabel}
         </label>{' '}
-        <label className='underline font-bold cursor-pointer'>
+        <label
+          className='underline font-bold cursor-pointer'
+          onClick={
+            fromPath === 'apply-loan'
+              ? () => toRedirect('privacy-policy')
+              : () => {}
+          }
+        >
           {policyLabel}
         </label>
       </label>

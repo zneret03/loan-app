@@ -5,7 +5,7 @@ export const checkFileType = (
   let incorrectType = false
 
   if (files) {
-    const type = files[0].name.split('.').pop() || ''
+    const type = files[0]?.name.split('.').pop() || ''
     const acceptedFilesWithoutDot = acceptedTypes.map((extension) =>
       extension.replace('.', '')
     )

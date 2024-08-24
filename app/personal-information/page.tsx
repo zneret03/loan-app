@@ -44,6 +44,12 @@ const formatPhoneNumber = (value: string): string => {
   return value
 }
 
+// const validateNumber = (value: string): string | boolean => {
+//   let message = ''
+//
+//   return message
+// }
+
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
   const [startDate, setStartDate] = useState<Date | null>(new Date())
@@ -177,7 +183,7 @@ const Page = (): JSX.Element => {
       if (formatNumber) {
         setValue('mobileNumber', formatNumber)
       }
-    }, 2000)
+    }, 100)
 
     return () => clearTimeout(delayDebounceFn)
   }, [mobileNumber])
@@ -312,7 +318,9 @@ const Page = (): JSX.Element => {
                           const isValidExtension = checkFileType(file, [
                             '.jpeg',
                             '.jpg',
-                            '.png'
+                            '.png',
+                            '.xlsx',
+                            '.csv'
                           ])
 
                           const isFileSizeValid = checkFileSize(
@@ -331,6 +339,7 @@ const Page = (): JSX.Element => {
                             setError('imageUrl', {
                               message: 'The file exceeds 10mb.'
                             })
+                            return
                           }
 
                           setImage(file[0] as File)

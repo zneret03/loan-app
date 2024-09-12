@@ -7,6 +7,6 @@ export interface LoanActionTypes {
 }
 
 export interface PersonalInfoActionTypes<FormFields> {
-  type: 'continue' | 'loading'
+  type: 'continue' | 'loading' | 'error'
   payload: FormFields
 }

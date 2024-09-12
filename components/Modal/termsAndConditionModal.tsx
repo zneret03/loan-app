@@ -42,7 +42,7 @@ export const TermsAndConditionModal = ({
         <article className={`p-6 space-y-6 h-[25rem] ${poppins.className}`}>
           <p>
             These terms and conditions outline the rules and regulations for the
-            use of Loan app's Website
+            use of Loan app&apos;s Website
           </p>
 
           <p>
@@ -54,11 +54,13 @@ export const TermsAndConditionModal = ({
           <p>
             The following terminology applies to these Terms and Conditions,
             Privacy Statement and Disclaimer Notice and all Agreements:
-            "Client", "You" and "Your" refers to you, the person log on this
-            website and compliant to the Company’s terms and conditions. "The
-            Company", "Ourselves", "We", "Our" and "Us", refers to our Company.
-            "Party", "Parties", or "Us", refers to both the Client and
-            ourselves. All terms refer to the offer, acceptance and
+            &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to
+            you, the person log on this website and compliant to the Company’s
+            terms and conditions. &quot;The Company&quot;,
+            &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and
+            &quot;Us&quot;, refers to our Company. &quot;Party&quot;,
+            &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client
+            and ourselves. All terms refer to the offer, acceptance and
             consideration of payment necessary to undertake the process of our
             assistance to the Client in the most appropriate manner for the
             express purpose of meeting the Client’s needs in respect of
@@ -80,15 +82,15 @@ export const TermsAndConditionModal = ({
 
           <p>
             We employ the use of cookies. By accessing Loan app, you agreed to
-            use cookies in agreement with the Loan app's Privacy Policy.
+            use cookies in agreement with the Loan app&apos;s Privacy Policy.
           </p>
 
           <p>
-            Most interactive websites use cookies to let us retrieve the user's
-            details for each visit. Cookies are used by our website to enable
-            the functionality of certain areas to make it easier for people
-            visiting our website. Some of our affiliate/advertising partners may
-            also use cookies.
+            Most interactive websites use cookies to let us retrieve the
+            user&apos;s details for each visit. Cookies are used by our website
+            to enable the functionality of certain areas to make it easier for
+            people visiting our website. Some of our affiliate/advertising
+            partners may also use cookies.
           </p>
 
           <h3>
@@ -191,7 +193,7 @@ export const TermsAndConditionModal = ({
             other Website information so long as the link: (a) is not in any way
             deceptive; (b) does not falsely imply sponsorship, endorsement or
             approval of the linking party and its products and/or services; and
-            (c) fits within the context of the linking party's site.
+            (c) fits within the context of the linking party&apos;s site.
           </p>
 
           <p>
@@ -225,7 +227,7 @@ export const TermsAndConditionModal = ({
             (a) is not in any way deceptive; (b) does not falsely imply
             sponsorship, endorsement or approval of the linking party and its
             products or services; and (c) fits within the context of the linking
-            party's site.
+            party&apos;s site.
           </p>
 
           <p>
@@ -246,12 +248,12 @@ export const TermsAndConditionModal = ({
             <li>
               By use of any other description of our Website being linked to
               that makes sense within the context and format of content on the
-              linking party's site.
+              linking party&apos;s site.
             </li>
           </ul>
 
           <p>
-            No use of Loan app's logo or other artwork will be allowed for
+            No use of Loan app&apos;s logo or other artwork will be allowed for
             linking absent a trademark license agreement.
           </p>
 
@@ -286,9 +288,9 @@ export const TermsAndConditionModal = ({
             We reserve the right to request that you remove all links or any
             particular link to our Website. You approve to immediately remove
             all links to our Website upon request. We also reserve the right to
-            amen these terms and conditions and it's linking policy at any time.
-            By continuously linking to our Website, you agree to be bound to and
-            follow these linking terms and conditions.
+            amen these terms and conditions and it&apos;s linking policy at any
+            time. By continuously linking to our Website, you agree to be bound
+            to and follow these linking terms and conditions.
           </p>
 
           <h3>

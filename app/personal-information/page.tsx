@@ -168,7 +168,7 @@ const Page = (): JSX.Element => {
       setActiveSelect(state.idType)
       setImage(state.rawImage as File)
     }
-  }, [state, setActiveSelect, setStartDate])
+  }, [state, setActiveSelect, setStartDate, queryParams, reset, setValue])
 
   useEffect(() => {
     if (!!activeSelect || !!image || !!startDate) {
@@ -186,7 +186,7 @@ const Page = (): JSX.Element => {
     }, 100)
 
     return () => clearTimeout(delayDebounceFn)
-  }, [mobileNumber])
+  }, [mobileNumber, setValue])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 

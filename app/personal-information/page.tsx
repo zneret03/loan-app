@@ -356,6 +356,7 @@ const Page = (): JSX.Element => {
                             setError('imageUrl', {
                               message: 'image format is invalid.'
                             })
+                            setImage(null)
                             return
                           }
 

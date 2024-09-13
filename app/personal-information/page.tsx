@@ -56,6 +56,7 @@ const Page = (): JSX.Element => {
   const [activeSelect, setActiveSelect] = useState<string | undefined>(
     undefined
   )
+  const [isMount, setMount] = useState<boolean>(true)
   const [image, setImage] = useState<File | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
 
@@ -97,6 +98,10 @@ const Page = (): JSX.Element => {
     fileInputRef.current?.click()
   }
 
+  const onClearUpload = (): void => {
+    setImage(null)
+  }
+
   const onSubmit = async (
     data: InitialInformationStateTypes
   ): Promise<void> => {
@@ -108,6 +113,8 @@ const Page = (): JSX.Element => {
       setError('idType', {
         message: 'required field.'
       })
+
+      dispatch({ type: 'error' })
       return
     }
 
@@ -115,6 +122,7 @@ const Page = (): JSX.Element => {
       setError('imageUrl', {
         message: 'required field.'
       })
+      dispatch({ type: 'error' })
       return
     }
 
@@ -122,6 +130,7 @@ const Page = (): JSX.Element => {
       setError('dateOfBirth', {
         message: 'required field.'
       })
+      dispatch({ type: 'error' })
       return
     }
 
@@ -129,12 +138,18 @@ const Page = (): JSX.Element => {
       setError('mobileNumber', {
         message: 'Mobile number should be in 09XX-XXX-XXXX format.'
       })
+
+      dispatch({ type: 'error' })
+      return
     }
 
     if (!numberOnly.test(data.mobileNumber)) {
       setError('mobileNumber', {
         message: 'Number only.'
       })
+
+      dispatch({ type: 'error' })
+      return
     }
 
     const { getUrl } = await uploadImage(image)
@@ -151,22 +166,30 @@ const Page = (): JSX.Element => {
 
     query.push('/preview-info')
 
+    dispatch({ type: 'continue', payload: config })
+
     setTimeout(() => {
-      dispatch({ type: 'continue', payload: config })
       reset()
     }, 3000)
   }
 
   useEffect(() => {
-    if (!!state.firstName || queryParams.get('previous') === 'true') {
-      reset({
-        ...state,
-        termsAndConditions: false
-      })
+    const mounted = (): void => {
+      if (!!state.firstName || queryParams.get('previous') === 'true') {
+        reset({
+          ...state,
+          termsAndConditions: false
+        })
 
-      setStartDate(new Date(state.dateOfBirth))
-      setActiveSelect(state.idType)
-      setImage(state.rawImage as File)
+        setStartDate(new Date(state.dateOfBirth))
+        setActiveSelect(state.idType)
+        setImage(state.rawImage as File)
+        setMount(false)
+      }
+    }
+
+    if (isMount) {
+      mounted()
     }
   }, [state, setActiveSelect, setStartDate])
 
@@ -320,7 +343,8 @@ const Page = (): JSX.Element => {
                             '.jpg',
                             '.png',
                             '.xlsx',
-                            '.csv'
+                            '.csv',
+                            '.xls'
                           ])
 
                           const isFileSizeValid = checkFileSize(
@@ -332,6 +356,7 @@ const Page = (): JSX.Element => {
                             setError('imageUrl', {
                               message: 'image format is invalid.'
                             })
+                            setImage(null)
                             return
                           }
 
@@ -352,9 +377,9 @@ const Page = (): JSX.Element => {
                     </span>
                     <button
                       className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
-                      onClick={onUploadAction}
+                      onClick={!!image ? onClearUpload : onUploadAction}
                     >
-                      Choose
+                      {!!image ? 'Clear' : 'Choose'}
                     </button>
                   </div>
                   {!!errors.imageUrl && (

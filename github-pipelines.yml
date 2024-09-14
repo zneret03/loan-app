@@ -14,4 +14,4 @@ cache_checkout:
 
 run_lint:
   needs: cache_checkout
-  uses: ./.github/workflow/linter.yml
+  uses: ./.github/workflow/github-workflow.yml

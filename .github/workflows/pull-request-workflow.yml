@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: '.next'
+          cache: 'yarn'
       - run: yarn install
       - run: yarn run build
       - run: yarn run lint
@@ -42,5 +42,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: '.next'
+          cache: 'yarn'
       - run: echo "deploy preview"

@@ -4,6 +4,6 @@ on: [push]
 jobs:
   Linter:
     runs-on: ubuntu-latest
-    steps: {{ github.workspace }}
+    steps: ${{ github.workspace }}
     steps:
       - run: yarn lint

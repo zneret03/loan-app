@@ -5,8 +5,8 @@ run-name: Loan-app pull request CI/CD pipeline
 on: [pull_request]
 
 env:
-  OS_ENV: [ubuntu-latest]
-  NODE_VERSION: [20.x]
+  OS_ENV: ubuntu-latest
+  NODE_VERSION: 20.x
 
 jobs:
   setup:

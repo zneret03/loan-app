@@ -5,7 +5,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 
 jobs:
-  Linter:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Yarn install
@@ -13,6 +13,8 @@ jobs:
         with:
           fetch-depth: 0
       - run: yarn install
-
-    # steps:
-    #   - run: yarn lint
+    linter:
+      needs: setup
+      uses: actions/checkout@v4
+      steps:
+        - run: yarn lint

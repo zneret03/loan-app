@@ -1,6 +1,6 @@
 name: GitHub Actions Demo
 
-run-name: CI/CD pipeline for loan-app
+run-name: Loan-app CI/CD pipeline
 
 on: [push]
 
@@ -9,9 +9,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
-    matrix:
-      os: [ubuntu-latest]
-      node-version: '16'
+      matrix:
+        os: [ubuntu-latest]
+        node-version: '16'
 
     steps:
       - name: Yarn install

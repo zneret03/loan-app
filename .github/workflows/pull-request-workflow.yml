@@ -4,14 +4,14 @@ run-name: Loan-app pull request CI/CD pipeline
 
 on: [pull_request]
 
-strategy:
-  atrix:
-    os: [ubuntu-latest]
-    node-version: [20.x]
-
 jobs:
   setup:
     runs-on: ${{ matrix.os }}
+
+  strategy:
+    matrix:
+      os: [ubuntu-latest]
+      node-version: [20.x]
 
     steps:
       - name: Yarn install
@@ -27,6 +27,11 @@ jobs:
   deploy-preview:
     runs-on: ${{ matrix.os }}
     needs: setup
+
+   strategy:
+    matrix:
+      os: [ubuntu-latest]
+      node-version: [20.x]
 
     steps:
       - name: Node Node.js ${{ matrix.node-version }}

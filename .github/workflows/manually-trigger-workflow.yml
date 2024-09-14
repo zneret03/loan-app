@@ -6,6 +6,7 @@ on:
       env: echo "sample manually trigger workflow"
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    run: ${{ inputs.env }}
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ${{ inputs.env }}

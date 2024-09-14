@@ -1,12 +1,18 @@
 name: GitHub Actions Demo
 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: CI/CD pipeline for loan-app
 
 on: [push]
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+    matrix:
+      os: [ubuntu-latest]
+      node-version: '16'
+
     steps:
       - name: Yarn install
         uses: actions/checkout@v4

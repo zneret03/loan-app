@@ -45,6 +45,8 @@ const reducer = (
       return { ...state, ...action.payload, referenceNumber, dateToday }
     case 'loading':
       return { ...state, isLoading: true }
+    case 'error':
+      return { ...state, isLoading: false }
     default:
       return state
   }

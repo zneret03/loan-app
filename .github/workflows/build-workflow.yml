@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Loan-app build workflow
 
 run-name: Loan-app CI/CD pipeline
 
@@ -7,7 +7,7 @@ on: [push]
 env:
 
 jobs:
-  setup:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -24,12 +24,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-  build:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Yarn build
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: yarn run build
+      - run: yarn build

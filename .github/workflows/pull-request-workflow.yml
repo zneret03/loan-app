@@ -4,43 +4,37 @@ run-name: Loan-app pull request CI/CD pipeline
 
 on: [pull_request]
 
+env:
+  OS_ENV: [ubuntu-latest]
+  NODE_VERSION: [20.x]
+
 jobs:
   setup:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [20.x]
+    runs-on: $OS_ENV
 
     steps:
       - name: Yarn install
         uses: actions/checkout@v4
 
-      - name: Node Node.js ${{ matrix.node-version }}
+      - name: Node Node.js $NODE_VERSION
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: $NODE_VERSION
           cache: 'yarn'
       - run: yarn install
       - run: yarn run build
       - run: yarn run lint
   deploy-preview:
-    runs-on: ${{ matrix.os }}
+    runs-on: $OS_ENV
     needs: setup
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [20.x]
 
     steps:
       - name: Yarn install
         uses: actions/checkout@v4
 
-      - name: Node Node.js ${{ matrix.node-version }}
+      - name: Node Node.js $NODE_VERSION
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: $NODE_VERSION
           cache: 'yarn'
       - run: echo "deploy preview"

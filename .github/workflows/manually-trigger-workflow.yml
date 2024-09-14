@@ -2,11 +2,9 @@ name: Check environmental variables
 
 on:
   workflow_dispatch:
-    inputs:
-      env: echo "sample manually trigger workflow"
 
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
     steps:
-      - run: ${{ inputs.env }}
+      - run: echo "test workflow"

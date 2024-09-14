@@ -31,7 +31,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const formatPhoneNumber = (value: string): string => {
   // Remove all non-digit characters
-  const cleaned = ('' + value).replace(/\D/g, '')
+  const cleaned = ('' + value).replaceAll(/\D/g, '')
 
   // Check if the input is of correct length
   const match = cleaned.match(/^(\d{0,4})(\d{0,3})(\d{0,4})$/)
@@ -53,9 +53,7 @@ const formatPhoneNumber = (value: string): string => {
 const Page = (): JSX.Element => {
   const { state, dispatch } = useContext(PersonalInformationContext)
   const [startDate, setStartDate] = useState<Date | null>(new Date())
-  const [activeSelect, setActiveSelect] = useState<string | undefined>(
-    undefined
-  )
+  const [activeSelect, setActiveSelect] = useState<string>()
   const [isMount, setMount] = useState<boolean>(true)
   const [image, setImage] = useState<File | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
@@ -191,7 +189,15 @@ const Page = (): JSX.Element => {
     if (isMount) {
       mounted()
     }
-  }, [state, setActiveSelect, setStartDate])
+  }, [
+    state,
+    setActiveSelect,
+    setStartDate,
+    queryParams,
+    reset,
+    setValue,
+    isMount
+  ])
 
   useEffect(() => {
     if (!!activeSelect || !!image || !!startDate) {
@@ -209,7 +215,7 @@ const Page = (): JSX.Element => {
     }, 100)
 
     return () => clearTimeout(delayDebounceFn)
-  }, [mobileNumber])
+  }, [mobileNumber, setValue])
 
   const onOpenSelect = (): void => setIsOpenSelect((prevState) => !prevState)
 
@@ -223,10 +229,7 @@ const Page = (): JSX.Element => {
   )
 
   const isFormFilled =
-    watchForm.findIndex((find) => !find) > -1 ||
-    !activeSelect ||
-    !image ||
-    !startDate
+    watchForm.some((find) => !find) || !activeSelect || !image || !startDate
 
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
   const isDisableContinue =
@@ -239,7 +242,7 @@ const Page = (): JSX.Element => {
           title='Personal Information'
           styles='bg-dark-slate rounded-lg h-content'
           dividerColor='divide-divider-slate'
-          isCenterTitle={true}
+          isCenterTitle={false}
           divider={true}
           hasBackButton
           historyPath='/apply-loan'
@@ -325,11 +328,11 @@ const Page = (): JSX.Element => {
                   />
                 </div>
                 <aside className='-mt-1'>
-                  <label
+                  <span
                     className={`text-dark-primary text-xs ${inter.className}`}
                   >
                     UPLOAD IMAGE
-                  </label>
+                  </span>
                   <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
                     <input
                       type='file'
@@ -377,9 +380,9 @@ const Page = (): JSX.Element => {
                     </span>
                     <button
                       className='bg-iris-slate border border-iris-dark hover:bg-iris-dark text-sm text-white text-center px-3.5 py-[0.8rem] rounded-lg'
-                      onClick={!!image ? onClearUpload : onUploadAction}
+                      onClick={image ? onClearUpload : onUploadAction}
                     >
-                      {!!image ? 'Clear' : 'Choose'}
+                      {image ? 'Clear' : 'Choose'}
                     </button>
                   </div>
                   {!!errors.imageUrl && (

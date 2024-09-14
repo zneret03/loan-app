@@ -24,9 +24,7 @@ interface FormTypes {
 }
 
 const Page = (): JSX.Element => {
-  const [activeSelect, setActiveSelect] = useState<number | undefined>(
-    undefined
-  )
+  const [activeSelect, setActiveSelect] = useState<number | undefined>()
 
   const [activeLoanOption, setActiveLoanOptions] = useState<string>('')
   const [isOpenSelect, setIsOpenSelect] = useState<{
@@ -92,15 +90,13 @@ const Page = (): JSX.Element => {
       return
     }
 
-    console.log(activeLoanOption)
-
     dispatch({
       type: 'computation',
       payload: {
         loanAmount,
         loanTerm: activeSelect,
         loanPurpose: activeLoanOption,
-        disbursementFee: 1_500
+        disbursementFee: 1500
       }
     })
   }
@@ -135,7 +131,7 @@ const Page = (): JSX.Element => {
     if (!!activeSelect || !!activeLoanOption) {
       clearErrors()
     }
-  }, [activeSelect, activeLoanOption])
+  }, [activeSelect, activeLoanOption, clearErrors])
 
   const isFormFilled = !!amount && !!activeSelect
   const isDisableButton = isFormFilled && isTermsAndCondition
@@ -165,7 +161,12 @@ const Page = (): JSX.Element => {
       setActiveSelect(state.loanTerm)
       setActiveLoanOptions(state.loanPurpose)
     }
-  }, [isPrevious])
+  }, [isPrevious, reset, state])
+
+  //eslint-disable-next-line unicorn/no-negated-condition
+  const currentActiveSelect = !!activeSelect
+    ? `${activeSelect} months`
+    : (activeSelect as number)
 
   return (
     <>
@@ -213,11 +214,7 @@ const Page = (): JSX.Element => {
               }
               onOpen={() => onOpenSelect('loan-term')}
               label='LOAN TERM'
-              activeSelect={
-                !!activeSelect
-                  ? `${activeSelect} months`
-                  : (activeSelect as number)
-              }
+              activeSelect={currentActiveSelect}
               setSelectOptions={setActiveOptions}
               selectOptions={filteredOptions}
               hasErrors={!!errors.loanTerm}
@@ -242,7 +239,7 @@ const Page = (): JSX.Element => {
         >
           <section className='space-y-10 text-dark-primary'>
             <section className='space-y-6'>
-              <label className='text-sm '>ESTIMATED AMORTIZATION</label>
+              <h1 className='text-sm '>ESTIMATED AMORTIZATION</h1>
               <h2 className='text-2xl'>
                 Php {Number(amortization).toLocaleString('en-US')}
               </h2>
@@ -251,29 +248,27 @@ const Page = (): JSX.Element => {
             <aside className='divide divide-y divide-divider-dark space-y-6'>
               <div className='space-y-10'>
                 <div className='space-y-4 text-right'>
-                  <label className='text-sm '>INTEREST RATE</label>
+                  <h1 className='text-sm '>INTEREST RATE</h1>
                   <h2 className='text-2xl'>{interestRates}%</h2>
                 </div>
 
                 <section className='space-y-4'>
-                  <label className=' text-xs'>
-                    BREAKDOWN OF FEES AND CHARGES
-                  </label>
+                  <h1 className=' text-xs'>BREAKDOWN OF FEES AND CHARGES</h1>
 
                   <aside className='bg-banner/20 p-4 space-y-6'>
                     <div className='space-y-4'>
-                      <label className='text-xs'>DISBURSEMENT FEE</label>
+                      <h1 className='text-xs'>DISBURSEMENT FEE</h1>
                       <h2 className='text-base font-bold'>
                         Php {disbursementFee || 0}
                       </h2>
                     </div>
                     <div className='space-y-4 text-xs'>
                       <div className='flex flex-col gap-1'>
-                        <label>DOCUMENTARY STAMP TAX</label>
+                        <h1>DOCUMENTARY STAMP TAX</h1>
 
-                        <label className='text-[#3C8BA2]'>
+                        <h1 className='text-[#3C8BA2]'>
                           (IF PHP 250,000 AND ABOVE)
-                        </label>
+                        </h1>
                       </div>
                       <h2 className='text-base font-bold'>
                         Php {documentaryStampFee.toLocaleString()}
@@ -284,7 +279,7 @@ const Page = (): JSX.Element => {
               </div>
 
               <div className='space-y-6 pt-6 text-right'>
-                <label className='text-sm'>TOTAL</label>
+                <h1 className='text-sm'>TOTAL</h1>
                 <h2 className='text-2xl'>
                   Php {Number(total).toLocaleString('en-US')}
                 </h2>

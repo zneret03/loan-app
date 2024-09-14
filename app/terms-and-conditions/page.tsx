@@ -39,7 +39,7 @@ const Page = (): JSX.Element => {
           >
             <p>
               These terms and conditions outline the rules and regulations for
-              the use of Loan app's Website
+              the use of Loan app&apos;s Website
             </p>
 
             <p>
@@ -51,20 +51,22 @@ const Page = (): JSX.Element => {
             <p>
               The following terminology applies to these Terms and Conditions,
               Privacy Statement and Disclaimer Notice and all Agreements:
-              "Client", "You" and "Your" refers to you, the person log on this
-              website and compliant to the Company’s terms and conditions. "The
-              Company", "Ourselves", "We", "Our" and "Us", refers to our
-              Company. "Party", "Parties", or "Us", refers to both the Client
+              &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to
+              you, the person log on this website and compliant to the
+              Company&apos;s terms and conditions. &quot;The Company&quot;,
+              &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and
+              &quot;Us&quot;, refers to our Company. &quot;Party&quot;,
+              &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client
               and ourselves. All terms refer to the offer, acceptance and
               consideration of payment necessary to undertake the process of our
               assistance to the Client in the most appropriate manner for the
-              express purpose of meeting the Client’s needs in respect of
-              provision of the Company’s stated services, in accordance with and
-              subject to, prevailing law of Netherlands. Any use of the above
-              terminology or other words in the singular, plural, capitalization
-              and/or he/she or they, are taken as interchangeable and therefore
-              as referring to same. Our Terms and Conditions were created with
-              the help of the{' '}
+              express purpose of meeting the Client&apos;s needs in respect of
+              provision of the Company&apos;s stated services, in accordance
+              with and subject to, prevailing law of Netherlands. Any use of the
+              above terminology or other words in the singular, plural,
+              capitalization and/or he/she or they, are taken as interchangeable
+              and therefore as referring to same. Our Terms and Conditions were
+              created with the help of the{' '}
               <a href='https://www.privacypolicyonline.com/terms-conditions-generator/'>
                 Terms & Conditions Generator
               </a>
@@ -77,15 +79,15 @@ const Page = (): JSX.Element => {
 
             <p>
               We employ the use of cookies. By accessing Loan app, you agreed to
-              use cookies in agreement with the Loan app's Privacy Policy.
+              use cookies in agreement with the Loan app&apos;s Privacy Policy.
             </p>
 
             <p>
               Most interactive websites use cookies to let us retrieve the
-              user's details for each visit. Cookies are used by our website to
-              enable the functionality of certain areas to make it easier for
-              people visiting our website. Some of our affiliate/advertising
-              partners may also use cookies.
+              user&apos;s details for each visit. Cookies are used by our
+              website to enable the functionality of certain areas to make it
+              easier for people visiting our website. Some of our
+              affiliate/advertising partners may also use cookies.
             </p>
 
             <h3>
@@ -190,7 +192,7 @@ const Page = (): JSX.Element => {
               any way deceptive; (b) does not falsely imply sponsorship,
               endorsement or approval of the linking party and its products
               and/or services; and (c) fits within the context of the linking
-              party's site.
+              party&apos;s site.
             </p>
 
             <p>
@@ -225,7 +227,7 @@ const Page = (): JSX.Element => {
               (a) is not in any way deceptive; (b) does not falsely imply
               sponsorship, endorsement or approval of the linking party and its
               products or services; and (c) fits within the context of the
-              linking party's site.
+              linking party&apos;s site.
             </p>
 
             <p>
@@ -250,13 +252,13 @@ const Page = (): JSX.Element => {
               <li>
                 By use of any other description of our Website being linked to
                 that makes sense within the context and format of content on the
-                linking party's site.
+                linking party&apos;s site.
               </li>
             </ul>
 
             <p>
-              No use of Loan app's logo or other artwork will be allowed for
-              linking absent a trademark license agreement.
+              No use of Loan app&apos;s logo or other artwork will be allowed
+              for linking absent a trademark license agreement.
             </p>
 
             <h3>
@@ -290,8 +292,8 @@ const Page = (): JSX.Element => {
               We reserve the right to request that you remove all links or any
               particular link to our Website. You approve to immediately remove
               all links to our Website upon request. We also reserve the right
-              to amen these terms and conditions and it's linking policy at any
-              time. By continuously linking to our Website, you agree to be
+              to amen these terms and conditions and it&apos;s linking policy at
+              any time. By continuously linking to our Website, you agree to be
               bound to and follow these linking terms and conditions.
             </p>
 

@@ -1,1 +1,1 @@
-export * from './CustomDatePicker'
+export * from './custom-date-picker'

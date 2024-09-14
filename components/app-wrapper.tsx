@@ -6,7 +6,11 @@ import { LoanProvider, PersonalInformationProvider } from '@/context'
 import { ChakraProvider } from '@chakra-ui/react'
 import '@/styles/tailwind.css'
 
-export const AppWrapper = ({ children }: { children: ReactNode }) => (
+export const AppWrapper = ({
+  children
+}: {
+  children: ReactNode
+}): JSX.Element => (
   <ChakraProvider>
     <PersonalInformationProvider>
       <ModalProvider>

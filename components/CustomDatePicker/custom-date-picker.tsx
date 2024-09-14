@@ -24,7 +24,7 @@ const months = [
   'December'
 ]
 
-interface CustomDatePicker {
+interface CustomDatePickerTypes {
   label: string
   currentDate: Date | null
   setCurrentDate: Dispatch<SetStateAction<Date | null>>
@@ -32,7 +32,7 @@ interface CustomDatePicker {
   errorMessage?: string
 }
 
-interface CustomHeader {
+interface CustomHeaderTypes {
   date: Date
   decreaseMonth: () => void
   increaseMonth: () => void
@@ -48,7 +48,7 @@ const CustomHeader = ({
   setIsEditYear,
   isEditYear,
   changeYear
-}: CustomHeader): JSX.Element => (
+}: CustomHeaderTypes): JSX.Element => (
   <main className='flex items-center justify-between px-4 py-2'>
     <div className='flex items-center gap-2'>
       <span className='text-lg font-bold text-calendar-primary'>
@@ -88,7 +88,7 @@ export const CustomDatePicker = ({
   setCurrentDate,
   hasError,
   errorMessage
-}: CustomDatePicker): JSX.Element => {
+}: CustomDatePickerTypes): JSX.Element => {
   const [isEditYear, setIsEditYear] = useState<boolean>(false)
   return (
     <main>

@@ -25,7 +25,7 @@ const Items = (props: ItemsTypes): JSX.Element => {
   if (props.type === 'single') {
     return (
       <aside className='space-y-4'>
-        <label className='text-xs'>{props.label}</label>
+        <h1 className='text-xs'>{props.label}</h1>
         <h2 className='text-primary'>{props.value}</h2>
       </aside>
     )
@@ -34,12 +34,12 @@ const Items = (props: ItemsTypes): JSX.Element => {
   return (
     <aside className='flex'>
       <div className='flex-1 space-y-4'>
-        <label className='text-xs'>{props.firstLabel}</label>
+        <h1 className='text-xs'>{props.firstLabel}</h1>
         <h2 className='text-primary'>{props.firstValue}</h2>
       </div>
 
       <div className='flex-1 space-y-4'>
-        <label className='text-xs'>{props.secondLabel}</label>
+        <h1 className='text-xs'>{props.secondLabel}</h1>
         {props.hasImage ? (
           <Image
             loader={() => props.secondValue as string}
@@ -73,15 +73,9 @@ const Page = (): JSX.Element => {
     idType
   } = personalDetails
 
-  console.log(loanPurpose)
-
   return (
     <>
-      {!imageUrl ? (
-        <div className='text-dark-primary flex items-center justify-center mt-20'>
-          <Spinner style='w-10 h-10' />
-        </div>
-      ) : (
+      {imageUrl ? (
         <div className='w-full max-w-6xl bg-gray mx-auto text-dark-primary shadow-sm pb-[5rem]'>
           <BaseLine
             title='Please confirm your details below'
@@ -160,6 +154,10 @@ const Page = (): JSX.Element => {
               </div>
             </section>
           </BaseLine>
+        </div>
+      ) : (
+        <div className='text-dark-primary flex items-center justify-center mt-20'>
+          <Spinner style='w-10 h-10' />
         </div>
       )}
     </>

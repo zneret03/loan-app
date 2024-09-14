@@ -7,9 +7,9 @@ jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
     steps:
-      - name: "Vercel Project ID"
+      - name: 'Vercel Project ID'
         run: echo ${{ vars.VERCEL_PROJECT_ID }}
-      - name: "Vercel Org ID"
+      - name: 'Vercel Org ID'
         run: echo ${{ vars.VERCEL_ORG_ID }}
-        name: "Vercel Token"
+      - name: 'Vercel Token'
         run: echo ${{ vars.VERCEL_TOKEN }}

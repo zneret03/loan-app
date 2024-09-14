@@ -13,8 +13,8 @@ jobs:
         with:
           fetch-depth: 0
       - run: yarn install
-    linter:
-      needs: setup
-      uses: actions/checkout@v4
-      steps:
-        - run: yarn lint
+  linter:
+    needs: setup
+    uses: actions/checkout@v4
+    steps:
+      - run: yarn lint

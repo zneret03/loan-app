@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  log-the-inputs:
+  vercel_variables:
     runs-on: ubuntu-latest
     steps:
       - name: 'Vercel Project ID'

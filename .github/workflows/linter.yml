@@ -7,5 +7,9 @@ on: [push]
 jobs:
   Linter:
     runs-on: ubuntu-latest
+    steps: 
+      - name: Install yarn 
+      - run: yarn install
     steps:
+      - name: Run yarn lint
       - run: yarn lint

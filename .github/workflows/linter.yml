@@ -8,8 +8,4 @@ jobs:
   Linter:
     runs-on: ubuntu-latest
     steps:
-      name: Install
-      script: 
-        - run: yarn install
-    steps:
       - run: yarn lint

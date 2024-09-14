@@ -18,12 +18,10 @@ jobs:
     needs: setup
     steps:
       - name: Yarn build
-      uses: actions/checkout@v4
       - run: yarn build
   linter:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Yarn lint
-      uses: actions/checkout@v4
       - run: yarn lint

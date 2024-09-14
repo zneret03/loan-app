@@ -229,7 +229,7 @@ const Page = (): JSX.Element => {
   )
 
   const isFormFilled =
-    watchForm.findIndex((find) => !find) ||
+    watchForm.some((find) => !find)  ||
     !activeSelect ||
     !image ||
     !startDate
@@ -331,11 +331,11 @@ const Page = (): JSX.Element => {
                   />
                 </div>
                 <aside className='-mt-1'>
-                  <h1
+                  <span
                     className={`text-dark-primary text-xs ${inter.className}`}
                   >
                     UPLOAD IMAGE
-                  </h1>
+                  </span>
                   <div className='mt-2 border border-primary bg-white rounded-lg flex items-center justify-between px-4 py-[1.125rem]'>
                     <input
                       type='file'

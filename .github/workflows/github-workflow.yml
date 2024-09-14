@@ -16,8 +16,11 @@ jobs:
     steps:
       - name: Yarn install
         uses: actions/checkout@v4
+
+      - name: Node Node.js %{{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: ${{ matrix.node-version }}
       - run: yarn install
   build:
     runs-on: ubuntu-latest

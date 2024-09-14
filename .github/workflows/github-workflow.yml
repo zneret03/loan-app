@@ -4,8 +4,6 @@ run-name: Loan-app CI/CD pipeline
 
 on: [push]
 
-env:
-
 jobs:
   setup:
     runs-on: ${{ matrix.os }}

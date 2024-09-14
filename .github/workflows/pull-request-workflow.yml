@@ -1,0 +1,36 @@
+name: Loan app github actions based on pull request
+
+run-name: Loan-app pull request CI/CD pipeline
+
+on: [pull_request]
+
+strategy:
+  atrix:
+    os: [ubuntu-latest]
+    node-version: [20.x]
+
+jobs:
+  setup:
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Yarn install
+        uses: actions/checkout@v4
+
+      - name: Node Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+      - run: yarn run build
+      - run: yarn run lint
+  deploy-preview:
+    runs-on: ${{ matrix.os }}
+    needs: setup
+
+    - name: Node Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: echo "vercel preview logs"
+

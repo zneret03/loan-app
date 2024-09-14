@@ -2,6 +2,9 @@ name: Check environmental variables
 
 on:
   workflow_dispatch:
+    inputs:
+      environmental:
+        print: echo "hello world"
 
 jobs:
   log-the-inputs:
@@ -13,3 +16,5 @@ jobs:
         run: echo ${{ vars.VERCEL_ORG_ID }}
       - name: 'Vercel Token'
         run: echo ${{ vars.VERCEL_TOKEN }}
+      - name: 'Sample workflow inputs'
+        run: ${{ inputs.environmental }}

@@ -1,0 +1,11 @@
+name: Debugging Secrets and Environment Variables
+
+on: [workflow_dispatch]
+
+jobs:
+  env-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "VERCEL_PROJECT_ID = ${{ vars.VERCEL_PROJECT_ID }}"
+      - run: echo "VERCEL_ORG_ID = ${{ vars.VERCEL_ORG_ID }}"
+      - run: echo "VERCEL_TOKEN = ${{ vars.VERCEL_TOKEN }}"

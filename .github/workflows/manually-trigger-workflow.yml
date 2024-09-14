@@ -2,6 +2,8 @@ name: Check environmental variables
 
 on:
   workflow_dispatch:
+    inputs:
+      env: echo "sample manually trigger workflow"
 
 jobs:
   log-the-inputs:

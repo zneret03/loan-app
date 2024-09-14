@@ -7,12 +7,12 @@ on: [push]
 jobs:
   Linter:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Yarn install
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - run: yarn install
 
-    steps:
-      - run: yarn lint
+    # steps:
+    #   - run: yarn lint

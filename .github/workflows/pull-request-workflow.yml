@@ -28,9 +28,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: setup
 
-    - name: Node Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: echo "vercel preview logs"
-
+    steps:
+      - name: Node Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: echo "vercel preview logs"

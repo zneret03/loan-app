@@ -8,8 +8,11 @@ jobs:
   Linter:
     runs-on: ubuntu-latest
     steps: 
-      - name: Install yarn 
-      - run: yarn install
+      - name: Yarn install
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
     steps:
       - name: Run yarn lint
       - run: yarn lint

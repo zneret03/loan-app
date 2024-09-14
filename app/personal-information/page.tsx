@@ -229,10 +229,7 @@ const Page = (): JSX.Element => {
   )
 
   const isFormFilled =
-    watchForm.some((find) => !find)  ||
-    !activeSelect ||
-    !image ||
-    !startDate
+    watchForm.some((find) => !find) || !activeSelect || !image || !startDate
 
   const isFormEmpty = isFormFilled || state.isLoading || !isTermsAndCondition
   const isDisableContinue =
@@ -245,7 +242,7 @@ const Page = (): JSX.Element => {
           title='Personal Information'
           styles='bg-dark-slate rounded-lg h-content'
           dividerColor='divide-divider-slate'
-          isCenterTitle={true}
+          isCenterTitle={false}
           divider={true}
           hasBackButton
           historyPath='/apply-loan'

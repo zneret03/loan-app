@@ -44,15 +44,15 @@ export const Checkbox = <T extends FieldValues>(
         {...rest}
         className='w-5 h-5 rounded-sm text-primary focus:ring-gray border border-primary border-2 cursor-pointer'
       />
-      <label className='text-base text-dark-primary'>
+      <h1 className='text-base text-dark-primary'>
         I agree to the{' '}
-        <label
+        <h2
           className={`underline font-bold ${isDisabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'}`}
           onClick={onToggle}
         >
           {tAndCLabel}
-        </label>{' '}
-        <label
+        </h2>{' '}
+        <h3
           className='underline font-bold cursor-pointer'
           onClick={
             fromPath === 'apply-loan'
@@ -61,8 +61,8 @@ export const Checkbox = <T extends FieldValues>(
           }
         >
           {policyLabel}
-        </label>
-      </label>
+        </h3>
+      </h1>
     </div>
   )
 }

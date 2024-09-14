@@ -48,11 +48,13 @@ module.exports = {
       // ? Apparently, all index.tsx files are already ignored
       files: [
         'app/*/*.tsx',
-        '**/components/**/!(type).{ts,tsx}',
+        'app/*.tsx',
         '**/context/**/*.{ts,tsx}',
-        '**/layouts/**/*.{ts,tsx}'
+        '**/layouts/**/*.{ts,tsx}',
+        '**/not-found/**/*.{ts,tsx}'
       ],
       rules: {
+        'import/no-default-export': 'off',
         'unicorn/filename-case': [
           'error',
           {

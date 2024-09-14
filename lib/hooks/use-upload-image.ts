@@ -10,6 +10,7 @@ interface UseUploadImageTypes {
 }
 
 export const useUploadImage = (): UseUploadImageTypes => {
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const uploadImage = async (image: File): Promise<{ getUrl: string }> => {
     const storage = getStorage()
     const imageRef = ref(storage, `${image.name}`)

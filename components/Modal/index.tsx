@@ -1,2 +1,2 @@
-export * from './Modal'
-export * from './termsAndConditionModal'
+export * from './modal'
+export * from './terms-and-condition-modal'

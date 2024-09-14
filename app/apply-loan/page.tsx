@@ -163,6 +163,7 @@ const Page = (): JSX.Element => {
     }
   }, [isPrevious, reset, state])
 
+  //eslint-disable-next-line unicorn/no-negated-condition
   const currentActiveSelect = !!activeSelect
     ? `${activeSelect} months`
     : (activeSelect as number)

@@ -5,6 +5,4 @@ jobs:
   Linter:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        yarn lint
-        fi
+      - run: yarn lint

@@ -1,8 +1,0 @@
-name: Production Deployment
-
-run-name: ${{ inputs.deploy_target }} by ${{ github.actor }}
-
-on:
-  - merge_group
-  branches:
-    [main]

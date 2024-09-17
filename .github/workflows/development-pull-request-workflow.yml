@@ -1,10 +1,11 @@
 name: Loan app github actions based on pull request
 
-run-name: Loan-app pull request CI/CD pipeline
+run-name: ${{ github.event.merge_group.head_commit.message }}
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ vars.VERCEL_TOKEN }}
 
 on: [pull_request]
 
@@ -18,7 +19,7 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - name: Yarn install
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Node Node.js ${{ matrix.node-version }}
@@ -38,12 +39,17 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Install Vercel CLI
-        run: echo ${{ secrets.VERCEL_PROJECT_ID }}
-      # - name: Pull Vercel Environment Information
-      #   run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      # - name: Build Project Artifacts
-      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      # - name: Deploy Project Artifacts to Vercel
-      #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+
+      - name: Build Project Artifacts
+        run: vercel build --token=$VERCEL_TOKEN
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=$VERCEL_TOKEN

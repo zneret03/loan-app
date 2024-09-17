@@ -1,12 +1,15 @@
-name: Check environmental variables
+name: Check environment variables
 
 on:
   workflow_dispatch:
-    inputs:
-      env: echo "sample manually trigger workflow"
 
 jobs:
-  log-the-inputs:
+  vercel_variables:
     runs-on: ubuntu-latest
     steps:
-      - run: ${{ inputs.env }}
+      - name: 'Vercel Project ID'
+        run: echo ${{ vars.VERCEL_PROJECT_ID }}
+      - name: 'Vercel Org ID'
+        run: echo ${{ vars.VERCEL_ORG_ID }}
+      - name: 'Vercel Token'
+        run: echo ${{ vars.VERCEL_TOKEN }}
